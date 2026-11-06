@@ -1,320 +1,69 @@
 (() => {
-  const SESSION_CONTEXTS = {
-    "Functions practice": "TypeScript learning · Sample session",
-    "Objects practice": "TypeScript learning · Sample session",
-    "Review study notes": "Learning · Sample session",
-    "Portfolio: next step": "Portfolio · Sample session"
-  };
-
-  const SYNTHETIC_DRAFTS = {
-    memory: "Synthetic Memory Draft (Simulated): Consolidate captured session notes into temporary working context for the active task.",
-    reviewer: "Synthetic Reviewer Draft (Simulated): Check captured items for clarity, scope alignment, and open verification questions."
-  };
-
-  function initPrototype() {
-    const state = {
-      activeSession: null,
-      focusState: "idle",
-      focusSession: null,
-      captureCount: 0,
-      activeReviewKind: null
-    };
-
-    const homeView = document.querySelector("#home-view");
-    const workspaceView = document.querySelector("#workspace-view");
-    const sessionTitleEl = document.querySelector("#session-title");
-    const sessionContextEl = document.querySelector("#session-context");
-
-    const captureInput = document.querySelector("#capture-input");
-    const captureList = document.querySelector("#capture-list");
-    const captureFeedback = document.querySelector("#capture-feedback");
-
-    const focusStatus = document.querySelector("#focus-status");
-    const startFocusBtn = document.querySelector('[data-action="start-focus"]');
-    const pauseFocusBtn = document.querySelector('[data-action="pause-focus"]');
-    const stopFocusBtn = document.querySelector('[data-action="stop-focus"]');
-
-    const reviewDialog = document.querySelector("#review-dialog");
-    const reviewContent = document.querySelector("#review-content");
-    const reviewFeedback = document.querySelector("#review-feedback");
-
-    function setText(el, text) {
-      if (el) {
-        el.textContent = text;
-      }
-    }
-
-    function openDialog(dialog) {
-      if (!dialog) return;
-      if (typeof dialog.showModal === "function") {
-        if (!dialog.open) {
-          dialog.showModal();
-        }
-      } else {
-        dialog.setAttribute("open", "");
-        dialog.hidden = false;
-      }
-    }
-
-    function closeDialog(dialog) {
-      if (!dialog) return;
-      if (typeof dialog.close === "function" && dialog.open) {
-        dialog.close();
-      } else {
-        dialog.removeAttribute("open");
-      }
-    }
-
-    function updateFocusUI() {
-      const sessionLabel = state.focusSession || "current task";
-      const isActive = state.focusState === "running" || state.focusState === "paused";
-      const focusExplainer = document.querySelector(".focus-explainer");
-      if (focusExplainer) focusExplainer.textContent = isActive ? `Focusing on ${sessionLabel} · sample only` : "Focus session · sample only";
-      if (startFocusBtn) startFocusBtn.hidden = isActive;
-      if (pauseFocusBtn) pauseFocusBtn.hidden = !isActive;
-      if (stopFocusBtn) stopFocusBtn.hidden = !isActive;
-
-      if (state.focusState === "idle") {
-        setText(focusStatus, "Focus not started");
-        if (startFocusBtn) startFocusBtn.disabled = false;
-        if (pauseFocusBtn) {
-          pauseFocusBtn.disabled = true;
-          pauseFocusBtn.textContent = "Pause Focus";
-        }
-        if (stopFocusBtn) stopFocusBtn.disabled = true;
-      } else if (state.focusState === "running") {
-        setText(
-          focusStatus,
-          "Focus active · sample"
-        );
-        if (startFocusBtn) startFocusBtn.disabled = true;
-        if (pauseFocusBtn) {
-          pauseFocusBtn.disabled = false;
-          pauseFocusBtn.textContent = "Pause Focus";
-        }
-        if (stopFocusBtn) stopFocusBtn.disabled = false;
-      } else if (state.focusState === "paused") {
-        setText(
-          focusStatus,
-          "Focus paused · sample"
-        );
-        if (startFocusBtn) startFocusBtn.disabled = true;
-        if (pauseFocusBtn) {
-          pauseFocusBtn.disabled = false;
-          pauseFocusBtn.textContent = "Resume Focus";
-        }
-        if (stopFocusBtn) stopFocusBtn.disabled = false;
-      } else if (state.focusState === "stopped") {
-        setText(
-          focusStatus,
-          "Session stopped · task open"
-        );
-        if (startFocusBtn) startFocusBtn.disabled = false;
-        if (pauseFocusBtn) {
-          pauseFocusBtn.disabled = true;
-          pauseFocusBtn.textContent = "Pause Focus";
-        }
-        if (stopFocusBtn) stopFocusBtn.disabled = true;
-      }
-    }
-
-    function openSession(rawTitle, triggerEl) {
-      const title = (rawTitle || "").trim() || "Untitled Session";
-      state.activeSession = title;
-
-      const customContext =
-        triggerEl && typeof triggerEl.getAttribute === "function"
-          ? triggerEl.getAttribute("data-session-context")
-          : null;
-      const contextText =
-        customContext ||
-        SESSION_CONTEXTS[title] ||
-        `Disposable in-memory workspace for "${title}". All state resets on page refresh.`;
-
-      setText(sessionTitleEl, title);
-      setText(sessionContextEl, contextText);
-      const continueButton = document.querySelector("#continue-session");
-      if (continueButton) continueButton.setAttribute("data-open-session", title);
-      setText(document.querySelector("#continue-context"), `${title} · ${contextText.replace(" · Sample session", "")}`);
-      document.querySelector('nav .nav-item[data-action="home"]')?.classList.remove("active");
-      document.querySelector("nav .nav-item[data-open-session]")?.classList.add("active");
-
-      if (homeView) homeView.hidden = true;
-      if (workspaceView) workspaceView.hidden = false;
-
-      updateFocusUI();
-    }
-
-    function returnHome() {
-      closeDialog(reviewDialog);
-      document.querySelector("nav .nav-item[data-open-session]")?.classList.remove("active");
-      document.querySelector('nav .nav-item[data-action="home"]')?.classList.add("active");
-      if (workspaceView) workspaceView.hidden = true;
-      if (homeView) homeView.hidden = false;
-    }
-
-    function handleCapture() {
-      const rawValue = captureInput && typeof captureInput.value === "string" ? captureInput.value : "";
-      const text = rawValue.trim();
-
-      if (!text) {
-        setText(
-          captureFeedback,
-          "Enter a note before capturing (in-memory only; nothing is saved)."
-        );
-        return;
-      }
-
-      if (captureList) {
-        const item = document.createElement("li");
-        item.textContent = text;
-        captureList.appendChild(item);
-      }
-
-      state.captureCount += 1;
-      if (captureInput) {
-        captureInput.value = "";
-      }
-
-      setText(
-        captureFeedback,
-        `Captured item #${state.captureCount} in memory only (no storage; resets on refresh).`
-      );
-    }
-
-    function openReview(kind) {
-      state.activeReviewKind = kind;
-      const sessionLabel = state.activeSession || "Active Session";
-      const baseDraft = SYNTHETIC_DRAFTS[kind] || SYNTHETIC_DRAFTS.reviewer;
-      const draftText = `[${sessionLabel}] ${baseDraft} (${state.captureCount} in-memory capture(s) in current view; no writes or network calls).`;
-
-      setText(reviewContent, draftText);
-      openDialog(reviewDialog);
-    }
-
-    function finishReview(decision) {
-      const kindLabel = state.activeReviewKind === "memory" ? "Memory" : "Reviewer";
-      closeDialog(reviewDialog);
-
-      if (decision === "approved") {
-        setText(
-          reviewFeedback,
-          `${kindLabel} draft approved in simulation only — no writes, storage, or network changes were made (resets on refresh).`
-        );
-      } else {
-        setText(
-          reviewFeedback,
-          `${kindLabel} draft rejected in simulation only — discarded with no writes or persistence (resets on refresh).`
-        );
-      }
-      state.activeReviewKind = null;
-    }
-
-    const sessionButtons = document.querySelectorAll("[data-open-session]");
-    sessionButtons.forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const sessionTitle = btn.getAttribute("data-open-session") || btn.textContent || "Session";
-        openSession(sessionTitle, btn);
-      });
-    });
-
-    const homeButtons = document.querySelectorAll('[data-action="home"]');
-    homeButtons.forEach((btn) => {
-      btn.addEventListener("click", () => {
-        returnHome();
-      });
-    });
-
-    const captureButtons = document.querySelectorAll('[data-action="capture"]');
-    captureButtons.forEach((btn) => {
-      btn.addEventListener("click", (event) => {
-        event.preventDefault();
-        handleCapture();
-      });
-    });
-
-    if (captureInput) {
-      captureInput.addEventListener("keydown", (event) => {
-        if (event.key === "Enter" && !event.shiftKey) {
-          event.preventDefault();
-          handleCapture();
-        }
-      });
-    }
-
-    if (startFocusBtn) {
-      startFocusBtn.addEventListener("click", () => {
-        if (state.focusState === "running" || state.focusState === "paused") return;
-        state.focusSession = state.activeSession || "current task";
-        state.focusState = "running";
-        updateFocusUI();
-      });
-    }
-
-    if (pauseFocusBtn) {
-      pauseFocusBtn.addEventListener("click", () => {
-        if (state.focusState === "running") {
-          state.focusState = "paused";
-        } else if (state.focusState === "paused") {
-          state.focusState = "running";
-        }
-        updateFocusUI();
-      });
-    }
-
-    if (stopFocusBtn) {
-      stopFocusBtn.addEventListener("click", () => {
-        if (state.focusState === "running" || state.focusState === "paused") {
-          state.focusState = "stopped";
-          updateFocusUI();
-        }
-      });
-    }
-
-    const memoryButtons = document.querySelectorAll('[data-action="memory"]');
-    memoryButtons.forEach((btn) => {
-      btn.addEventListener("click", () => {
-        openReview("memory");
-      });
-    });
-
-    const reviewerButtons = document.querySelectorAll('[data-action="reviewer"]');
-    reviewerButtons.forEach((btn) => {
-      btn.addEventListener("click", () => {
-        openReview("reviewer");
-      });
-    });
-
-    const approveButtons = document.querySelectorAll('[data-action="approve-review"]');
-    approveButtons.forEach((btn) => {
-      btn.addEventListener("click", () => {
-        finishReview("approved");
-      });
-    });
-
-    const rejectButtons = document.querySelectorAll('[data-action="reject-review"]');
-    rejectButtons.forEach((btn) => {
-      btn.addEventListener("click", () => {
-        finishReview("rejected");
-      });
-    });
-
-    const timeFilter = document.querySelector("#time-filter");
-    if (timeFilter) {
-      timeFilter.addEventListener("change", () => {
-        const maxMinutes = Number(timeFilter.value);
-        document.querySelectorAll(".suggestion[data-minutes]").forEach((item) => {
-          item.hidden = maxMinutes > 0 && Number(item.getAttribute("data-minutes")) > maxMinutes;
-        });
-      });
-    }
-
-    updateFocusUI();
+  const $ = (selector) => document.querySelector(selector);
+  const all = (selector) => document.querySelectorAll(selector);
+  const contexts = {'Functions practice':'TypeScript learning', 'Objects practice':'TypeScript learning', 'Review study notes':'Personal & study', 'Portfolio: next step':'Personal & study'};
+  const state = {session:'Functions practice', focus:'idle', focusTarget:'', seconds:0, completed:new Set(), captures:[]};
+  const format = (seconds) => `${String(Math.floor(seconds / 60)).padStart(2,'0')}:${String(seconds % 60).padStart(2,'0')}`;
+  function drawFocus() {
+    const active = state.focus === 'running' || state.focus === 'paused';
+    $('#timer').textContent = format(state.seconds);
+    $('#focus-label').textContent = active ? `${state.focus === 'running' ? 'Focusing' : 'Paused'} · ${state.focusTarget}` : state.focus === 'stopped' ? 'Session stopped' : 'Focus ready';
+    const task = state.focusTarget || state.session;
+    const done = state.completed.has(task);
+    $('#focus-detail').textContent = active ? `${state.focus === 'paused' ? 'Paused' : 'Focusing'} on ${task} · ${format(state.seconds)}` : state.focus === 'stopped' ? `Stopped at ${format(state.seconds)} · ${task} ${done ? 'completed' : 'remains open'}` : `${state.session} · ${state.completed.has(state.session) ? 'completed' : 'task open'}`;
+    $('[data-workspace-start]').hidden = active;
+    $('[data-pause]').hidden = !active;
+    $('[data-pause]').textContent = state.focus === 'paused' ? 'Resume' : 'Pause';
+    $('[data-stop]').hidden = !active;
+    $('[data-top-pause]').hidden = !active;
+    $('[data-top-pause]').textContent = state.focus === 'paused' ? 'Resume' : 'Pause';
+    $('[data-top-stop]').hidden = !active;
+    $('[data-start-focus]').textContent = active ? 'Focus in progress' : 'Start focus ↗';
+    $('[data-start-focus]').disabled = active;
+    $('[data-complete]').disabled = state.completed.has(state.session);
+    $('[data-complete]').textContent = state.completed.has(state.session) ? 'Task completed' : 'Complete task';
   }
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initPrototype, { once: true });
-  } else {
-    initPrototype();
+  function openSession(name) {
+    state.session = name;
+    $('#home-view').hidden = true; $('#workspace-view').hidden = false;
+    $('#workspace-title').textContent = name;
+    $('#workspace-context').textContent = `${contexts[name] || 'Personal'} · Sample session`;
+    $('#last-session').textContent = `${name} · ${contexts[name] || 'Personal'}`;
+    $('#breadcrumb').textContent = `Workspace / ${name}`;
+    all('.session').forEach((el) => el.classList.toggle('active',el.dataset.session === name));
+    all('.nav').forEach((el) => el.classList.toggle('active',el.dataset.session === 'Functions practice'));
+    drawFocus(); window.scrollTo(0,0);
   }
+  function home() {
+    $('#workspace-view').hidden = true; $('#home-view').hidden = false;
+    $('#breadcrumb').innerHTML = 'Home <span>/ Your space to begin</span>';
+    all('.nav').forEach((el) => el.classList.toggle('active',el.hasAttribute('data-home')));
+    window.scrollTo(0,0);
+  }
+  function startFocus(target) {
+    if (state.focus === 'running' || state.focus === 'paused') return;
+    state.focus = 'running'; state.focusTarget = target; state.seconds = 0; drawFocus();
+  }
+  function stopFocus() { if (state.focus === 'running' || state.focus === 'paused') { state.focus = 'stopped'; drawFocus(); } }
+  all('[data-session]').forEach((button) => button.addEventListener('click',() => openSession(button.dataset.session)));
+  all('[data-home]').forEach((button) => button.addEventListener('click',home));
+  $('#continue').addEventListener('click',() => openSession(state.session));
+  $('[data-start-focus]').addEventListener('click',() => startFocus($('#focus-target').value));
+  $('[data-workspace-start]').addEventListener('click',() => startFocus(state.session));
+  $('[data-pause]').addEventListener('click',() => { state.focus = state.focus === 'running' ? 'paused' : 'running'; drawFocus(); });
+  $('[data-stop]').addEventListener('click',stopFocus);
+  $('[data-top-pause]').addEventListener('click',() => { state.focus = state.focus === 'running' ? 'paused' : 'running'; drawFocus(); });
+  $('[data-top-stop]').addEventListener('click',stopFocus);
+  $('[data-complete]').addEventListener('click',() => { state.completed.add(state.session); if (state.focusTarget === state.session) stopFocus(); drawFocus(); });
+  setInterval(() => { if (state.focus === 'running') { state.seconds++; drawFocus(); } },1000);
+  $('#time-filter').addEventListener('change',(event) => { const max = Number(event.target.value); all('.step').forEach((step) => { step.hidden = max > 0 && Number(step.dataset.minutes) > max; }); });
+  $('#capture-form').addEventListener('submit',(event) => { event.preventDefault(); const input = $('#capture-input'); const text = input.value.trim(); if (!text) { $('#capture-feedback').textContent = 'Write a thought first, then capture it.'; input.focus(); return; } state.captures.push(text); const item = document.createElement('li'); item.textContent = text; $('#capture-list').append(item); $('#capture-count').textContent = `${state.captures.length} ${state.captures.length === 1 ? 'note' : 'notes'}`; $('#capture-feedback').textContent = 'Captured in this preview. No file was saved.'; input.value = ''; });
+  $('#capture-jump').addEventListener('click',() => $('#capture-input').focus());
+  document.addEventListener('keydown',(event) => { if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') { event.preventDefault(); $('#capture-input').focus(); } });
+  $('#terminal-form').addEventListener('submit',(event) => { event.preventDefault(); const input = $('#terminal-command'); const cmd = input.value.trim(); if (!cmd) return; const line = document.createElement('p'); line.textContent = `› ${cmd}`; $('#terminal-output').append(line); const response = document.createElement('p'); response.className = 'terminal-muted'; if (cmd === '/focus') { startFocus(state.session); response.textContent = 'Sample focus action requested.'; } else if (cmd === '/stop') { stopFocus(); response.textContent = 'Sample stop action requested.'; } else response.textContent = 'Preview only — no real command was executed.'; $('#terminal-output').append(response); input.value = ''; });
+  all('[data-review]').forEach((button) => button.addEventListener('click',() => { const kind = button.dataset.review; $('#review-title').textContent = kind === 'memory' ? 'Review project memory' : 'Review study reviewer'; $('#review-session').textContent = state.session; $('#review-focus').textContent = state.focusTarget ? `${format(state.seconds)} · ${state.focus} · ${state.focusTarget}` : 'Not started'; $('#review-count').textContent = `${state.captures.length} in this preview`; $('#review-editor').value = kind === 'memory' ? `# Suggested memory — ${state.session}\n\nAdd only the details you want to keep.\n\n- Next step: ` : `# Reviewer — ${state.session}\n\nDraft your study notes here.\n\n## Practice\n- What would you like to recall?`; $('#review-dialog').showModal(); }));
+  $('#close-dialog').addEventListener('click',() => $('#review-dialog').close());
+  $('#discard').addEventListener('click',() => $('#review-dialog').close());
+  $('#approve').addEventListener('click',() => { $('#review-dialog').close(); $('#capture-feedback').textContent = 'Preview approved. No file was changed.'; });
+  drawFocus();
 })();
