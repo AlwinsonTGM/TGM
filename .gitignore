@@ -31,6 +31,9 @@ EBWebView/
 **/data/webview/
 
 # Databases & local state
+.env
+.env.*
+!.env.example
 *.db
 *.db-shm
 *.db-wal
@@ -47,6 +50,7 @@ EBWebView/
 
 # Embedded test repos
 work/worktrunk-proof/
+work/ux-variations/
 
 # Logs and runtime artifacts
 *.log

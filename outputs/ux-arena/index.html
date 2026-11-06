@@ -1,0 +1,516 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TGM — Worktrunk UX &amp; Animation Arena</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #04120e;
+      --panel: #071e18;
+      --panel-2: #0b2a20;
+      --border: #2c4c3b;
+      --gold: #dcc180;
+      --gold-dim: #9e854d;
+      --teal: #42c9ac;
+      --teal-dark: #04241d;
+      --text: #f1ede1;
+      --muted: #a8bfb0;
+      --sans: "Segoe UI", system-ui, -apple-system, sans-serif;
+      --serif: Georgia, "Times New Roman", serif;
+      --mono: Consolas, "JetBrains Mono", monospace;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font: 13px/1.45 var(--sans);
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .arena-header {
+      background: linear-gradient(180deg, #09251d 0%, #051611 100%);
+      border-bottom: 1px solid var(--gold-dim);
+      padding: 10px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    .arena-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .arena-badge {
+      background: rgba(220, 193, 128, 0.14);
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .arena-title {
+      font: 600 16px/1.1 var(--serif);
+      color: var(--text);
+      margin: 0;
+    }
+    .arena-sub {
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .arena-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      background: var(--panel-2);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      padding: 6px 11px;
+      font: 600 12px/1.2 var(--sans);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      transition: background 150ms ease, border-color 150ms ease;
+    }
+    .btn:hover {
+      background: #123c2e;
+      border-color: var(--gold-dim);
+    }
+    .btn.active {
+      background: var(--teal);
+      color: var(--teal-dark);
+      border-color: var(--teal);
+    }
+    .btn-gold {
+      border-color: var(--gold);
+      color: var(--gold);
+      background: rgba(220, 193, 128, 0.1);
+    }
+    .btn-gold.active {
+      background: var(--gold);
+      color: #16221b;
+    }
+    .variant-bar {
+      background: #061913;
+      border-bottom: 1px solid var(--border);
+      padding: 8px 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      overflow-x: auto;
+    }
+    .variant-tab {
+      background: #0a251d;
+      border: 1px solid #254434;
+      color: var(--text);
+      border-radius: 8px;
+      padding: 7px 12px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 165px;
+      text-align: left;
+      transition: all 160ms cubic-bezier(0.16, 1, 0.3, 1);
+      flex: none;
+    }
+    .variant-tab:hover {
+      background: #103529;
+      border-color: var(--gold-dim);
+    }
+    .variant-tab.active {
+      background: #134635;
+      border-color: var(--gold);
+      box-shadow: 0 0 0 1px rgba(220, 193, 128, 0.35);
+    }
+    .variant-tab-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      font-weight: 700;
+      font-size: 12px;
+      color: var(--gold);
+    }
+    .variant-group-pill {
+      font-size: 10px;
+      padding: 1px 6px;
+      border-radius: 99px;
+      background: rgba(66, 201, 172, 0.15);
+      color: var(--teal);
+      font-weight: 600;
+    }
+    .variant-tab-desc {
+      font-size: 11px;
+      color: var(--muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .info-strip {
+      background: #082119;
+      border-bottom: 1px solid #213d2f;
+      padding: 7px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      font-size: 12px;
+    }
+    .info-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .branch-code {
+      font-family: var(--mono);
+      font-size: 11px;
+      background: #04140f;
+      border: 1px solid #2b4c3b;
+      color: var(--teal);
+      padding: 2px 7px;
+      border-radius: 5px;
+    }
+    .rating-group {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .star-btn {
+      background: transparent;
+      border: 1px solid #355745;
+      color: var(--muted);
+      border-radius: 5px;
+      padding: 3px 7px;
+      font-size: 11px;
+      cursor: pointer;
+    }
+    .star-btn.scored {
+      background: var(--gold);
+      color: #15221b;
+      border-color: var(--gold);
+      font-weight: 700;
+    }
+    .viewport-grid {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr;
+      background: #020b08;
+      min-height: 0;
+    }
+    .viewport-grid.split {
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      background: var(--gold-dim);
+    }
+    .pane {
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      background: var(--bg);
+    }
+    .pane-bar {
+      background: #061812;
+      border-bottom: 1px solid #203c2e;
+      padding: 5px 12px;
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .viewport-grid.split .pane-bar {
+      display: flex;
+    }
+    .pane-select {
+      background: #0b2a20;
+      color: var(--text);
+      border: 1px solid #3c5f4c;
+      border-radius: 5px;
+      padding: 4px 8px;
+      font-size: 12px;
+    }
+    iframe {
+      flex: 1;
+      width: 100%;
+      border: 0;
+      background: #061d17;
+    }
+  </style>
+</head>
+<body>
+  <header class="arena-header">
+    <div class="arena-brand">
+      <span class="arena-badge">Worktrunk · 6 Parallel Branches</span>
+      <div>
+        <h1 class="arena-title">TGM UX &amp; Animation Arena</h1>
+        <div class="arena-sub">6 isolated git-wt branches · Installed UX Skills vs. Discovered UX Skills vs. No-Skills Control</div>
+      </div>
+    </div>
+    <div class="arena-controls">
+      <button id="blind-toggle" class="btn btn-gold" type="button">Blind Test Mode: OFF</button>
+      <button id="split-toggle" class="btn" type="button">Side-by-Side Split: OFF</button>
+      <button id="reload-btn" class="btn" type="button">Reload Frame(s)</button>
+      <a id="open-direct" class="btn" href="../tgm-ux-prototype/index.html" target="_blank" rel="noopener">Open in New Tab ↗</a>
+    </div>
+  </header>
+
+  <nav id="variant-bar" class="variant-bar" aria-label="UX Variations"></nav>
+
+  <div class="info-strip">
+    <div class="info-left">
+      <strong id="active-name">Loading…</strong>
+      <span id="active-branch" class="branch-code"></span>
+      <span id="active-thesis" style="color: var(--muted)"></span>
+    </div>
+    <div class="rating-group">
+      <span style="color: var(--muted); margin-right: 4px;">Your Score:</span>
+      <button class="star-btn" data-score="1">1</button>
+      <button class="star-btn" data-score="2">2</button>
+      <button class="star-btn" data-score="3">3</button>
+      <button class="star-btn" data-score="4">4</button>
+      <button class="star-btn" data-score="5">5 ★</button>
+    </div>
+  </div>
+
+  <main id="viewport-grid" class="viewport-grid">
+    <section class="pane">
+      <div class="pane-bar">
+        <span>Left Viewport</span>
+        <select id="left-select" class="pane-select" aria-label="Left viewport variation"></select>
+      </div>
+      <iframe id="frame-left" title="Primary UX variation preview"></iframe>
+    </section>
+    <section id="pane-right" class="pane" hidden>
+      <div class="pane-bar">
+        <span>Right Viewport (Comparison)</span>
+        <select id="right-select" class="pane-select" aria-label="Right viewport variation"></select>
+      </div>
+      <iframe id="frame-right" title="Secondary UX variation preview"></iframe>
+    </section>
+  </main>
+
+  <script>
+    const VARIANTS = [
+      {
+        id: "impeccable",
+        blindLabel: "Challenger Alpha",
+        name: "1. Impeccable (Animate + Craft Floor)",
+        group: "Installed Skill",
+        branch: "ux-impeccable",
+        skills: "impeccable (animate.md, delight.md, polish.md, craft-floor.md)",
+        thesis: "Operate-mode View Transitions, cubic-bezier(0.16,1,0.3,1) spatial continuity, independent topbar FlowState HUD, interactive AGY CLI + approval bar.",
+        path: "../../work/ux-variations/ux-impeccable/outputs/tgm-ux-prototype/index.html"
+      },
+      {
+        id: "pro-max",
+        blindLabel: "Challenger Beta",
+        name: "2. UI/UX Pro Max + High-End Visual",
+        group: "Installed Skill",
+        branch: "ux-pro-max",
+        skills: "ui-ux-pro-max + high-end-visual-design",
+        thesis: "Agency-grade specular depth, energy + time filter choreography, SVG progress ring focus HUD, slide-over diff inspector & Keep-style capture.",
+        path: "../../work/ux-variations/ux-pro-max/outputs/tgm-ux-prototype/index.html"
+      },
+      {
+        id: "taste-motion",
+        blindLabel: "Challenger Gamma",
+        name: "3. Design Taste + Stitch Micro-Motion",
+        group: "Installed Skill",
+        branch: "ux-taste-motion",
+        skills: "design-taste-frontend + stitch-design-taste",
+        thesis: "Perpetual micro-motion, cursor-reactive gold border spotlights, spring-physics view morphing, breathing active-focus aura.",
+        path: "../../work/ux-variations/ux-taste-motion/outputs/tgm-ux-prototype/index.html"
+      },
+      {
+        id: "discovered-skills",
+        blindLabel: "Challenger Delta",
+        name: "4. Discovered Skills (Motion + Obsidian)",
+        group: "Discovered UX",
+        branch: "ux-discovered-skills",
+        skills: "find-skills → .agents/skills (animate, design-system, motion-graphics, obsidian-markdown)",
+        thesis: "Tokenized motion system, SVG crest/icon path choreography, authentic Obsidian callout/frontmatter reviewer editor & independent focus.",
+        path: "../../work/ux-variations/ux-discovered-skills/outputs/tgm-ux-prototype/index.html"
+      },
+      {
+        id: "open-design",
+        blindLabel: "Challenger Epsilon",
+        name: "5. Open-Design Benchmark (Raycast/Cursor/Obsidian)",
+        group: "Discovered UX",
+        branch: "ux-open-design-benchmark",
+        skills: "open-design catalogue (Linear, Raycast, Cursor, Obsidian patterns)",
+        thesis: "Keyboard-first Ctrl+K command palette, non-blocking split-pane Review & Vault Inspector alongside live AGY terminal, status HUD.",
+        path: "../../work/ux-variations/ux-open-design-benchmark/outputs/tgm-ux-prototype/index.html"
+      },
+      {
+        id: "baseline-noskills",
+        blindLabel: "Challenger Zeta",
+        name: "6. No-Skills Control Agent",
+        group: "Control (No Skills)",
+        branch: "ux-baseline-noskills",
+        skills: "None (vanilla model with zero SKILL.md files)",
+        thesis: "Pure baseline model instincts from PRODUCT.md and ux-shaping-draft.md for direct A/B assessment against skill-guided branches.",
+        path: "../../work/ux-variations/ux-baseline-noskills/outputs/tgm-ux-prototype/index.html"
+      },
+      {
+        id: "incumbent",
+        blindLabel: "Original Seed",
+        name: "0. Incumbent Prototype (master)",
+        group: "Original Seed",
+        branch: "master",
+        skills: "Initial static session-flow seed",
+        thesis: "Original starting point on master prior to the parallel Worktrunk UX & animation round.",
+        path: "../tgm-ux-prototype/index.html"
+      }
+    ];
+
+    const state = {
+      activeIndex: 0,
+      rightIndex: 5,
+      blindMode: false,
+      splitMode: false,
+      scores: {}
+    };
+
+    const variantBar = document.getElementById("variant-bar");
+    const activeName = document.getElementById("active-name");
+    const activeBranch = document.getElementById("active-branch");
+    const activeThesis = document.getElementById("active-thesis");
+    const frameLeft = document.getElementById("frame-left");
+    const frameRight = document.getElementById("frame-right");
+    const paneRight = document.getElementById("pane-right");
+    const viewportGrid = document.getElementById("viewport-grid");
+    const leftSelect = document.getElementById("left-select");
+    const rightSelect = document.getElementById("right-select");
+    const openDirect = document.getElementById("open-direct");
+    const blindToggle = document.getElementById("blind-toggle");
+    const splitToggle = document.getElementById("split-toggle");
+
+    function getTitle(v) {
+      return state.blindMode ? v.blindLabel : v.name;
+    }
+
+    function getGroup(v) {
+      return state.blindMode ? "Blind Eval" : v.group;
+    }
+
+    function getDesc(v) {
+      return state.blindMode ? "Identity hidden until revealed" : v.skills;
+    }
+
+    function renderTabs() {
+      variantBar.innerHTML = "";
+      leftSelect.innerHTML = "";
+      rightSelect.innerHTML = "";
+
+      VARIANTS.forEach((v, idx) => {
+        const score = state.scores[v.id] ? ` ★${state.scores[v.id]}` : "";
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "variant-tab" + (idx === state.activeIndex ? " active" : "");
+        btn.innerHTML = `
+          <div class="variant-tab-top">
+            <span>${getTitle(v)}${score}</span>
+            <span class="variant-group-pill">${getGroup(v)}</span>
+          </div>
+          <div class="variant-tab-desc">${getDesc(v)}</div>
+        `;
+        btn.addEventListener("click", () => selectVariant(idx));
+        variantBar.appendChild(btn);
+
+        const optL = document.createElement("option");
+        optL.value = String(idx);
+        optL.textContent = getTitle(v) + score;
+        optL.selected = idx === state.activeIndex;
+        leftSelect.appendChild(optL);
+
+        const optR = document.createElement("option");
+        optR.value = String(idx);
+        optR.textContent = getTitle(v) + score;
+        optR.selected = idx === state.rightIndex;
+        rightSelect.appendChild(optR);
+      });
+
+      const current = VARIANTS[state.activeIndex];
+      activeName.textContent = getTitle(current);
+      activeBranch.textContent = state.blindMode ? "branch: [hidden]" : `git-wt: ${current.branch}`;
+      activeThesis.textContent = state.blindMode
+        ? "Interact with the prototype below, rate it on the right, then toggle Blind Mode OFF to reveal which agent/skill created it."
+        : `${current.thesis}`;
+      openDirect.href = current.path;
+
+      document.querySelectorAll(".star-btn").forEach((b) => {
+        const s = Number(b.getAttribute("data-score"));
+        b.classList.toggle("scored", state.scores[current.id] === s);
+      });
+    }
+
+    function selectVariant(idx) {
+      state.activeIndex = idx;
+      const v = VARIANTS[idx];
+      if (frameLeft.getAttribute("src") !== v.path) {
+        frameLeft.setAttribute("src", v.path);
+      }
+      renderTabs();
+    }
+
+    leftSelect.addEventListener("change", () => {
+      selectVariant(Number(leftSelect.value));
+    });
+
+    rightSelect.addEventListener("change", () => {
+      state.rightIndex = Number(rightSelect.value);
+      frameRight.setAttribute("src", VARIANTS[state.rightIndex].path);
+      renderTabs();
+    });
+
+    blindToggle.addEventListener("click", () => {
+      state.blindMode = !state.blindMode;
+      blindToggle.textContent = state.blindMode ? "Blind Test Mode: ON (Click to Reveal)" : "Blind Test Mode: OFF";
+      blindToggle.classList.toggle("active", state.blindMode);
+      renderTabs();
+    });
+
+    splitToggle.addEventListener("click", () => {
+      state.splitMode = !state.splitMode;
+      splitToggle.textContent = state.splitMode ? "Side-by-Side Split: ON" : "Side-by-Side Split: OFF";
+      splitToggle.classList.toggle("active", state.splitMode);
+      viewportGrid.classList.toggle("split", state.splitMode);
+      paneRight.hidden = !state.splitMode;
+      if (state.splitMode && !frameRight.getAttribute("src")) {
+        frameRight.setAttribute("src", VARIANTS[state.rightIndex].path);
+      }
+    });
+
+    document.getElementById("reload-btn").addEventListener("click", () => {
+      if (frameLeft.contentWindow) frameLeft.contentWindow.location.reload();
+      if (state.splitMode && frameRight.contentWindow) frameRight.contentWindow.location.reload();
+    });
+
+    document.querySelectorAll(".star-btn").forEach((b) => {
+      b.addEventListener("click", () => {
+        const current = VARIANTS[state.activeIndex];
+        state.scores[current.id] = Number(b.getAttribute("data-score"));
+        renderTabs();
+      });
+    });
+
+    selectVariant(0);
+  </script>
+</body>
+</html>
