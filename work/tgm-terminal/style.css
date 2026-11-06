@@ -1,0 +1,25 @@
+:root { color-scheme: dark; font-family: system-ui, sans-serif; background: #101213; color: #e9eeeb; }
+* { box-sizing: border-box; }
+body { margin: 0; height: 100vh; display: flex; flex-direction: column; }
+header { display: flex; align-items: center; justify-content: space-between; padding: 20px 24px; border-bottom: 1px solid #2b3230; }
+header div { display: flex; align-items: baseline; gap: 14px; }
+h1, p { margin: 0; }
+h1 { font-size: 18px; }
+header p, .hint { color: #a8b4ad; font-size: 13px; }
+.brand { color: #9bd6ae; font-size: 13px; font-weight: 700; letter-spacing: .1em; }
+#status { color: #a8b4ad; font-size: 13px; }
+main { flex: 1; min-height: 0; display: flex; flex-direction: column; padding: 20px 24px; gap: 12px; }
+.controls { display: flex; align-items: end; flex-wrap: wrap; gap: 12px; }
+label, .folder { display: flex; flex-direction: column; gap: 6px; color: #bac8bf; font-size: 12px; }
+.folder { flex: 1; min-width: 220px; display: grid; grid-template-columns: auto 1fr; align-items: center; }
+.folder > span:first-child { grid-column: 1 / -1; }
+#folder-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+button, select { background: #202a25; color: #eef5f0; border: 1px solid #3a4a40; border-radius: 5px; padding: 9px 12px; font: inherit; min-height: 38px; }
+button { cursor: pointer; }
+button:hover:not(:disabled) { background: #304137; }
+button:disabled { opacity: .45; cursor: default; }
+button:focus-visible, select:focus-visible { outline: 2px solid #9bd6ae; outline-offset: 2px; }
+#error:empty { display: none; }
+#error { color: #ffb4a8; font-size: 13px; }
+#terminal { flex: 1; min-height: 100px; overflow: hidden; padding: 10px; background: #0b0e0c; border: 1px solid #303a34; border-radius: 5px; }
+.hint { text-align: right; }

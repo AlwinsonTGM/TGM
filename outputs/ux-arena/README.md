@@ -1,6 +1,6 @@
 # UX comparison arena setup
 
-The arena loads six prototypes from separate Git worktrees. From the root of a fresh clone in PowerShell, run:
+The arena loads seven alternative prototypes from separate Git worktrees, plus the original prototype in the main checkout. From the root of a fresh clone in PowerShell, run:
 
 ```powershell
 git fetch origin
@@ -12,6 +12,12 @@ git worktree add work/ux-variations/ux-open-design-benchmark -b ux-open-design-b
 git worktree add work/ux-variations/ux-baseline-noskills -b ux-baseline-noskills origin/ux-baseline-noskills
 ```
 
+The Codex alternative lives on the `ux-codex` branch. Once that branch is available on the remote, a fresh clone can add it with:
+
+```powershell
+git worktree add work/ux-variations/ux-codex -b ux-codex origin/ux-codex
+```
+
 Then open `outputs/ux-arena/index.html` in a browser. If a local branch already exists, omit `-b` and the remote branch argument and use the local branch name instead. The original planning machine already has these worktrees; do not create them a second time there.
 
-All six are disposable, synthetic previews. Their AGY, FlowState, memory, and reviewer interactions are simulated.
+All variations are disposable, synthetic previews. Their AGY, FlowState, memory, and reviewer interactions are simulated.

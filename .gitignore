@@ -51,6 +51,8 @@ EBWebView/
 # Embedded test repos
 work/worktrunk-proof/
 work/ux-variations/
+# Disposable harness test data, profiles, and generated builds
+work/harness-probe/
 
 # Logs and runtime artifacts
 *.log

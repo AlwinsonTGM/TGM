@@ -1,0 +1,23 @@
+{
+  "name": "tgm-terminal-foundation",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Local interactive terminal foundation for TGM",
+  "main": "main.cjs",
+  "scripts": {
+    "start": "electron .",
+    "test": "electron tests/terminal.test.cjs",
+    "test:clipboard": "electron tests/clipboard.test.cjs",
+    "test:clipboard-windows": "electron tests/clipboard-windows.test.cjs",
+    "package:win": "node scripts/package-win.cjs",
+    "test:package": "node tests/packaged-native.test.cjs"
+  },
+  "dependencies": {
+    "@xterm/addon-fit": "0.11.0",
+    "@xterm/xterm": "6.0.0",
+    "node-pty": "1.1.0"
+  },
+  "devDependencies": {
+    "electron": "44.10.2"
+  }
+}

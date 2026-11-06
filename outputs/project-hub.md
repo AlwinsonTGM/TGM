@@ -1,5 +1,7 @@
 # Personal Command Center — project hub
 
+> **Current handoff, 6 November 2026:** The user chose the Codex design, now on `main`, and the competing UX branches were removed. The first release should support both installed AGY and OpenCode. A standalone, unpackaged [terminal foundation](../work/tgm-terminal/README.md) exists; it is not yet connected to the dashboard. See the [harness feasibility report](harness-feasibility-2026-11-06.md) for test results and the detached-process limitation. Older comparison and AGY-only notes below are historical where they conflict with this handoff.
+
 **Last updated:** 6 November 2026  
 **Current stage:** First-release plan drafted; product context and design/development orchestration in progress.  
 **Product implementation:** Not started. Earlier code was used for disposable feasibility tests.
@@ -67,6 +69,8 @@ The dependency arrows show what must exist to finish a checkpoint. UI exploratio
 
 ## Current handoff
 
+- **6 November Codex concept:** A seventh, independently designed synthetic preview is in the `ux-codex` worktree and the [comparison arena](ux-arena/index.html). It explores compact suggestions, independent focus, shared capture and review before saving. The user has not yet evaluated it; real AGY, FlowState and Obsidian integrations remain out of scope for this prototype.
+- **6 November design audit:** The six Flash UX variations received separate visual-design and usability grades in the [comparison audit](ux-design-audit-2026-11-06.md). The review recommends Discovered Skills as a starting point, subject to the user's own evaluation; it identifies concrete focus/task, keyboard and contrast defects that need correction before treating any variant as a foundation. These are synthetic previews, not production integrations.
 - **6 November UX & Animation Arena (Worktrunk):** Per user request, 6 isolated Worktrunk (`git-wt`) branches/worktrees (`work/ux-variations/*`) were created from `master` and built in parallel by 6 Gemini 3.8 Flash subagents across three comparison groups (direct `agy --model gemini-4-argon-high` CLI runs hit `429 RESOURCE_EXHAUSTED` quota limits, and their `argon-ux-*` branches were removed per user request):
   1. **Installed UX Skills:** `ux-impeccable` (`7f080e6`, using `impeccable` `animate`/`delight`/`polish`/`craft-floor`), `ux-pro-max` (`a8b5d50`, using `ui-ux-pro-max` + `high-end-visual-design`), and `ux-taste-motion` (`b9a76c0`, using `design-taste-frontend` + `stitch-design-taste`).
   2. **Discovered UX Skills & Benchmarks:** `ux-discovered-skills` (`6e8f83c`, discovered `.agents/skills` `animate`, `design-system`, `motion-graphics`, and `obsidian-markdown`) and `ux-open-design-benchmark` (`4233a40`, mined `open-design` Raycast/Linear/Cursor/Obsidian split-pane patterns).
