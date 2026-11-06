@@ -10,7 +10,9 @@ Windows-first desktop application with a web-style interface hosted in Electron;
 
 ## Stack
 
-Agreed direction, 6 November 2026: React, TypeScript, and Vite for the dashboard, with Electron and Node.js/TypeScript for the desktop host; SQLite for local structured data and Markdown for approved Obsidian reviewers. Evaluate xterm.js and node-pty for hosting installed harness CLIs. Keep the existing FlowState app in Tauri and Rust. Versions, dashboard repository, SQLite binding, secure integrations, and deployment/packaging remain open and need testing.
+Agreed direction, 6 November 2026: React, TypeScript, and Vite for the dashboard, with Electron and Node.js/TypeScript for the desktop host; SQLite for local structured data and Markdown for approved Obsidian reviewers. Evaluate xterm.js and node-pty for hosting installed harness CLIs. Keep the existing FlowState app in Tauri and Rust. Versions, SQLite binding, secure integrations, and deployment/packaging remain open and need testing.
+
+On 7 November 2026, the user chose to keep the dashboard source in an `app/` directory within this project and Git repository on the internal drive. This does not decide where installed application data will be stored; FlowState remains a separate project.
 
 D: is an unreliable external HDD and is not suitable for development; use reliable internal storage. The user has managed storage and does not need a disk-space optimization plan.
 

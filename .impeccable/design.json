@@ -1,0 +1,267 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-06T22:54:23Z",
+  "title": "Design System: TGM",
+  "extensions": {
+    "colorMeta": {
+      "background": {
+        "role": "neutral",
+        "displayName": "Deep forest background",
+        "canonical": "#071a15",
+        "tonalRamp": [
+          "oklch(15% 0.0082 174.2)",
+          "oklch(27% 0.0148 174.2)",
+          "oklch(39% 0.0214 174.2)",
+          "oklch(51% 0.0274 174.2)",
+          "oklch(63% 0.0274 174.2)",
+          "oklch(75% 0.0228 174.2)",
+          "oklch(85% 0.0137 174.2)",
+          "oklch(95% 0.0046 174.2)"
+        ]
+      },
+      "sidebar": {
+        "role": "neutral",
+        "displayName": "Dark forest sidebar",
+        "canonical": "#081712",
+        "tonalRamp": [
+          "oklch(15% 0.0070 170.3)",
+          "oklch(27% 0.0127 170.3)",
+          "oklch(39% 0.0183 170.3)",
+          "oklch(51% 0.0234 170.3)",
+          "oklch(63% 0.0234 170.3)",
+          "oklch(75% 0.0195 170.3)",
+          "oklch(85% 0.0117 170.3)",
+          "oklch(95% 0.0039 170.3)"
+        ]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Forest surface",
+        "canonical": "#0e2920",
+        "tonalRamp": [
+          "oklch(15% 0.0112 168.9)",
+          "oklch(27% 0.0202 168.9)",
+          "oklch(39% 0.0292 168.9)",
+          "oklch(51% 0.0375 168.9)",
+          "oklch(63% 0.0375 168.9)",
+          "oklch(75% 0.0312 168.9)",
+          "oklch(85% 0.0187 168.9)",
+          "oklch(95% 0.0062 168.9)"
+        ]
+      },
+      "divider": {
+        "role": "neutral",
+        "displayName": "Green divider",
+        "canonical": "#2b493a",
+        "tonalRamp": [
+          "oklch(15% 0.0134 161.5)",
+          "oklch(27% 0.0240 161.5)",
+          "oklch(39% 0.0347 161.5)",
+          "oklch(51% 0.0445 161.5)",
+          "oklch(63% 0.0445 161.5)",
+          "oklch(75% 0.0371 161.5)",
+          "oklch(85% 0.0223 161.5)",
+          "oklch(95% 0.0074 161.5)"
+        ]
+      },
+      "text": {
+        "role": "neutral",
+        "displayName": "Soft light text",
+        "canonical": "#e9eee5",
+        "tonalRamp": [
+          "oklch(15% 0.0039 130.8)",
+          "oklch(27% 0.0071 130.8)",
+          "oklch(39% 0.0102 130.8)",
+          "oklch(51% 0.0131 130.8)",
+          "oklch(63% 0.0131 130.8)",
+          "oklch(75% 0.0109 130.8)",
+          "oklch(85% 0.0065 130.8)",
+          "oklch(95% 0.0022 130.8)"
+        ]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Muted sage text",
+        "canonical": "#a8bdad",
+        "tonalRamp": [
+          "oklch(15% 0.0096 152.7)",
+          "oklch(27% 0.0174 152.7)",
+          "oklch(39% 0.0251 152.7)",
+          "oklch(51% 0.0322 152.7)",
+          "oklch(63% 0.0322 152.7)",
+          "oklch(75% 0.0268 152.7)",
+          "oklch(85% 0.0161 152.7)",
+          "oklch(95% 0.0054 152.7)"
+        ]
+      },
+      "gold": {
+        "role": "secondary",
+        "displayName": "Warm gold",
+        "canonical": "#d9bf80",
+        "tonalRamp": [
+          "oklch(15% 0.0259 88.0)",
+          "oklch(27% 0.0466 88.0)",
+          "oklch(39% 0.0674 88.0)",
+          "oklch(51% 0.0864 88.0)",
+          "oklch(63% 0.0864 88.0)",
+          "oklch(75% 0.0720 88.0)",
+          "oklch(85% 0.0432 88.0)",
+          "oklch(95% 0.0144 88.0)"
+        ]
+      },
+      "teal": {
+        "role": "primary",
+        "displayName": "Mint teal",
+        "canonical": "#61d8b8",
+        "tonalRamp": [
+          "oklch(15% 0.0353 173.0)",
+          "oklch(27% 0.0635 173.0)",
+          "oklch(39% 0.0918 173.0)",
+          "oklch(51% 0.1177 173.0)",
+          "oklch(63% 0.1177 173.0)",
+          "oklch(75% 0.0981 173.0)",
+          "oklch(85% 0.0588 173.0)",
+          "oklch(95% 0.0196 173.0)"
+        ]
+      },
+      "action-ink": {
+        "role": "neutral",
+        "displayName": "Deep action ink",
+        "canonical": "#09251b",
+        "tonalRamp": [
+          "oklch(15% 0.0117 166.5)",
+          "oklch(27% 0.0211 166.5)",
+          "oklch(39% 0.0305 166.5)",
+          "oklch(51% 0.0391 166.5)",
+          "oklch(63% 0.0391 166.5)",
+          "oklch(75% 0.0326 166.5)",
+          "oklch(85% 0.0196 166.5)",
+          "oklch(95% 0.0065 166.5)"
+        ]
+      },
+      "focus-ring": {
+        "role": "primary",
+        "displayName": "Mint focus ring",
+        "canonical": "#77e5c9",
+        "tonalRamp": [
+          "oklch(15% 0.0330 174.9)",
+          "oklch(27% 0.0594 174.9)",
+          "oklch(39% 0.0858 174.9)",
+          "oklch(51% 0.1099 174.9)",
+          "oklch(63% 0.1099 174.9)",
+          "oklch(75% 0.0916 174.9)",
+          "oklch(85% 0.0550 174.9)",
+          "oklch(95% 0.0183 174.9)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Home heading in the selected prototype."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Body text and controls in the selected prototype."
+      }
+    },
+    "shadows": [],
+    "motion": [
+      {
+        "name": "control-transition",
+        "value": "background-color 140ms ease, border-color 140ms ease",
+        "purpose": "Prototype button and select state transitions; disabled when reduced motion is requested."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "compact",
+        "value": "720px"
+      },
+      {
+        "name": "narrow-desktop",
+        "value": "850px"
+      },
+      {
+        "name": "medium",
+        "value": "1000px"
+      },
+      {
+        "name": "wide-desktop",
+        "value": "1100px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Filled mint action, from the prototype.",
+      "html": "<button class=\"ds-primary\">Start focus ↗</button>",
+      "css": ".ds-primary{font:700 14px Segoe UI,Arial,sans-serif;background:#61d8b8;color:#09251b;border:1px solid #61d8b8;border-radius:7px;padding:10px 15px;cursor:pointer;transition:background-color 140ms ease,border-color 140ms ease;}.ds-primary:hover{background:#8ae8ce}.ds-primary:focus-visible{outline:2px solid #77e5c9;outline-offset:3px;}.ds-primary:active{filter:brightness(.9)}@media (prefers-reduced-motion:reduce){button,select{transition:none}}"
+    },
+    {
+      "name": "Outlined Button",
+      "kind": "button",
+      "description": "Secondary action with a thin green border.",
+      "html": "<button class=\"ds-outline\">Complete task</button>",
+      "css": ".ds-outline{font:14px Segoe UI,Arial,sans-serif;background:transparent;color:#e9eee5;border:1px solid #52715d;border-radius:7px;padding:10px 13px;cursor:pointer;transition:background-color 140ms ease,border-color 140ms ease;}.ds-outline:hover{background:#204937}.ds-outline:focus-visible{outline:2px solid #77e5c9;outline-offset:3px;}.ds-outline:active{filter:brightness(.9)}@media (prefers-reduced-motion:reduce){button,select{transition:none}}"
+    },
+    {
+      "name": "Quiet Button",
+      "kind": "button",
+      "description": "Low-emphasis navigation action.",
+      "html": "<button class=\"ds-quiet\">Quick capture</button>",
+      "css": ".ds-quiet{font:14px Segoe UI,Arial,sans-serif;border:0;background:none;color:#c8d9ca;cursor:pointer;transition:background-color 140ms ease,border-color 140ms ease;}.ds-quiet:hover{color:#c8d9ca}.ds-quiet:focus-visible{outline:2px solid #77e5c9;outline-offset:3px;}.ds-quiet:active{filter:brightness(.9)}@media (prefers-reduced-motion:reduce){button,select{transition:none}}"
+    },
+    {
+      "name": "Quick Capture Input",
+      "kind": "input",
+      "description": "Dark text field for an uncategorized thought.",
+      "html": "<label class=\"ds-capture-label\">Quick capture<input class=\"ds-capture-input\" placeholder=\"A thought, question, or next step…\"></label>",
+      "css": ".ds-capture-label{display:grid;gap:8px;color:#e9eee5;font:600 14px Segoe UI,Arial,sans-serif}.ds-capture-input{font:400 14px Segoe UI,Arial,sans-serif;border:1px solid #3b5d49;background:#0b231b;color:#e9eee5;border-radius:7px;padding:12px}.ds-capture-input::placeholder{color:#a4baa9}.ds-capture-input:hover{border-color:#3b5d49}.ds-capture-input:focus-visible{outline:2px solid #77e5c9;outline-offset:3px;}"
+    },
+    {
+      "name": "Navigation",
+      "kind": "nav",
+      "description": "Sidebar rows with the selected Home state and line icons.",
+      "html": "<nav class=\"ds-nav\"><button class=\"ds-nav-row ds-nav-selected\" aria-current=\"page\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M3 11.5 12 4l9 7.5M6 10v9h12v-9M10 19v-5h4v5\"/></svg>Home</button><button class=\"ds-nav-row\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><rect x=\"3.5\" y=\"5\" width=\"17\" height=\"14\" rx=\"2\"/><path d=\"m7 10 3 2-3 2m5 1h4\"/></svg>Workspace</button></nav>",
+      "css": ".ds-nav{display:grid;gap:4px;width:200px;padding:12px;background:#081712}.ds-nav-row{display:flex;align-items:center;gap:13px;text-align:left;border:0;background:none;border-radius:8px;padding:12px;color:#bdd0c0;font:14px Segoe UI,Arial,sans-serif;cursor:pointer;transition:background-color 140ms ease,border-color 140ms ease;}.ds-nav-row svg{width:18px;height:18px;fill:none;stroke:#d9bf80;stroke-width:1.55;stroke-linecap:round;stroke-linejoin:round}.ds-nav-selected{background:#153c2c;color:#f0f2e8}.ds-nav-row:hover{background:#17382b}.ds-nav-row:focus-visible{outline:2px solid #77e5c9;outline-offset:3px;}.ds-nav-row:active{filter:brightness(.9)}@media (prefers-reduced-motion:reduce){button,select{transition:none}}"
+    },
+    {
+      "name": "Continue Session",
+      "kind": "card",
+      "description": "Outlined continuation action; sample text is illustrative.",
+      "html": "<button class=\"ds-continue\"><span class=\"ds-continue-icon\">↗</span><span><strong>Continue last session</strong><small>Functions practice · TypeScript learning</small></span><span class=\"ds-continue-arrow\">→</span></button>",
+      "css": ".ds-continue{width:100%;max-width:440px;background:#102e23;color:#e9eee5;border:1px solid #42614d;border-radius:9px;text-align:left;padding:14px 16px;display:flex;align-items:center;gap:13px;font:14px Segoe UI,Arial,sans-serif;cursor:pointer;transition:background-color 140ms ease,border-color 140ms ease;}.ds-continue strong,.ds-continue small{display:block}.ds-continue small{color:#a8bdad;margin-top:5px}.ds-continue-icon{font-size:19px;color:#61d8b8}.ds-continue-arrow{margin-left:auto;color:#d9bf80;font-size:18px}.ds-continue:hover{background:#102e23}.ds-continue:focus-visible{outline:2px solid #77e5c9;outline-offset:3px;}.ds-continue:active{filter:brightness(.9)}@media (prefers-reduced-motion:reduce){button,select{transition:none}}"
+    },
+    {
+      "name": "Independent Focus Panel",
+      "kind": "card",
+      "description": "Prototype focus panel; its control is illustrative and not connected.",
+      "html": "<section class=\"ds-focus\"><div class=\"ds-focus-kicker\">Independent focus</div><h2>Work on your own.</h2><p>Start a focus session without opening AGY. Your task stays open when you stop.</p><label>Focus on<select><option>Independent work</option></select></label><button>Start focus ↗</button></section>",
+      "css": ".ds-focus{max-width:288px;border:1px solid #5b6442;border-radius:10px;padding:18px;background:#10291f;color:#e9eee5;font:14px Segoe UI,Arial,sans-serif}.ds-focus-kicker{color:#d9bf80;font-size:12px;font-weight:700}.ds-focus h2{font:600 22px Georgia,serif;margin:8px 0 10px}.ds-focus p{color:#b5c9b7;line-height:1.5;font-size:12px}.ds-focus label{display:grid;gap:7px;margin-top:20px;font-size:12px;color:#a8bdad}.ds-focus select{color:#deeadf;border:1px solid #496657;background:#102c22;border-radius:6px;padding:9px;font:14px Segoe UI,Arial,sans-serif}.ds-focus button{width:100%;text-align:left;margin-top:10px;background:#61d8b8;color:#09251b;border:1px solid #61d8b8;border-radius:7px;padding:10px 15px;font:700 14px Segoe UI,Arial,sans-serif;cursor:pointer;transition:background-color 140ms ease,border-color 140ms ease;}.ds-focus button:hover{background:#8ae8ce}.ds-focus button:focus-visible,.ds-focus select:focus-visible{outline:2px solid #77e5c9;outline-offset:3px;}.ds-focus button:active{filter:brightness(.9)}@media (prefers-reduced-motion:reduce){button,select{transition:none}}"
+    }
+  ],
+  "narrative": {
+    "northStar": "A Calm Workspace",
+    "overview": "TGM is focused, welcoming, and practical. Its controls feel familiar and restrained, with clear feedback and a compact desktop layout. Use the selected Codex concept as the visual reference, and prioritize clear tasks over decoration.\n\nThis is a record of a disposable prototype, not a claim that production components or complete accessibility states exist. The palette and flat, layered character are confirmed; exact values below are extracted from the prototype and should be validated as the real application is built.",
+    "keyCharacteristics": [
+      "Deep forest-green surfaces with warm gold details and mint-teal actions.",
+      "Clear navigation, restrained controls, and compact project context.",
+      "Thin borders and tonal layering rather than prominent shadows.",
+      "Serif headings paired with familiar, readable sans-serif controls."
+    ],
+    "rules": [],
+    "dos": [
+      "Do keep controls familiar, focus indicators visible, and feedback clear.",
+      "Do use dark-green tonal layers, warm gold details, and teal selectively for prominent actions.",
+      "Do respect reduced-motion preferences and test the real interface at relevant Windows sizes."
+    ],
+    "donts": [
+      "Don't present simulated integrations or sample data as real activity.",
+      "Don't treat prototype measurements or incomplete states as proof of production readiness."
+    ]
+  }
+}

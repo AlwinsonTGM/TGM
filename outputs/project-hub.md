@@ -1,8 +1,11 @@
 # Personal Command Center — project hub
 
+> **Current handoff, 7 November 2026:** The user confirmed the [Home first-slice brief](home-slice-brief.md): prioritize Continue when a session exists, keep suggested next steps visible, and provide locally saved goals and uncategorized quick capture. Add goals through a short Home form with an optional first step; selecting a suggestion opens its goal and step details. The selected Codex concept is the visual starting point, captured as prototype-derived guidance in [DESIGN.md](../DESIGN.md). The dashboard source will live in `app/` in this project and repository; FlowState remains separate. The [first-slice specification](home-first-slice-spec.md) is published as [GitHub issue #1](https://github.com/AlwinsonTGM/TGM/issues/1); the next step is to split it into implementation tickets. The installed app's data location is still undecided. FlowState, Obsidian, and the standalone terminal still require integration; do not present simulations as working features. Older handoffs and status details below are historical wherever they conflict with this note.
+
 > **Current handoff, 6 November 2026:** The user chose the Codex design, now on `main`, and the competing UX branches were removed. The first release should support both installed AGY and OpenCode. A standalone, unpackaged [terminal foundation](../work/tgm-terminal/README.md) exists; it is not yet connected to the dashboard. See the [harness feasibility report](harness-feasibility-2026-11-06.md) for test results and the detached-process limitation. Older comparison and AGY-only notes below are historical where they conflict with this handoff.
 
-**Last updated:** 6 November 2026  
+**Last updated:** 7 November 2026
+
 **Current stage:** First-release plan drafted; product context and design/development orchestration in progress.  
 **Product implementation:** Not started. Earlier code was used for disposable feasibility tests.
 
@@ -37,8 +40,8 @@ Status meanings: **Done** = supported by the linked evidence; **In progress** = 
 |---|---|---|---|---|
 | P0 | Record product decisions and run focused feasibility probes | Done | — | [Decisions](dashboard-decisions.md); [prototype results](end-to-end-prototype-results.md) |
 | P1 | Draft first-release plan and visual project map | Done | P0 | [First-release plan](first-release-plan.md); this hub. Draft, not user-approved specification. |
-| P2 | Review scope and explore desktop UI/UX directions | In progress | P1 | User chose the Loki-inspired TGM direction; 6 parallel Worktrunk (`git-wt`) UX & animation variations + [Comparison Arena](ux-arena/index.html) await user evaluation alongside the [original seed](tgm-ux-prototype/index.html). See [UX discovery](ux-shaping-draft.md). |
-| P3 | Choose dashboard project location, app shell, ownership, storage, and recovery approach | In progress | P1; UI informs shell | [Stack direction accepted](stack-decision-proposal.md); project location, ownership and safe FlowState/vault integration remain open. D: is an unreliable external HDD and must not be used for development. |
+| P2 | Review scope and explore desktop UI/UX directions | In progress | P1 | Codex concept selected; [Home brief](home-slice-brief.md) confirmed and [visual guidance](../DESIGN.md) recorded. Production UI and validation remain. |
+| P3 | Choose dashboard project location, app shell, ownership, storage, and recovery approach | In progress | P1; UI informs shell | [Stack direction accepted](stack-decision-proposal.md); dashboard source will be in `app/` in this repository. Data location, ownership and safe FlowState/vault integration remain open. D: is an unreliable external HDD and must not be used for development. |
 | P4 | Build dashboard foundations: goals, projects, capture, and session history | Not started | P3 | Acceptance checks in the plan pass with restart and test data. |
 | P5 | Integrate the actual AGY terminal, project sessions, MCP, and approvals | Not started | P3 | Packaged Windows workflow tested; failures and scope boundaries visible. |
 | P6 | Develop FlowState stop, integration, and reconciliation | Not started | P3, P5 | Direct and AGY-started sessions work; timing, duplicate prevention, and recovery checks pass. |

@@ -143,7 +143,7 @@ See the [project hub](project-hub.md) for checkpoint statuses and dependencies. 
 
 These are not silently settled by this plan:
 
-1. **Dashboard home and technology:** The user accepted React/TypeScript/Vite and Electron/Node, with SQLite and Markdown, while FlowState retains Tauri/Rust. The new project's location, dependency versions, packaging, and relationship to the existing FlowState repository remain open. D: is an unstable external HDD and is not suitable for development; use reliable internal storage.
+1. **Dashboard home and technology:** The user accepted React/TypeScript/Vite and Electron/Node, with SQLite and Markdown, while FlowState retains Tauri/Rust. On 7 November the user chose `app/` within this project and repository for dashboard source; FlowState remains a separate project. Dependency versions, packaging, application data location, and the integration boundary with FlowState remain open. D: is an unstable external HDD and is not suitable for development; use reliable internal storage.
 2. **Identity and synchronization:** Stable IDs, how FlowState-only sessions are discovered after downtime, handling retries/concurrent requests, and exact ownership of summaries versus raw focus records.
 3. **Project data and memory:** Location and format of project notes versus existing vault/code folders, the memory budget and unit, what context is available after AGY compaction, and a safe backup/restore strategy.
 4. **Obsidian changes:** Destination selection, supported link style, safe conflict detection and recovery for multiple files, and a deliberate way to test compatibility with the user's existing structure.
