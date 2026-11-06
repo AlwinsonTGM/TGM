@@ -49,7 +49,7 @@ Bring a small set of actionable goal suggestions together with selectable instal
 - The user wants **TGM** (their own initials/name) as the top app brand, replacing the generated AGY brand. The AGY terminal retains its actual AGY identity. Whether the full product name is Personal Command Center remains open.
 - The user named GradientDeck UI and Unslop as desired GitHub design references. Their exact intended repositories and applicable usage are being verified; do not silently substitute a different project with the same name.
 - The user explicitly wants the interface to feel familiar to tools they already use; recognizable navigation, controls, and expected behavior are a binding design preference. They named AGY, Obsidian, Google Keep, and Codex as familiar references. The final visual system remains open.
-- The user selected the Codex UX concept as the design direction. Its full design system and production implementation remain to be documented and developed.
+- The user selected the Codex UX concept as the design direction. Its visual design system is documented in [DESIGN.md](DESIGN.md) and [.impeccable/design.json](.impeccable/design.json); production implementation remains to be developed.
 
 ## Evidence on Hand
 

@@ -1,0 +1,324 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-06T22:02:00+08:00",
+  "title": "Design System: TGM — Personal Command Center",
+  "extensions": {
+    "colorMeta": {
+      "primary": {
+        "role": "primary",
+        "displayName": "Bifrost Mint",
+        "canonical": "#61d8b8",
+        "tonalRamp": ["#062019", "#0d382c", "#175644", "#247860", "#38a385", "#61d8b8", "#9ae8d2", "#d8f7ee"]
+      },
+      "primary-hover": {
+        "role": "primary",
+        "displayName": "Luminous Mint",
+        "canonical": "#8ae8ce",
+        "tonalRamp": ["#08241c", "#114033", "#1d614e", "#2d876e", "#4cb598", "#8ae8ce", "#b6f2e1", "#e4fbf4"]
+      },
+      "primary-ink": {
+        "role": "primary",
+        "displayName": "Deep Pine Ink",
+        "canonical": "#09251b",
+        "tonalRamp": ["#04120d", "#09251b", "#123d2e", "#1d5944", "#2d7a60", "#4b9e82", "#7ec4ac", "#bfe6d8"]
+      },
+      "secondary": {
+        "role": "secondary",
+        "displayName": "Horned Brass",
+        "canonical": "#d9bf80",
+        "tonalRamp": ["#211b0d", "#3b3119", "#5c4c28", "#826c3b", "#ad9358", "#d9bf80", "#ead9ae", "#f7f0de"]
+      },
+      "secondary-muted": {
+        "role": "secondary",
+        "displayName": "Tarnished Brass",
+        "canonical": "#a88e58",
+        "tonalRamp": ["#1c170c", "#332a17", "#504225", "#735f37", "#a88e58", "#c4ae7e", "#dccca9", "#f2ebd9"]
+      },
+      "tertiary": {
+        "role": "tertiary",
+        "displayName": "Preview Gold Banner",
+        "canonical": "#dec889",
+        "tonalRamp": ["#231d0e", "#3e341b", "#61522b", "#8a7540", "#b59d60", "#dec889", "#ede0b7", "#f9f4e4"]
+      },
+      "tertiary-ink": {
+        "role": "tertiary",
+        "displayName": "Banner Pine Ink",
+        "canonical": "#173124",
+        "tonalRamp": ["#0a1711", "#173124", "#244c38", "#356b50", "#4c8e6d", "#71b090", "#a2ceb7", "#d7ebe0"]
+      },
+      "neutral-bg": {
+        "role": "neutral",
+        "displayName": "Asgardian Pine",
+        "canonical": "#071a15",
+        "tonalRamp": ["#04100d", "#071a15", "#0e2920", "#173b2e", "#265443", "#427864", "#72a692", "#b8d6ca"]
+      },
+      "neutral-sidebar": {
+        "role": "neutral",
+        "displayName": "Deep Sanctum",
+        "canonical": "#081712",
+        "tonalRamp": ["#040d0a", "#081712", "#0f261e", "#18382c", "#285242", "#457563", "#75a391", "#bad4ca"]
+      },
+      "neutral-surface": {
+        "role": "neutral",
+        "displayName": "Sanctum Canopy",
+        "canonical": "#0e2920",
+        "tonalRamp": ["#06140f", "#0e2920", "#163b2e", "#225241", "#336e59", "#4f917a", "#7eb8a3", "#bfe0d4"]
+      },
+      "neutral-surface-raised": {
+        "role": "neutral",
+        "displayName": "Elevated Canopy",
+        "canonical": "#10291f",
+        "tonalRamp": ["#07140f", "#10291f", "#183c2e", "#245441", "#367059", "#52947a", "#81baa3", "#c2e2d5"]
+      },
+      "neutral-surface-active": {
+        "role": "neutral",
+        "displayName": "Active Bough",
+        "canonical": "#153c2c",
+        "tonalRamp": ["#081912", "#102b20", "#153c2c", "#215741", "#32755a", "#4e997b", "#7ec0a5", "#c1e5d6"]
+      },
+      "neutral-surface-hover": {
+        "role": "neutral",
+        "displayName": "Hovered Bough",
+        "canonical": "#17382b",
+        "tonalRamp": ["#091812", "#11291f", "#17382b", "#245340", "#357159", "#52957a", "#82bca4", "#c3e3d5"]
+      },
+      "neutral-terminal": {
+        "role": "neutral",
+        "displayName": "Terminal Void",
+        "canonical": "#061511",
+        "tonalRamp": ["#030b09", "#061511", "#0c241d", "#15362c", "#244f42", "#3f7363", "#6fa191", "#b5d2c8"]
+      },
+      "neutral-input": {
+        "role": "neutral",
+        "displayName": "Input Well",
+        "canonical": "#0b231b",
+        "tonalRamp": ["#05110d", "#0b231b", "#13362a", "#1e4d3c", "#2f6954", "#4b8c74", "#7ab39e", "#bde0d2"]
+      },
+      "neutral-border": {
+        "role": "neutral",
+        "displayName": "Botanical Hairline",
+        "canonical": "#2b493a",
+        "tonalRamp": ["#0d1a13", "#1a2f24", "#2b493a", "#3e6652", "#56876e", "#76a88f", "#a1c7b3", "#d4e7dd"]
+      },
+      "neutral-border-strong": {
+        "role": "neutral",
+        "displayName": "Interactive Stem",
+        "canonical": "#4e715e",
+        "tonalRamp": ["#111d16", "#203429", "#355142", "#4e715e", "#6a917c", "#8cb09c", "#b4cebf", "#dfece4"]
+      },
+      "neutral-border-brass": {
+        "role": "neutral",
+        "displayName": "Brass-Olive Frame",
+        "canonical": "#5b6442",
+        "tonalRamp": ["#171a10", "#2b301e", "#42492f", "#5b6442", "#79845a", "#9aa57b", "#bfc7a7", "#e3e7d7"]
+      },
+      "neutral-text": {
+        "role": "neutral",
+        "displayName": "Parchment Mist",
+        "canonical": "#e9eee5",
+        "tonalRamp": ["#161c17", "#2c362e", "#475449", "#667568", "#89998b", "#b0bdb1", "#d1dad0", "#e9eee5"]
+      },
+      "neutral-text-bright": {
+        "role": "neutral",
+        "displayName": "Gilded Vellum",
+        "canonical": "#f3f1e6",
+        "tonalRamp": ["#1b1a14", "#343228", "#524f40", "#73705c", "#98947d", "#bdb9a4", "#dcd9c8", "#f3f1e6"]
+      },
+      "neutral-text-muted": {
+        "role": "neutral",
+        "displayName": "Lichen Sage",
+        "canonical": "#a8bdad",
+        "tonalRamp": ["#131c15", "#243328", "#394e3f", "#526d59", "#708e78", "#a8bdad", "#c7d6ca", "#e6ede8"]
+      },
+      "focus-ring": {
+        "role": "tertiary",
+        "displayName": "Astral Focus Ring",
+        "canonical": "#77e5c9",
+        "tonalRamp": ["#07231c", "#103f33", "#1b604e", "#2b866e", "#47b397", "#77e5c9", "#aaeede", "#e0faf3"]
+      },
+      "danger-bg": {
+        "role": "tertiary",
+        "displayName": "Diagnostic Crimson Ground",
+        "canonical": "#291616",
+        "tonalRamp": ["#170b0b", "#291616", "#422323", "#613434", "#854949", "#ad6868", "#d19494", "#efd2d2"]
+      },
+      "danger-border": {
+        "role": "tertiary",
+        "displayName": "Diagnostic Crimson Border",
+        "canonical": "#8a4b4b",
+        "tonalRamp": ["#1d0e0e", "#361b1b", "#572c2c", "#8a4b4b", "#a86464", "#c48585", "#ddb0b0", "#f2dede"]
+      },
+      "danger-text": {
+        "role": "tertiary",
+        "displayName": "Diagnostic Rose Mist",
+        "canonical": "#f5c6c0",
+        "tonalRamp": ["#24110f", "#42211d", "#66342e", "#8f4c44", "#b86d64", "#da968e", "#f5c6c0", "#fbe6e3"]
+      },
+      "backdrop": {
+        "role": "neutral",
+        "displayName": "Sanctum Modal Backdrop",
+        "canonical": "rgba(7, 26, 21, 0.78)",
+        "tonalRamp": ["#04100d", "#071a15", "#0e2920", "#173b2e", "#265443", "#427864", "#72a692", "#b8d6ca"]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display Serif",
+        "purpose": "Primary view headings on Home and active Workspace session titles."
+      },
+      "headline": {
+        "displayName": "Section & Modal Headline",
+        "purpose": "Independent Focus aside heading, TGM brand mark, and review modal titles."
+      },
+      "title": {
+        "displayName": "Section Title",
+        "purpose": "Functional section headers such as Suggested next steps and Quick capture."
+      },
+      "body": {
+        "displayName": "Interface Body",
+        "purpose": "Default UI copy, button labels, form controls, and session descriptions."
+      },
+      "label": {
+        "displayName": "Tracked Uppercase Label",
+        "purpose": "Sidebar group labels, step metadata, harness badges, and status badges."
+      },
+      "mono": {
+        "displayName": "Tabular Monospace",
+        "purpose": "Interactive CLI transcript, command prompt, and FlowState timer readouts."
+      }
+    },
+    "shadows": [
+      {
+        "name": "modal-backdrop",
+        "value": "rgba(7, 26, 21, 0.78)",
+        "purpose": "Dimmed backdrop behind native review dialogs; resting cards and buttons use flat tonal layering with 0 shadow."
+      }
+    ],
+    "motion": [
+      {
+        "name": "transition-surface",
+        "value": "140ms ease",
+        "purpose": "Background, border, and text color transitions on interactive controls; disabled under prefers-reduced-motion."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "compact-desktop",
+        "value": "1100px"
+      },
+      {
+        "name": "narrow-desktop",
+        "value": "850px"
+      },
+      {
+        "name": "compact-stack",
+        "value": "720px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Action Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "High-contrast Bifrost Mint button reserved for the leading action in a view.",
+      "html": "<button class=\"ds-btn-primary\" type=\"button\"><span>Start focus</span><svg viewBox=\"0 0 16 16\" aria-hidden=\"true\"><path d=\"M4.5 11.5 11.5 4.5M6 4.5h5.5V10\"/></svg></button>",
+      "css": ".ds-btn-primary { background: #61d8b8; color: #09251b; border: 1px solid #61d8b8; border-radius: 7px; padding: 10px 15px; font: 700 14px/1.5 'Segoe UI', Arial, sans-serif; display: inline-flex; align-items: center; gap: 10px; cursor: pointer; transition: background-color 140ms ease, border-color 140ms ease; } .ds-btn-primary svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.55; stroke-linecap: round; stroke-linejoin: round; } .ds-btn-primary:hover { background: #8ae8ce; border-color: #8ae8ce; } .ds-btn-primary:focus-visible { outline: 2px solid #77e5c9; outline-offset: 3px; } .ds-btn-primary:active { filter: brightness(0.9); }"
+    },
+    {
+      "name": "Outline Action Button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Bordered evergreen secondary control for sibling step actions, pause/stop, and review triggers.",
+      "html": "<button class=\"ds-btn-outline\" type=\"button\"><span>Open</span><svg viewBox=\"0 0 16 16\" aria-hidden=\"true\"><path d=\"M3.5 8h9m-3.5-3.5L12.5 8 9 11.5\"/></svg></button>",
+      "css": ".ds-btn-outline { background: transparent; color: #e9eee5; border: 1px solid #4e715e; border-radius: 7px; padding: 9px 13px; font: 400 14px/1.5 'Segoe UI', Arial, sans-serif; display: inline-flex; align-items: center; gap: 10px; cursor: pointer; transition: background-color 140ms ease, border-color 140ms ease; } .ds-btn-outline svg { width: 15px; height: 15px; fill: none; stroke: #d9bf80; stroke-width: 1.55; stroke-linecap: round; stroke-linejoin: round; } .ds-btn-outline:hover { background: #17382b; } .ds-btn-outline:focus-visible { outline: 2px solid #77e5c9; outline-offset: 3px; } .ds-btn-outline:active { filter: brightness(0.9); }"
+    },
+    {
+      "name": "Sidebar Session Item with Harness Badge",
+      "kind": "nav",
+      "refersTo": "nav-item",
+      "description": "Project tree session button displaying its bound CLI harness badge (AGY or OC).",
+      "html": "<div class=\"ds-session-group\"><button class=\"ds-session active\" type=\"button\"><span>Functions practice</span><small class=\"ds-badge-agy\">AGY</small></button><button class=\"ds-session\" type=\"button\"><span>Objects practice</span><small class=\"ds-badge-oc\">OC</small></button></div>",
+      "css": ".ds-session-group { display: grid; gap: 4px; background: #081712; padding: 10px; border-left: 1px solid #2b493a; width: 220px; } .ds-session { border: 0; background: none; color: #a8bdad; padding: 8px 10px; border-radius: 6px; font: 400 12px/1.4 'Segoe UI', Arial, sans-serif; display: flex; align-items: center; justify-content: space-between; gap: 8px; cursor: pointer; transition: background-color 140ms ease; } .ds-session:hover { background: #17382b; } .ds-session.active { background: #153c2c; color: #f3f1e6; } .ds-session:focus-visible { outline: 2px solid #77e5c9; outline-offset: 3px; } .ds-badge-agy, .ds-badge-oc { font: 700 12px/1.2 Consolas, 'JetBrains Mono', monospace; letter-spacing: 0.06em; text-transform: uppercase; padding: 2px 6px; border-radius: 4px; background: #0b231b; border: 1px solid #4e715e; font-variant-numeric: tabular-nums; } .ds-badge-agy { color: #d9bf80; } .ds-badge-oc { color: #61d8b8; }"
+    },
+    {
+      "name": "Quick Capture Input Field",
+      "kind": "input",
+      "refersTo": "input-field",
+      "description": "Low-friction uncategorized capture field with immediate submit action.",
+      "html": "<div class=\"ds-capture-row\"><input class=\"ds-input\" type=\"text\" placeholder=\"A thought, question, or next step…\" /><button class=\"ds-capture-btn\" type=\"button\">Capture</button></div>",
+      "css": ".ds-capture-row { display: flex; gap: 8px; background: #071a15; padding: 10px; } .ds-input { flex: 1; border: 1px solid #4e715e; background: #0b231b; color: #e9eee5; border-radius: 7px; padding: 11px 12px; font: 400 14px/1.5 'Segoe UI', Arial, sans-serif; caret-color: #61d8b8; } .ds-input::placeholder { color: #a8bdad; } .ds-input:focus-visible { outline: 2px solid #77e5c9; outline-offset: 3px; } .ds-capture-btn { border: 1px solid #4e715e; background: #153c2c; color: #e9eee5; border-radius: 7px; padding: 0 16px; font: 600 14px/1.5 'Segoe UI', Arial, sans-serif; cursor: pointer; transition: background-color 140ms ease; } .ds-capture-btn:hover { background: #17382b; } .ds-capture-btn:focus-visible { outline: 2px solid #77e5c9; outline-offset: 3px; }"
+    },
+    {
+      "name": "Independent Focus Card",
+      "kind": "card",
+      "refersTo": "surface-card",
+      "description": "Elevated Canopy card allowing the user to start FlowState focus without opening a CLI harness.",
+      "html": "<aside class=\"ds-card\"><div class=\"ds-card-head\"><h2>Work on your own.</h2><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M12 3v18M3 12h18m-13.5-4.5 9 9m0-9-9 9\"/></svg></div><p>Start an independent FlowState focus session without opening AGY or OpenCode.</p></aside>",
+      "css": ".ds-card { border: 1px solid #5b6442; border-radius: 9px; padding: 18px; background: #10291f; color: #e9eee5; max-width: 288px; font-family: 'Segoe UI', Arial, sans-serif; } .ds-card-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 10px; } .ds-card-head h2 { font: 600 24px/1.2 Georgia, 'Times New Roman', serif; color: #f3f1e6; margin: 0; } .ds-card-head svg { width: 18px; height: 18px; fill: none; stroke: #d9bf80; stroke-width: 1.55; stroke-linecap: round; } .ds-card p { color: #a8bdad; font-size: 12px; line-height: 1.5; margin: 0; }"
+    },
+    {
+      "name": "Multi-Harness Terminal Header",
+      "kind": "custom",
+      "refersTo": "surface-card",
+      "description": "Workspace terminal header showing the active CLI harness, command signature, and failure-simulation control.",
+      "html": "<div class=\"ds-term-head\"><div class=\"ds-term-id\"><span class=\"ds-term-prompt\">›_</span><strong>AGY Terminal</strong><code>agy</code><span class=\"ds-term-tag\">SIMULATED</span></div><span class=\"ds-term-sub\">Bound to AGY CLI</span></div>",
+      "css": ".ds-term-head { background: #10291f; border: 1px solid #4e715e; border-radius: 9px 9px 0 0; padding: 11px 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; font: 400 12px/1.4 'Segoe UI', Arial, sans-serif; color: #a8bdad; } .ds-term-id { display: flex; align-items: center; gap: 10px; } .ds-term-prompt { color: #61d8b8; font-family: Consolas, monospace; } .ds-term-id strong { color: #f3f1e6; } .ds-term-id code { font: 12px/1.2 Consolas, monospace; color: #a8bdad; background: #0b231b; border: 1px solid #2b493a; border-radius: 4px; padding: 2px 6px; } .ds-term-tag { font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #d9bf80; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Gilded Study Desk",
+    "overview": "TGM is a calm, grounded, and deliberate Windows-first desktop environment built to help its owner start one meaningful work or study session without friction. Inspired by a Loki-tinted world of deep evergreen timber, tarnished brass, and luminous mint signals, the interface treats the screen as a quiet, well-lit study desk rather than a high-pressure productivity dashboard. Every surface pairs familiar developer affordances from AGY, OpenCode, Obsidian, Google Keep, and Codex with warm editorial anchors that reduce overwhelm at the start of a session.\n\nDensity is calibrated to the user's immediate state of mind. The Home view keeps suggested next steps, per-step CLI harness selection, last-session continuation, independent FlowState focus, and uncategorized quick capture reachable without scrolling on a standard desktop viewport. Moving into a session workspace shifts the center of gravity to the active CLI terminal (AGY CLI or OpenCode) and an honest, non-intrusive focus bar, while relegating memory and Obsidian reviewer proposals to explicit review dialogs where verified session evidence is visually separated from editable AI drafts.\n\nThe visual system explicitly rejects noisy multi-widget dashboards, gamified streaks, decorative glassmorphism, neon glow halos, and unreviewed AI automation that obscures whether an action actually succeeded.",
+    "keyCharacteristics": [
+      "Loki-Tinted Botanical Ground: Deep forest surfaces layered tonally with crisp 1px structural borders and antique brass identity accents.",
+      "Serif Invites, Sans Operates, Mono Measures: Warm Georgia headings welcome the user into a session, workhorse Windows UI sans-serif drives controls and copy, and tabular monospace reports timers, CLI commands, and harness badges.",
+      "One Primary Commitment Per View: Solid Bifrost Mint fill is reserved for the single leading commitment on screen (the top suggested step or the active focus trigger).",
+      "Explicit Harness & Evidence Provenance: Every session visibly carries its bound CLI harness (AGY or OpenCode) and separates verified focus/session facts from editable AI proposals."
+    ],
+    "rules": [
+      {
+        "name": "The Mint-For-Commitment Rule",
+        "body": "Solid Bifrost Mint (#61d8b8) appears on at most one primary call-to-action per region (the first suggested step on Home, the Start Focus button in the aside, or the Approve button in a review dialog). Sibling actions use bordered outline buttons so the eye always knows where to begin.",
+        "section": "colors"
+      },
+      {
+        "name": "The Brass-Signals-Identity Rule",
+        "body": "Horned Brass (#d9bf80) marks brand identity, structural wayfinding, and tabular timer readouts; never use it as a full card background or body text color.",
+        "section": "colors"
+      },
+      {
+        "name": "The Tinted-Neutral Rule",
+        "body": "Every surface, border, and muted label is tinted toward evergreen and sage (#071a15 to #a8bdad); pure neutral grays (#888888, #cccccc) are forbidden.",
+        "section": "colors"
+      },
+      {
+        "name": "The Serif-Invites-Sans-Operates Rule",
+        "body": "Reserve Georgia for view-level headings, the TGM brand mark, and modal titles. Never set buttons, form controls, navigation links, or terminal output in serif type.",
+        "section": "typography"
+      },
+      {
+        "name": "The Tabular-Time Rule",
+        "body": "Every elapsed duration, countdown, note count, and harness badge must set font-variant-numeric: tabular-nums so ticking timers and updated counts never jitter adjacent layout elements.",
+        "section": "typography"
+      },
+      {
+        "name": "The Flat-Canopy Rule",
+        "body": "Cards, buttons, and bars rest flat on the canvas with 1px solid borders and zero box-shadow. State changes are communicated through background color shifts (140ms ease) and crisp focus outlines (2px solid #77e5c9 with 3px offset), never glowing neon shadows.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do keep Stop session and Complete task as separate buttons and state transitions so stopping focus for the day never marks an unfinished task complete.",
+      "Do display the bound CLI harness (AGY CLI or OpenCode) on every session in the sidebar, workspace header, terminal bar, and review dialog.",
+      "Do preserve independent FlowState focus and Quick Capture usability when the selected CLI harness is offline or fails to resume.",
+      "Do pair wide letter-spacing (0.06em) strictly with text-transform: uppercase on short 12px labels and badges.",
+      "Do use authored 1.55px-stroke inline SVGs for all icons and directional arrows."
+    ],
+    "donts": [
+      "Don't place uppercase kicker or eyebrow labels above <h1>, <h2>, or <h3> headings; let the heading hierarchy speak directly and place status badges beside actions or in metadata rows.",
+      "Don't present AI-generated summaries, memory drafts, or reviewer notes as verified facts; always separate factual session evidence from editable AI proposals.",
+      "Don't use Unicode symbols (↗, →, ✧, ×) or emoji in place of consistent SVG icons.",
+      "Don't introduce glassmorphic blur cards, multi-stop neon gradients, or decorative glow shadows that compete with the terminal and reading surfaces."
+    ]
+  }
+}

@@ -1,36 +1,295 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>TGM — Codex concept</title><link rel="stylesheet" href="styles.css"><script src="prototype.js" defer></script></head>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>TGM — Codex concept</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="prototype.js" defer></script>
+</head>
 <body>
-<div class="preview">DESIGN PREVIEW <span>Sample data · Changes reset on refresh · AGY and FlowState are simulated</span></div>
+<div class="preview">DESIGN PREVIEW <span>Sample data · Changes reset on refresh · AGY, OpenCode, and FlowState are simulated</span></div>
 <div class="shell">
   <aside class="sidebar" aria-label="Main navigation">
-    <button class="brand" data-home aria-label="TGM home"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M4 6c1 9 6 14 16 19C30 20 35 15 36 6M12 18l8 15 8-15"/></svg><span><strong>TGM</strong><small>YOUR COMMAND CENTER</small></span></button>
-    <nav aria-label="Sections"><button class="nav active" data-home><svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5M6 10v9h12v-9M10 19v-5h4v5"/></svg> Home</button><button class="nav" data-session="Functions practice"><svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="14" rx="2"/><path d="m7 10 3 2-3 2m5 1h4"/></svg> Workspace</button><button class="nav disabled" disabled><svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7c-2-2-5-2-8-1v12c3-1 6-1 8 1m0-12c2-2 5-2 8-1v12c-3-1-6-1-8 1zm0 0v12"/></svg> Learning <small>SOON</small></button></nav>
+    <button class="brand" data-home aria-label="TGM home">
+      <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M4 6c1 9 6 14 16 19C30 20 35 15 36 6M12 18l8 15 8-15"/></svg>
+      <span><strong>TGM</strong><small>YOUR COMMAND CENTER</small></span>
+    </button>
+    <nav aria-label="Sections">
+      <button class="nav active" data-home>
+        <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5M6 10v9h12v-9M10 19v-5h4v5"/></svg>
+        Home
+      </button>
+      <button class="nav" data-session="Functions practice">
+        <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="14" rx="2"/><path d="m7 10 3 2-3 2m5 1h4"/></svg>
+        Workspace
+      </button>
+      <button class="nav disabled" disabled>
+        <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7c-2-2-5-2-8-1v12c3-1 6-1 8 1m0-12c2-2 5-2 8-1v12c-3-1-6-1-8 1zm0 0v12"/></svg>
+        Learning <small>SOON</small>
+      </button>
+    </nav>
     <div class="side-label">YOUR SESSIONS <span>Sample</span></div>
-    <details class="project-group" open><summary><svg class="project-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5-5 7 5 7m6-14 5 7-5 7M13 4l-2 16"/></svg><span>TypeScript learning</span><svg class="chevron" viewBox="0 0 16 16" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></summary><div class="session-list"><button class="session" data-session="Functions practice">Functions practice</button><button class="session" data-session="Objects practice">Objects practice</button></div></details>
-    <details class="project-group" open><summary><svg class="project-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6.5 12 4l8 2.5v10L12 20l-8-3.5zm0 0 8 3 8-3M12 9.5V20M8 8l8-2.8"/></svg><span>Personal &amp; study</span><svg class="chevron" viewBox="0 0 16 16" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></summary><div class="session-list"><button class="session" data-session="Review study notes">Review study notes</button><button class="session" data-session="Portfolio: next step">Portfolio: next step</button></div></details>
+    <details class="project-group" open>
+      <summary>
+        <svg class="project-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5-5 7 5 7m6-14 5 7-5 7M13 4l-2 16"/></svg>
+        <span>TypeScript learning</span>
+        <svg class="chevron" viewBox="0 0 16 16" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg>
+      </summary>
+      <div class="session-list">
+        <button class="session" data-session="Functions practice"><span>Functions practice</span><small class="harness-badge" data-session-badge="Functions practice">AGY</small></button>
+        <button class="session" data-session="Objects practice"><span>Objects practice</span><small class="harness-badge" data-session-badge="Objects practice">OC</small></button>
+      </div>
+    </details>
+    <details class="project-group" open>
+      <summary>
+        <svg class="project-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6.5 12 4l8 2.5v10L12 20l-8-3.5zm0 0 8 3 8-3M12 9.5V20M8 8l8-2.8"/></svg>
+        <span>Personal &amp; study</span>
+        <svg class="chevron" viewBox="0 0 16 16" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg>
+      </summary>
+      <div class="session-list">
+        <button class="session" data-session="Review study notes"><span>Review study notes</span><small class="harness-badge" data-session-badge="Review study notes">AGY</small></button>
+        <button class="session" data-session="Portfolio: next step"><span>Portfolio: next step</span><small class="harness-badge" data-session-badge="Portfolio: next step">OC</small></button>
+      </div>
+    </details>
     <div class="side-foot">A little progress counts.</div>
   </aside>
   <main>
-    <header class="topbar"><div id="breadcrumb">Home <span>/ Your space to begin</span></div><div class="top-actions"><button class="quiet" id="capture-jump">Quick capture</button><div class="top-status"><svg class="focus-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13" r="7"/><path d="M12 9v4l3 2M9 2h6m-3 0v4"/></svg><span id="focus-label">Focus ready</span><strong id="timer">00:00</strong> <button class="quiet" data-top-pause hidden>Pause</button><button class="quiet" data-top-stop hidden>Stop</button></div></div></header>
+    <header class="topbar">
+      <div id="breadcrumb">Home <span>/ Your space to begin</span></div>
+      <div class="top-actions">
+        <button class="quiet" id="capture-jump">Quick capture</button>
+        <div class="top-status">
+          <svg class="focus-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13" r="7"/><path d="M12 9v4l3 2M9 2h6m-3 0v4"/></svg>
+          <span id="focus-label">Focus ready</span>
+          <strong id="timer">00:00</strong>
+          <button class="quiet" data-top-pause hidden>Pause</button>
+          <button class="quiet" data-top-stop hidden>Stop</button>
+        </div>
+      </div>
+    </header>
     <div class="content">
       <section id="home-view" aria-labelledby="home-title">
-        <div class="home-intro"><div><h1 id="home-title">Let’s make a little progress.</h1><p class="intro-copy">Pick a small step, or find your way back to where you left off.</p></div><div class="ornament" aria-hidden="true"><svg viewBox="0 0 120 105"><path d="M18 12c3 27 18 37 42 50 24-13 39-23 42-50M37 47l23 42 23-42"/><path d="M60 62v27"/></svg></div></div>
-        <div class="home-grid"><div class="steps-column"><div class="section-head"><div><h2>Suggested next steps</h2><p>Small enough to start. Choose what feels right.</p></div><label for="time-filter">Time <select id="time-filter"><option value="0">Any time</option><option value="15">15 min</option><option value="30">30 min</option><option value="60">1 hour</option></select></label></div>
-          <div class="steps" id="steps"><article class="step" data-minutes="15"><div><h3>Practice TypeScript functions</h3><p>Write and explain a small function on your own.</p><span class="meta">TYPESCRIPT LEARNING <b>·</b> 15 MIN</span></div><button class="open-step" data-session="Functions practice" aria-label="Start TypeScript functions">Start <span>→</span></button></article>
-          <article class="step" data-minutes="20"><div><h3>Review study notes</h3><p>Revisit a concept and test what you remember.</p><span class="meta">STUDY GOAL <b>·</b> 20 MIN</span></div><button class="open-step" data-session="Review study notes" aria-label="Open review study notes">Open <span>→</span></button></article>
-          <article class="step" data-minutes="30"><div><h3>Continue your portfolio</h3><p>Make one small improvement to a case study.</p><span class="meta">PORTFOLIO <b>·</b> 30 MIN</span></div><button class="open-step" data-session="Portfolio: next step" aria-label="Open portfolio next step">Open <span>→</span></button></article></div>
-          <button class="continue" id="continue"><span class="continue-icon">↗</span><span><strong>Continue last session</strong><small id="last-session">Functions practice · TypeScript learning</small></span><span class="continue-arrow">→</span></button>
-        </div><aside class="home-aside"><div class="aside-head"><span>Independent focus</span><span class="flower" aria-hidden="true">✧</span></div><h2>Work on your own.</h2><p>Start a focus session without opening AGY. Your task stays open when you stop.</p><label for="focus-target">Focus on</label><select id="focus-target"><option>Functions practice</option><option>Objects practice</option><option>Review study notes</option><option>Portfolio: next step</option><option>Independent work</option></select><button class="primary full" data-start-focus>Start focus <span aria-hidden="true">↗</span></button><div class="aside-separator"></div><div class="aside-note"><span aria-hidden="true">✦</span><p>You don’t need a perfect plan.<br><strong>Just choose the next step.</strong></p></div></aside></div>
+        <div class="home-intro">
+          <div>
+            <h1 id="home-title" tabindex="-1">Let’s make a little progress.</h1>
+            <p class="intro-copy">Pick a small step, choose your CLI harness, or return to where you left off.</p>
+          </div>
+          <div class="ornament" aria-hidden="true">
+            <svg viewBox="0 0 120 105"><path d="M18 12c3 27 18 37 42 50 24-13 39-23 42-50M37 47l23 42 23-42"/><path d="M60 62v27"/></svg>
+          </div>
+        </div>
+        <div class="home-grid">
+          <div class="steps-column">
+            <div class="section-head">
+              <div>
+                <h2>Suggested next steps</h2>
+                <p>Small enough to start. Choose what feels right.</p>
+              </div>
+              <div class="filter-bar">
+                <label for="harness-choice">Harness
+                  <select id="harness-choice">
+                    <option value="default">Session default</option>
+                    <option value="agy">AGY CLI</option>
+                    <option value="opencode">OpenCode</option>
+                  </select>
+                </label>
+                <label for="time-filter">Time
+                  <select id="time-filter">
+                    <option value="0">Any time</option>
+                    <option value="15">15 min</option>
+                    <option value="30">30 min</option>
+                    <option value="60">1 hour</option>
+                  </select>
+                </label>
+              </div>
+            </div>
+            <div class="steps" id="steps">
+              <article class="step" data-minutes="15">
+                <div>
+                  <h3>Practice TypeScript functions</h3>
+                  <p>Write and explain a small function on your own.</p>
+                  <span class="meta">TYPESCRIPT LEARNING <b>·</b> 15 MIN <b>·</b> <em data-step-harness="Functions practice">AGY CLI</em></span>
+                </div>
+                <button class="open-step" data-session="Functions practice" data-from-step="true" aria-label="Start TypeScript functions">
+                  Start
+                  <svg class="icon-inline" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8h9m-3.5-3.5L12.5 8 9 11.5"/></svg>
+                </button>
+              </article>
+              <article class="step" data-minutes="20">
+                <div>
+                  <h3>Review study notes</h3>
+                  <p>Revisit a concept and test what you remember.</p>
+                  <span class="meta">STUDY GOAL <b>·</b> 20 MIN <b>·</b> <em data-step-harness="Review study notes">AGY CLI</em></span>
+                </div>
+                <button class="open-step" data-session="Review study notes" data-from-step="true" aria-label="Open review study notes">
+                  Open
+                  <svg class="icon-inline" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8h9m-3.5-3.5L12.5 8 9 11.5"/></svg>
+                </button>
+              </article>
+              <article class="step" data-minutes="30">
+                <div>
+                  <h3>Continue your portfolio</h3>
+                  <p>Make one small improvement to a case study.</p>
+                  <span class="meta">PORTFOLIO <b>·</b> 30 MIN <b>·</b> <em data-step-harness="Portfolio: next step">OPENCODE</em></span>
+                </div>
+                <button class="open-step" data-session="Portfolio: next step" data-from-step="true" aria-label="Open portfolio next step">
+                  Open
+                  <svg class="icon-inline" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8h9m-3.5-3.5L12.5 8 9 11.5"/></svg>
+                </button>
+              </article>
+            </div>
+            <button class="continue" id="continue">
+              <svg class="continue-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 15 15 5M8 5h7v7"/></svg>
+              <span>
+                <strong>Continue last session</strong>
+                <small id="last-session">Functions practice · TypeScript learning · AGY CLI</small>
+              </span>
+              <svg class="continue-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8h9m-3.5-3.5L12.5 8 9 11.5"/></svg>
+            </button>
+          </div>
+          <aside class="home-aside" aria-labelledby="aside-title">
+            <div class="aside-head">
+              <h2 id="aside-title">Work on your own.</h2>
+              <svg class="aside-crest" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M3 12h18m-13.5-4.5 9 9m0-9-9 9"/></svg>
+            </div>
+            <p>Start an independent FlowState focus session without opening AGY or OpenCode. Your task stays open when you stop.</p>
+            <label for="focus-target">Focus on</label>
+            <select id="focus-target">
+              <option>Functions practice</option>
+              <option>Objects practice</option>
+              <option>Review study notes</option>
+              <option>Portfolio: next step</option>
+              <option>Independent work</option>
+            </select>
+            <button class="primary full" data-start-focus>
+              <span>Start focus</span>
+              <svg class="icon-inline" viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 11.5 11.5 4.5M6 4.5h5.5V10"/></svg>
+            </button>
+            <div class="aside-separator"></div>
+            <div class="aside-note">
+              <svg class="note-mark" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2v12M2 8h12"/></svg>
+              <p>You don’t need a perfect plan.<br><strong>Just choose the next step.</strong></p>
+            </div>
+          </aside>
+        </div>
       </section>
-      <section id="workspace-view" hidden aria-labelledby="workspace-title"><div class="workspace-heading"><div><button class="back" data-home>← &nbsp;Home</button><h1 id="workspace-title">Functions practice</h1><p id="workspace-context">TypeScript learning · Sample session</p></div><div class="review-actions"><button class="outline" data-review="memory">Save to memory</button><button class="outline" data-review="reviewer">Create reviewer</button></div></div>
-        <div class="focus-bar"><div><svg class="focus-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13" r="7"/><path d="M12 9v4l3 2M9 2h6m-3 0v4"/></svg><strong>Focus session</strong><span id="focus-detail">Ready when you are · task open</span></div><div class="focus-controls"><button class="outline" data-pause hidden>Pause</button><button class="outline" data-stop hidden>Stop session</button><button class="primary" data-workspace-start>Start focus</button><button class="outline" data-complete>Complete task</button></div></div>
-        <div class="terminal"><div class="terminal-head"><div><span class="terminal-indicator">›_</span><strong>AGY Terminal</strong><span class="terminal-label">SIMULATED</span></div><span>Project session</span></div><div class="terminal-body" id="terminal-output" role="log" aria-live="polite"><p class="terminal-muted">This is an illustration of the workspace. No real AGY commands run here.</p><p><span class="terminal-accent">›</span> Your session is ready.</p><p class="terminal-muted">Try <code>/focus</code>, <code>/stop</code>, or <code>help</code>.</p></div><form id="terminal-form" class="terminal-input"><span>›</span><label class="sr-only" for="terminal-command">Simulated terminal command</label><input id="terminal-command" placeholder="Type a sample command…" autocomplete="off"><button type="submit">Run ↵</button></form></div>
-        <p class="workspace-note">Memory and reviewer updates are always yours to review before saving.</p>
+      <section id="workspace-view" hidden aria-labelledby="workspace-title">
+        <div class="workspace-heading">
+          <div>
+            <button class="back" data-home>
+              <svg class="icon-inline" viewBox="0 0 16 16" aria-hidden="true"><path d="M12.5 8h-9M7 4.5 3.5 8 7 11.5"/></svg>
+              Home
+            </button>
+            <h1 id="workspace-title" tabindex="-1">Functions practice</h1>
+            <p id="workspace-context">TypeScript learning · Bound to AGY CLI · Sample session</p>
+          </div>
+          <div class="review-actions">
+            <button class="outline" data-review="memory">Save to memory</button>
+            <button class="outline" data-review="reviewer">Create reviewer</button>
+          </div>
+        </div>
+        <div class="focus-bar">
+          <div>
+            <svg class="focus-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13" r="7"/><path d="M12 9v4l3 2M9 2h6m-3 0v4"/></svg>
+            <strong>Focus session</strong>
+            <span id="focus-detail">Ready when you are · task open</span>
+          </div>
+          <div class="focus-controls">
+            <button class="outline" data-pause hidden>Pause</button>
+            <button class="outline" data-stop hidden>Stop session</button>
+            <button class="primary" data-workspace-start>Start focus</button>
+            <button class="outline" data-complete>Complete task</button>
+          </div>
+        </div>
+        <div class="terminal">
+          <div class="terminal-head">
+            <div class="terminal-identity">
+              <span class="terminal-indicator">›_</span>
+              <strong id="terminal-title">AGY Terminal</strong>
+              <code class="terminal-cmd" id="terminal-cmd">agy</code>
+              <span class="terminal-label">SIMULATED</span>
+            </div>
+            <div class="terminal-tools">
+              <label class="terminal-switch" for="workspace-harness">Session harness
+                <select id="workspace-harness">
+                  <option value="agy">AGY CLI</option>
+                  <option value="opencode">OpenCode</option>
+                </select>
+              </label>
+              <button class="quiet terminal-fault-btn" type="button" id="toggle-cli-fault">Simulate CLI unavailable</button>
+            </div>
+          </div>
+          <div class="terminal-alert" id="terminal-alert" role="alert" hidden>
+            <strong id="terminal-alert-title">CLI unavailable or session resume failed.</strong>
+            <span id="terminal-alert-body">No command was sent. Independent FlowState focus above and Quick Capture below remain usable while the CLI is offline.</span>
+          </div>
+          <div class="terminal-body" id="terminal-output" role="log" aria-live="polite">
+            <p class="terminal-muted" id="terminal-intro">This is an illustration of the embedded terminal. Sessions, auth, and config stay separate per harness.</p>
+            <p><span class="terminal-accent">›</span> <span id="terminal-ready">AGY CLI session ready for Functions practice.</span></p>
+            <p class="terminal-muted">Try <code>/focus</code>, <code>/stop</code>, or <code>help</code>.</p>
+          </div>
+          <form id="terminal-form" class="terminal-input">
+            <span>›</span>
+            <label class="sr-only" for="terminal-command">Simulated terminal command</label>
+            <input id="terminal-command" placeholder="Type a sample command…" autocomplete="off">
+            <button type="submit" id="terminal-submit">Run</button>
+          </form>
+        </div>
+        <p class="workspace-note">Each session retains its selected harness. Memory and reviewer updates are always yours to review before saving.</p>
       </section>
-      <section class="capture" aria-label="Quick capture"><div class="capture-title"><div><h2>Quick capture</h2><p>Get it out of your head. Organize it later.</p></div><span id="capture-count">0 notes</span></div><form id="capture-form"><label class="sr-only" for="capture-input">Capture a thought</label><input id="capture-input" placeholder="A thought, question, or next step…" autocomplete="off"><button type="submit">Capture <span>↵</span></button></form><ul id="capture-list"></ul><p id="capture-feedback" role="status">Notes are temporary in this preview.</p></section>
+      <section class="capture" aria-label="Quick capture">
+        <div class="capture-title">
+          <div>
+            <h2>Quick capture</h2>
+            <p>Get it out of your head. Organize it later.</p>
+          </div>
+          <span id="capture-count">0 notes</span>
+        </div>
+        <form id="capture-form">
+          <label class="sr-only" for="capture-input">Capture a thought</label>
+          <input id="capture-input" placeholder="A thought, question, or next step…" autocomplete="off">
+          <button type="submit">Capture</button>
+        </form>
+        <ul id="capture-list"></ul>
+        <p id="capture-feedback" role="status">Notes are temporary in this preview.</p>
+      </section>
     </div>
   </main>
 </div>
-<dialog id="review-dialog" aria-labelledby="review-title"><div class="dialog-top"><div><p class="eyebrow">PREVIEW · NO FILES WILL BE CHANGED</p><h2 id="review-title">Review project memory</h2></div><button id="close-dialog" class="close" aria-label="Close review">×</button></div><p class="dialog-copy">You decide what to keep. This is sample content for the selected session.</p><div class="evidence"><h3>Session details</h3><dl><div><dt>Session</dt><dd id="review-session"></dd></div><div><dt>Focus</dt><dd id="review-focus"></dd></div><div><dt>Captured notes</dt><dd id="review-count"></dd></div></dl></div><div class="proposal-head"><h3>Suggested update</h3><span>EDITABLE DRAFT</span></div><label class="sr-only" for="review-editor">Edit suggested update</label><textarea id="review-editor" rows="6"></textarea><p class="dialog-foot">Approving here only demonstrates the interaction. Nothing is saved to your files.</p><div class="dialog-buttons"><button class="outline" id="discard">Discard</button><button class="primary" id="approve">Approve preview</button></div></dialog>
-</body></html>
+<dialog id="review-dialog" aria-labelledby="review-title">
+  <div class="dialog-top">
+    <div>
+      <h2 id="review-title">Review project memory</h2>
+      <p class="dialog-copy">You decide what to keep. This is sample content for the selected session; no files will be changed.</p>
+    </div>
+    <div class="dialog-top-right">
+      <span class="dialog-badge">PREVIEW ONLY</span>
+      <button id="close-dialog" class="close" aria-label="Close review">
+        <svg class="icon-inline" viewBox="0 0 16 16" aria-hidden="true"><path d="m4 4 8 8m0-8-8 8"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="evidence">
+    <h3>Session details</h3>
+    <dl>
+      <div><dt>Session</dt><dd id="review-session"></dd></div>
+      <div><dt>Harness</dt><dd id="review-harness"></dd></div>
+      <div><dt>Focus</dt><dd id="review-focus"></dd></div>
+      <div><dt>Captured notes</dt><dd id="review-count"></dd></div>
+    </dl>
+  </div>
+  <div class="proposal-head">
+    <h3>Suggested update</h3>
+    <span>EDITABLE DRAFT</span>
+  </div>
+  <label class="sr-only" for="review-editor">Edit suggested update</label>
+  <textarea id="review-editor" rows="6"></textarea>
+  <p class="dialog-foot">Approving here only demonstrates the interaction. Nothing is saved to your files.</p>
+  <div class="dialog-buttons">
+    <button class="outline" id="discard">Discard</button>
+    <button class="primary" id="approve">Approve preview</button>
+  </div>
+</dialog>
+</body>
+</html>
