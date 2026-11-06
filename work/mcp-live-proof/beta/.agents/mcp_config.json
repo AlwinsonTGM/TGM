@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "project_probe": {
+      "command": "C:\\Program Files\\nodejs\\node.exe",
+      "args": [
+        "C:\\Users\\PC\\Documents\\Codex\\2026-11-05\\so-x20\\work\\mcp-live-proof\\server.js",
+        "beta"
+      ]
+    }
+  }
+}

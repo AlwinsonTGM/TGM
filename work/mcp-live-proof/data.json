@@ -1,0 +1,21 @@
+{
+  "projects": {
+    "alpha": {
+      "memory": "alpha-base:alpha-notefirst",
+      "revision": 2
+    },
+    "beta": {
+      "memory": "beta-base:",
+      "revision": 0
+    }
+  },
+  "drafts": [
+    {
+      "id": 4,
+      "project": "alpha",
+      "text": "second",
+      "revision": 1
+    }
+  ],
+  "nextId": 5
+}

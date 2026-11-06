@@ -1,0 +1,55 @@
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Rust / Tauri build artifacts
+target/
+**/target/
+gen/schemas/
+**/gen/schemas/
+
+# Caches & downloaded binaries
+electron-cache/
+**/electron-cache/
+npm-cache/
+**/npm-cache/
+.cache/
+**/.cache/
+__pycache__/
+**/__pycache__/
+*.pyc
+
+# Browser & runtime test profiles / webview caches
+chrome-profile/
+**/chrome-profile*/
+isolated-profile/
+**/isolated-profile/
+diag-profile/
+**/diag-profile/
+EBWebView/
+**/EBWebView/
+**/data/webview/
+
+# Databases & local state
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+
+# Large binaries and archives
+*.exe
+*.dll
+*.pdb
+*.asar
+*.zip
+*.tar.gz
+
+# Embedded test repos
+work/worktrunk-proof/
+
+# Logs and runtime artifacts
+*.log
+*.tmp
+Thumbs.db
+.DS_Store

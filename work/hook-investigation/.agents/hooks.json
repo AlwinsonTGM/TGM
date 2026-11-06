@@ -1,0 +1,1 @@
+{"test": {"PreInvocation": [{"type": "command", "command": "node probe.js", "timeout": 10}]}}

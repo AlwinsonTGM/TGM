@@ -1,0 +1,15 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Temporary AGY terminal probe</title><script>
+const q = new URL(location).search;
+document.write('<link rel="stylesheet" href="/xterm.css'+q+'">');
+document.write('<script src="/xterm.js'+q+'"><\/script>');
+document.write('<script src="/fit.js'+q+'"><\/script>');
+</script><style>html,body {height:100%;margin:0;background:#17191c;color:#fff;font:14px sans-serif} header{height:48px;display:flex;align-items:center;padding:0 20px} main{display:flex;height:calc(100% - 48px)} aside{width:190px;padding:20px} #term{flex:1;min-width:0;height:100%}</style></head>
+<body><header>Temporary terminal feasibility probe</header><main><aside>Project panel<br><br>Session<br>Memory</aside><div id="term"></div></main><script>
+const term = new Terminal({cursorBlink:true, scrollback:1000});
+const fit = new FitAddon.FitAddon(); term.loadAddon(fit); term.open(document.getElementById('term')); fit.fit();
+const ws = new WebSocket(`ws://${location.host}/${location.search}`);
+ws.onopen = () => { ws.send(JSON.stringify({type:'resize',cols:term.cols,rows:term.rows})); term.focus(); };
+ws.onmessage = e => { const msg=JSON.parse(e.data); if(msg.type==='data') term.write(msg.data); if(msg.type==='exit') term.write(`\r\nProcess exited: ${msg.exitCode}\r\n`); };
+term.onData(data => {if(ws.readyState===WebSocket.OPEN)ws.send(JSON.stringify({type:'input',data}));});
+window.addEventListener('resize', () => {fit.fit(); if(ws.readyState===WebSocket.OPEN)ws.send(JSON.stringify({type:'resize',cols:term.cols,rows:term.rows}));});
+</script></body></html>

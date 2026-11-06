@@ -1,0 +1,11 @@
+# TGM: Argon High planning brief
+
+This brief is a durable pointer to the current planning phase. Begin with [the project hub](project-hub.md) and follow its links for requirements, design, orchestration, and dated test evidence. The dashboard prototype is [here](tgm-ux-prototype/index.html), with limitations and testing in its [README](tgm-ux-prototype/README.md).
+
+The user asked Codex to save the recent work and drive AGY Gemini 4 Argon High on the next step. Recommend a small, concrete, reviewable planning step that preserves user choice. The prototype has not yet been evaluated by the user. It is synthetic and disposable; its terminal, focus, memory and reviewer actions are simulations. Do not treat generated mockups or isolated tests as proof of production integration. Do not start production implementation or change the real FlowState project or Obsidian vault during this review.
+
+The user wants a calm desktop home that helps them start a small step, leading to an actual AGY CLI workspace. TGM is the product identity, with a noticeable Loki-inspired visual direction. The user chose React/TypeScript/Vite plus Electron for the dashboard; FlowState remains Tauri/Rust. Design and logic development should be separable through a shared contract. Use the internal C: drive, not the unreliable external D: drive.
+
+Please inspect the linked evidence and prepare a concise proposal covering: (1) the immediate next step and why; (2) a preliminary interface contract that separates home/workspace presentation from behavioral state and actions without choosing unresolved implementation details; (3) the most consequential user-facing decisions and concrete acceptance checks, distinguishing prototype feedback from technical verification; (4) any blockers and a dependency-ordered next slice. Clearly label decisions that are proposed, unverified, or pending user feedback. Cite local artifact names and avoid inventing results.
+
+Suggested skills for a future harness session: read `C:\Users\PC\.agents\skills\ask-matt\SKILL.md` for routing; consult `C:\Users\PC\.agents\skills\prototype\SKILL.md` for the existing disposable prototype and `C:\Users\PC\.agents\skills\impeccable\SKILL.md` for UI work if those skills are available in that harness. The user has not authorized production implementation in this step.

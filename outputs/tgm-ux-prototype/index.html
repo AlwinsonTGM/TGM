@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TGM — Session flow prototype</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="prototype.js" defer></script>
+</head>
+<body>
+  <svg class="svg-library" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11.5 12 4l9 7.5M5.5 10.5V20h13v-9.5M9.5 20v-6h5v6"/></symbol>
+    <symbol id="i-layers" viewBox="0 0 24 24"><path d="m12 3 9 5-9 5-9-5 9-5Zm-9 9 9 5 9-5M3 16l9 5 9-5"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M12 6c-3-2.5-6-2.5-9-1v14c3-1.5 6-1.5 9 1m0-14c3-2.5 6-2.5 9-1v14c-3-1.5-6-1.5-9 1m0-14v14"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6zM14 3v5h4M9 13h6M9 16h6"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-pencil" viewBox="0 0 24 24"><path d="m4 17-.5 3.5L7 20 19 8l-3-3L4 17ZM14.5 6.5l3 3"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="m8 5 11 7-11 7V5Z"/></symbol>
+    <symbol id="i-terminal" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="m7 9 3 3-3 3m5 0h4"/></symbol>
+    <symbol id="i-bookmark" viewBox="0 0 24 24"><path d="M6 4h12v17l-6-4-6 4V4Z"/></symbol>
+  </svg>
+  <div class="prototype-banner"><span>Interactive design preview</span><span>Sample data · Changes reset when you close or refresh</span></div>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Main navigation">
+      <button class="brand" data-action="home" aria-label="TGM home"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 40 40"><path d="M5 6c2 10 7 13 15 19C11 22 5 20 5 6Zm30 0c-2 10-7 13-15 19 9-3 15-5 15-19ZM12 18l8 15 8-15-8 7-8-7Z"/></svg></span><span class="brand-name">TGM</span><span class="brand-subtitle">Personal Command Center</span></button>
+      <nav class="nav-list" aria-label="Sections">
+        <button class="nav-item active" data-action="home" aria-label="Home"><svg><use href="#i-home"/></svg><span>Home</span></button>
+        <button class="nav-item" data-open-session="Functions practice" aria-label="Projects, opens sample workspace"><svg><use href="#i-layers"/></svg><span>Projects</span></button>
+        <button class="nav-item" disabled title="Not included in this preview" aria-label="Learning, not included in this preview"><svg><use href="#i-book"/></svg><span>Learning <small>Later</small></span></button>
+        <button class="nav-item" disabled title="Not included in this preview" aria-label="Reviewers, not included in this preview"><svg><use href="#i-file"/></svg><span>Reviewers <small>Later</small></span></button>
+      </nav>
+      <div class="sidebar-rule"></div>
+      <div class="sidebar-heading">Projects &amp; sessions <span>Sample</span></div>
+      <div class="project-name"><svg><use href="#i-chevron"/></svg><span>TypeScript learning</span></div>
+      <button class="session-link" data-open-session="Functions practice" aria-label="Functions practice"><svg><use href="#i-terminal"/></svg><span>Functions practice</span></button>
+      <button class="session-link" data-open-session="Objects practice" aria-label="Objects practice"><svg><use href="#i-terminal"/></svg><span>Objects practice</span></button>
+      <div class="sidebar-spacer"></div>
+      <div class="sidebar-foot"><span class="status-dot"></span> Preview only</div>
+    </aside>
+
+    <main class="main-content">
+      <div class="topbar"><span class="topbar-label">Your space to begin</span><div class="topbar-right"><div class="focus-chip"><span class="status-dot"></span><span id="focus-status" aria-live="polite">Focus not started</span></div></div></div>
+
+      <section id="home-view" class="page home-page" aria-labelledby="home-title">
+        <div class="page-heading"><div><p class="greeting">Good to see you.</p><h1 id="home-title">Choose a small step.</h1><p class="intro">A little progress is enough to begin.</p></div></div>
+        <div class="section-heading"><div><h2>Suggested next steps</h2><p>Choose one that feels manageable right now.</p></div><label class="time-control"><svg><use href="#i-clock"/></svg><span>Time available</span><select id="time-filter" aria-label="Time available"><option value="">Any time</option><option value="15">15 minutes</option><option value="30">30 minutes</option><option value="60">1 hour</option></select></label></div>
+        <div class="suggestions">
+          <article class="suggestion" data-minutes="15"><div class="step-mark"><svg><use href="#i-terminal"/></svg></div><div class="suggestion-copy"><h3>Practice TypeScript functions</h3><p>Build confidence with a short, hands-on exercise.</p><span>TypeScript learning <span class="dot-separator">·</span> About 15 min</span></div><button class="primary-button" data-open-session="Functions practice">Start <svg><use href="#i-arrow"/></svg></button></article>
+          <article class="suggestion" data-minutes="20"><div class="step-mark"><svg><use href="#i-book"/></svg></div><div class="suggestion-copy"><h3>Review study notes</h3><p>Revisit a topic you studied recently.</p><span>Learning <span class="dot-separator">·</span> About 20 min</span></div><button class="quiet-button" data-open-session="Review study notes">Open <svg><use href="#i-arrow"/></svg></button></article>
+          <article class="suggestion" data-minutes="30"><div class="step-mark"><svg><use href="#i-layers"/></svg></div><div class="suggestion-copy"><h3>Continue your portfolio</h3><p>Pick up the next small improvement.</p><span>Portfolio <span class="dot-separator">·</span> About 30 min</span></div><button class="quiet-button" data-open-session="Portfolio: next step">Open <svg><use href="#i-arrow"/></svg></button></article>
+        </div>
+        <button id="continue-session" class="continue-row" data-open-session="Functions practice"><span class="continue-icon"><svg><use href="#i-play"/></svg></span><span class="continue-text"><strong>Continue last session</strong><small id="continue-context">Functions practice · TypeScript learning</small></span><span class="continue-action">Continue <svg><use href="#i-arrow"/></svg></span></button>
+        <div class="capture-area"><label for="capture-input" class="capture-label">Quick capture</label><div class="capture-control"><svg><use href="#i-pencil"/></svg><input id="capture-input" placeholder="Capture a thought, idea, or next step…" autocomplete="off"><button class="text-button" data-action="capture">Capture</button></div><p id="capture-feedback" class="feedback" role="status">No need to organize it now. Captures are temporary in this preview.</p><ul id="capture-list" class="capture-list" aria-label="Captured thoughts"></ul></div>
+      </section>
+
+      <section id="workspace-view" class="page workspace-page" hidden aria-labelledby="session-title">
+        <button class="back-link" data-action="home"><svg><use href="#i-arrow"/></svg> Home</button>
+        <div class="workspace-heading"><div><h1 id="session-title">Functions practice</h1><p id="session-context">TypeScript learning · Sample session</p></div><div class="workspace-actions"><button class="outline-button" data-action="memory"><svg><use href="#i-bookmark"/></svg> Save to memory</button><button class="outline-button" data-action="reviewer"><svg><use href="#i-file"/></svg> Create reviewer</button></div></div>
+        <div class="focus-bar"><div><span class="focus-label">FlowState</span><span class="focus-explainer">Focus session · sample only</span></div><div class="focus-actions"><button class="primary-button" data-action="start-focus">Start focus</button><button class="quiet-button" data-action="pause-focus" hidden>Pause</button><button class="quiet-button" data-action="stop-focus" hidden>Stop session</button></div></div>
+        <div class="terminal-shell"><div class="terminal-header"><span><svg><use href="#i-terminal"/></svg> AGY Terminal</span><small>Illustration · not connected</small></div><div class="terminal-body"><p class="terminal-muted">This preview illustrates where the real AGY CLI will appear.</p><p><span class="terminal-green">›</span> Continue the study session</p><p class="terminal-muted">When built, your actual terminal, commands and approvals will live here.</p><p class="terminal-cursor">› <span>Ready when you are</span></p></div></div>
+        <p id="review-feedback" class="feedback" role="status">Memory and reviewer actions are previews only.</p>
+      </section>
+    </main>
+  </div>
+  <dialog id="review-dialog" aria-labelledby="review-title"><form method="dialog"><p class="dialog-label">Preview only</p><h2 id="review-title">Review proposed update</h2><div id="review-content"></div><p class="dialog-note">This is sample content. Nothing is written to memory or Obsidian.</p><div class="dialog-actions"><button class="quiet-button" type="button" data-action="reject-review">Discard</button><button class="primary-button" type="button" data-action="approve-review">Approve preview</button></div></form></dialog>
+</body>
+</html>

@@ -1,0 +1,1 @@
+Tauri renderer received shell marker via xterm.js

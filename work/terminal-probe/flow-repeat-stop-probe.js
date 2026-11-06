@@ -1,0 +1,9 @@
+const pty=require('node-pty');const {Terminal}=require('@xterm/headless');const path=require('node:path');const fs=require('node:fs');
+const cwd=path.resolve(__dirname,'../agy-flow-test');const eventFile=path.join(cwd,'mcp-events.jsonl');const term=new Terminal({cols:120,rows:38,scrollback:1000,allowProposedApi:true});
+const calls=()=>fs.readFileSync(eventFile,'utf8').trim().split('\n').filter(Boolean).map(JSON.parse);const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+function screen(){let s='';const b=term.buffer.active;for(let i=0;i<b.length;i++)s+=(b.getLine(i)?.translateToString(true)||'')+'\n';return s;}
+async function status(){return await (await fetch('http://127.0.0.1:42731/status')).json();}
+(async()=>{let before=await status();let baseline=calls().length;console.log('Before:',JSON.stringify(before));if(before.active_task)throw Error('Expected no active task');
+let child=pty.spawn(process.env.ComSpec,['/d','/c','agy --model gemini-3.8-flash-low --settings settings.json'],{name:'xterm-256color',cols:120,rows:38,cwd,env:process.env});child.onData(d=>term.write(d));
+try{await sleep(6500);child.write('/stop');await sleep(1500);child.write('\r');let end=Date.now()+75000;while(Date.now()<end&&calls().length===baseline)await sleep(500);if(calls().length===baseline)throw Error('No MCP invocation observed');let result=calls().slice(baseline);console.log('MCP result:',JSON.stringify(result));await sleep(12000);console.log('After:',JSON.stringify(await status()));fs.writeFileSync(path.join(cwd,'repeated-stop-output.txt'),screen());console.log('Relevant terminal lines:\n'+screen().split('\n').filter(l=>/stop|session|error|active|failed|no /i.test(l)).join('\n'));}
+finally{child.write('\x03');await sleep(400);child.kill();}})().catch(e=>{console.error('FAILED:',e.message);process.exitCode=1;});

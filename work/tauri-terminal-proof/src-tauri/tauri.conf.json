@@ -1,0 +1,9 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "SyntheticTauriTest",
+  "version": "0.1.0",
+  "identifier": "invalid.test.syntheticterminal",
+  "build": { "frontendDist": "../dist" },
+  "app": { "windows": [{ "title": "Synthetic Tauri terminal test", "width": 800, "height": 500 }], "security": { "csp": null } },
+  "bundle": { "active": false }
+}

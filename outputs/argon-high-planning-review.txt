@@ -1,0 +1,298 @@
+I will begin by reading [`outputs/argon-next-step-brief.md`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/argon-next-step-brief.md) to understand the review requirements and identify the linked local project materials.
+I will now read [`outputs/project-hub.md`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/project-hub.md) and [`outputs/tgm-ux-prototype/README.md`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/tgm-ux-prototype/README.md) to trace the linked requirements, design, orchestration, and test evidence documents.
+I will now read the linked specification, design, orchestration, stack decision, and test evidence documents referenced in [`outputs/project-hub.md`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/project-hub.md).
+I will now read [`outputs/dashboard-decisions.md`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/dashboard-decisions.md), [`outputs/end-to-end-prototype-results.md`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/end-to-end-prototype-results.md), and [`outputs/ux-shaping-draft.md`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/ux-shaping-draft.md).
+I will now read the prototype source files ([`outputs/tgm-ux-prototype/index.html`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/tgm-ux-prototype/index.html), [`outputs/tgm-ux-prototype/prototype.js`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/tgm-ux-prototype/prototype.js), [`outputs/tgm-ux-prototype/styles.css`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/tgm-ux-prototype/styles.css)) and the additional referenced feasibility/validation reports ([`outputs/antigravity-feasibility-results.md`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/antigravity-feasibility-results.md), [`outputs/integration-validation-2026-11-06.md`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/integration-validation-2026-11-06.md), [`outputs/desktop-stack-research.md`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/desktop-stack-research.md)).
+I will now inspect the referenced static visual concepts ([`outputs/ui-exploration/home-tgm-concept.png`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/ui-exploration/home-tgm-concept.png) and [`outputs/ui-exploration/workspace-tgm-concept.png`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/ui-exploration/workspace-tgm-concept.png)) to complete the review of all linked artifacts before synthesizing the proposal.
+# TGM (Personal Command Center) — Next-Step Planning & Interface Contract Review
+
+**Review basis:** [`argon-next-step-brief.md`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/argon-next-step-brief.md), [`project-hub.md`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/project-hub.md), [`PRODUCT.md`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/PRODUCT.md), [`first-release-plan.md`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/first-release-plan.md), [`development-orchestration.md`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/development-orchestration.md), [`stack-decision-proposal.md`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/stack-decision-proposal.md), [`desktop-stack-research.md`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/desktop-stack-research.md), [`dashboard-decisions.md`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/dashboard-decisions.md), [`ux-shaping-draft.md`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/ux-shaping-draft.md), [`end-to-end-prototype-results.md`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/end-to-end-prototype-results.md), [`integration-validation-2026-11-06.md`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/integration-validation-2026-11-06.md), [`antigravity-feasibility-results.md`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/antigravity-feasibility-results.md), [`tgm-ux-prototype/README.md`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/tgm-ux-prototype/README.md), [`tgm-ux-prototype/index.html`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/tgm-ux-prototype/index.html), [`tgm-ux-prototype/prototype.js`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/tgm-ux-prototype/prototype.js), [`tgm-ux-prototype/styles.css`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/tgm-ux-prototype/styles.css), [`home-tgm-concept.png`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/ui-exploration/home-tgm-concept.png), and [`workspace-tgm-concept.png`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/ui-exploration/workspace-tgm-concept.png).
+
+---
+
+## 0. Boundary of Evidence: Approved Decisions vs. Recommendations vs. Unverified/Pending
+
+### A. User-Approved Decisions & Verified Technical Facts
+- **Product Identity & Brand (`Approved`):** Top-level brand is **TGM**; the embedded terminal keeps its real **AGY Terminal** identity ([`PRODUCT.md`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/PRODUCT.md#L48-L51), [`ux-shaping-draft.md`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/ux-shaping-draft.md#L58-L60)). Whether the subtitle remains *Personal Command Center* is still open ([`PRODUCT.md`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/PRODUCT.md#L48)).
+- **Visual & Structural Direction (`Approved Direction, Details Pending`):** Windows/PC-first **calm home + workspace** layout (`Concept C` dark palette with noticeable Loki-inspired deep green and gold details) and familiarity with AGY, Obsidian, Google Keep, and Codex ([`ux-shaping-draft.md`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/ux-shaping-draft.md#L3-L4), [`PRODUCT.md`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/PRODUCT.md#L50-L51)).
+- **Stack & Storage Constraints (`Approved`):** React + TypeScript + Vite for the dashboard UI/shared rules, Electron + Node.js/TypeScript for the desktop host, SQLite for structured records, and Markdown for approved Obsidian reviewers; FlowState stays in Tauri + Rust ([`stack-decision-proposal.md`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/stack-decision-proposal.md#L7-L12)). All development must use reliable internal storage (`C:`), never the unstable external HDD `D:` ([`PRODUCT.md`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/PRODUCT.md#L15)).
+- **First-Release Scope & Data Rules (`Approved`):**
+  - Day-one release includes goal suggestions, quick capture (uncategorized allowed), real embedded AGY CLI, FlowState focus integration (and standalone FlowState usage without AGY), Obsidian reviewer preview/save, bounded project memory, and all three practice modes (multiple-choice, interview, hands-on) via AGY ([`project-hub.md`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/project-hub.md#L28), [`first-release-plan.md`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/first-release-plan.md#L38-L86)).
+  - Stopping a focus session records duration and leaves an unfinished task open; completing a task is an explicit, separate action ([`dashboard-decisions.md`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/dashboard-decisions.md#L52)).
+  - Cross-project suggestions may draw from **active** project memories; **archived** projects and goals are excluded by default ([`first-release-plan.md`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/first-release-plan.md#L61)).
+  - Gemini Notebook API and multi-client business features are deferred ([`dashboard-decisions.md`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/dashboard-decisions.md#L38), [`project-hub.md`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/project-hub.md#L76)).
+- **Orchestration & Tooling (`Approved Roles, Verified Narrow Probes`):** Codex acts as lead/integrator, `gemini-4-argon-medium` is requested for implementation, and `gemini-3.8-flash-high` drives Agent Desktop for UI checks, with `git-wt` (Worktrunk 0.81.0) isolating parallel tracks ([`development-orchestration.md`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/development-orchestration.md#L6-L13), [`development-orchestration.md`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/development-orchestration.md#L39-L42)).
+- **Demonstrated Prototype Evidence (`Verified in Isolation Only`):**
+  - Electron `44.10.2` ran an unpackaged hidden-window `xterm.js` + `node-pty` roundtrip with actual AGY (`gemini-3.8-flash-low`) after waiting for the visible prompt ([`stack-decision-proposal.md`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/stack-decision-proposal.md#L16)).
+  - Actual AGY `/focus` and `/stop` skills invoked an MCP tool that started and stopped a session in a modified, isolated FlowState copy while leaving the task `pending` ([`end-to-end-prototype-results.md`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/end-to-end-prototype-results.md#L9-L13)).
+  - Actual AGY submitted a reviewer draft via `reviewer_probe/propose_reviewer`, and separate isolated runs verified external-edit conflict blocking and opening the saved note in Obsidian `1.15.0` ([`end-to-end-prototype-results.md`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/end-to-end-prototype-results.md#L18-L21), [`integration-validation-2026-11-06.md`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/integration-validation-2026-11-06.md#L29-L31)).
+
+### B. Recommendations in This Proposal (`Proposed — Pending User Review`)
+- **Immediate Next Step (`Proposed`):** Run a single, structured **User Prototype Evaluation & Architecture Boundary Decision Check** (closing the loop on `P2` and `P3` in [`project-hub.md`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/project-hub.md#L38-L39)) before initializing any production repository or writing app code.
+- **Preliminary Home/Workspace Interface Contract (`Proposed`):** Replace the DOM-coupled state in [`prototype.js`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/tgm-ux-prototype/prototype.js#L14-L21) with a pure TypeScript view-state and command/intent contract that separates the Design track (React components + synthetic fixtures) from the Logic track (SQLite, PTY, FlowState, Obsidian adapters) without prematurely locking down IPC, SQLite schema, or file paths.
+- **Dependency-Ordered Next Slice (`Proposed`):** Sequence the transition from `P2`/`P3` sign-off into `P3` repository/contract scaffolding, followed by parallel `git-wt` tracks for the `P4` Home/Workspace UI and `P4` Local Domain Logic on synthetic fixtures.
+
+### C. Unverified Assumptions & Pending User Feedback (`Unverified / Open`)
+- **Clickable Prototype & Static Concept Evaluation (`Pending User Feedback`):** The user has **not yet evaluated** [`tgm-ux-prototype/index.html`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/tgm-ux-prototype/index.html) or [`home-tgm-concept.png`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/ui-exploration/home-tgm-concept.png) ([`argon-next-step-brief.md`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/argon-next-step-brief.md#L5)). All prototype behaviors (`focusState`, `captureCount`, `SYNTHETIC_DRAFTS` in [`prototype.js`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/tgm-ux-prototype/prototype.js#L9-L21)) are disposable in-memory simulations.
+- **Visual Inspection via Agent Desktop (`Unverified`):** While `gemini-3.8-flash-high` verified accessibility state transitions in [`tgm-ux-prototype/index.html`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/tgm-ux-prototype/index.html), screenshot capture failed because the test browser window was minimized ([`tgm-ux-prototype/README.md`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/tgm-ux-prototype/README.md#L11)).
+- **Design Reference Provenance (`Pending User Clarification`):** Which specific `Unslop` repository ([`heydamir/unslop` vs. `claudiusararu/unslop-ui-skill`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/development-orchestration.md#L11)) and which exact GradientDeck references the user wants applied remain unconfirmed.
+- **Electron 45 Crash & Packaging (`Unverified`):** Electron `45.2.3` crashed in the renderer with `0x80000003` ([`stack-decision-proposal.md`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/stack-decision-proposal.md#L18)), and packaged builds (`node-pty` + SQLite native addon ABI compatibility) have not been tested on any Electron version.
+- **Production Safety & Policy (`Unverified`):** The prototype FlowState loopback bridge is unauthenticated ([`end-to-end-prototype-results.md`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/end-to-end-prototype-results.md#L14)), multi-file Obsidian writes lack atomic crash recovery ([`integration-validation-2026-11-06.md`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/integration-validation-2026-11-06.md#L31)), and Google consumer-plan policy for an app-hosted interactive AGY CLI remains unconfirmed ([`antigravity-feasibility-results.md`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/antigravity-feasibility-results.md#L15)).
+
+---
+
+## 1. Immediate Next Step and Why (`Proposed`)
+
+### Recommended Step: Structured User Walkthrough of the TGM Prototype + 5-Point Decision Alignment (`P2` + `P3` Gate)
+Before creating the production dashboard repository or dispatching parallel `git-wt` implementation tracks, the immediate next step is a **15-minute structured user review of [`tgm-ux-prototype/index.html`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/tgm-ux-prototype/index.html) paired with [`home-tgm-concept.png`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/ui-exploration/home-tgm-concept.png) and [`workspace-tgm-concept.png`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/ui-exploration/workspace-tgm-concept.png)**, coupled with resolving the **five open product/workspace decisions** listed in Section 3.
+
+### Why This Step Must Come First
+1. **The Prototype and Concepts Diverge on Key User-Facing Controls:** Comparing [`home-tgm-concept.png`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/ui-exploration/home-tgm-concept.png), [`workspace-tgm-concept.png`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/ui-exploration/workspace-tgm-concept.png), [`tgm-ux-prototype/index.html`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/tgm-ux-prototype/index.html), and [`first-release-plan.md`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/first-release-plan.md) reveals concrete UI discrepancies that only the user should settle:
+   - **Independent Focus on Home:** [`home-tgm-concept.png`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/ui-exploration/home-tgm-concept.png) places a `Start focus ->` button directly in the Home top bar, whereas [`tgm-ux-prototype/index.html`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/tgm-ux-prototype/index.html#L45) only shows a passive `#focus-status` badge on Home and hides `Start focus` inside `#workspace-view` ([`index.html`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/tgm-ux-prototype/index.html#L62)).
+   - **Quick Capture Reachability:** [`workspace-tgm-concept.png`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/ui-exploration/workspace-tgm-concept.png) keeps the Quick Capture bar visible at the bottom of the Workspace view, whereas [`tgm-ux-prototype/index.html`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/tgm-ux-prototype/index.html#L56) places `.capture-area` exclusively inside `#home-view`.
+   - **Stop vs. Complete Task Action:** [`prototype.js`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/tgm-ux-prototype/prototype.js#L107-L118) implements `stop-focus` (`"Session stopped · task open"`), but neither [`index.html`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/tgm-ux-prototype/index.html#L62) nor [`workspace-tgm-concept.png`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/ui-exploration/workspace-tgm-concept.png) provides the separate **Complete task** control required by [`first-release-plan.md`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/first-release-plan.md#L68).
+   - **Suggestion Management Controls:** [`first-release-plan.md`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/first-release-plan.md#L42) requires letting the user *choose, edit, dismiss, or request alternatives* for suggested steps, plus an optional time/energy prompt; [`index.html`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/tgm-ux-prototype/index.html#L49-L54) currently includes `#time-filter` and `Start`/`Open` buttons, without edit/dismiss/refresh-alternatives or energy selection.
+2. **Protects Parallel Track Separation:** Locking the shared contract (`P3`) right after prototype feedback prevents the Design track (`Impeccable`) and Logic track (`gemini-4-argon-medium`) from building against conflicting screen states ([`development-orchestration.md`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/development-orchestration.md#L13)).
+
+---
+
+## 2. Preliminary Home/Workspace Interface Contract (`Proposed`)
+
+This contract replaces the untyped state in [`initPrototype`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/tgm-ux-prototype/prototype.js#L14-L21) (`activeSession`, `focusState`, `focusSession`, `captureCount`, `activeReviewKind`) with a **pure TypeScript boundary** between presentation (`Design track`) and state/integrations (`Logic track`).
+
+### What This Contract Intentionally Does Not Decide
+- It **does not** choose the SQLite library, table schema, or Electron IPC channel names.
+- It **does not** choose the FlowState local transport (named pipe vs. authenticated loopback) or exact memory budget number/unit.
+- It **does not** choose the Obsidian folder layout or link syntax (`[[wikilink]]` vs. `[markdown](link.md)`), treating link format and destination as opaque strings/options supplied by the logic layer.
+
+```mermaid
+flowchart LR
+    subgraph DesignTrack["Design Track (React UI + Synthetic Fixtures)"]
+        HomeView["Home Surface"]
+        WorkspaceView["Workspace Surface"]
+        ReviewModal["Approval & Conflict Modal"]
+    end
+
+    subgraph Contract["Shared TypeScript Contract (Pure Types)"]
+        ViewState["DashboardViewState (Read-Only Props)"]
+        Actions["DashboardActions (Async Intent Dispatch)"]
+    end
+
+    subgraph LogicTrack["Logic Track (State + Host Adapters)"]
+        Store["Domain State & SQLite Port"]
+        AGYPort["AGY Terminal & MCP Port"]
+        FlowPort["FlowState Session Port"]
+        VaultPort["Obsidian Reviewer Port"]
+    end
+
+    HomeView --> Actions
+    WorkspaceView --> Actions
+    ReviewModal --> Actions
+    ViewState --> HomeView
+    ViewState --> WorkspaceView
+    ViewState --> ReviewModal
+    Actions --> Store
+    Store --> ViewState
+    Store <--> AGYPort
+    Store <--> FlowPort
+    Store <--> VaultPort
+```
+
+### Proposed TypeScript Contract Skeleton (For Review, Not Yet Written to Disk)
+
+```typescript
+// Pure domain identifiers — opaque to the UI track
+export type GoalId = string;
+export type ProjectId = string;
+export type SessionId = string;
+export type FocusSessionId = string;
+export type CaptureId = string;
+export type ProposalId = string;
+
+export type SurfaceRoute =
+  | { view: "home" }
+  | { view: "workspace"; projectId: ProjectId; sessionId: SessionId }
+  | { view: "projects" }
+  | { view: "learning" }
+  | { view: "reviewers" };
+
+// Reflects first-release-plan.md §5 failure and availability states honestly
+export type DependencyHealth =
+  | { status: "ready" }
+  | { status: "unavailable"; reason: string; recoverable: boolean }
+  | { status: "error"; message: string; lastAttemptIso: string };
+
+// Maps prototype.js focusState ("idle" | "running" | "paused" | "stopped")
+// while adding explicit task completion and external FlowState sync states
+export type FocusStatusView =
+  | { state: "idle"; flowStateHealth: DependencyHealth }
+  | {
+      state: "running" | "paused";
+      focusSessionId: FocusSessionId;
+      taskTitle: string;
+      projectId?: ProjectId;
+      goalId?: GoalId;
+      elapsedSecondsAuthoritative: number; // Always from FlowState, never AI-estimated
+      startedVia: "dashboard" | "agy" | "flowstate_direct";
+    }
+  | {
+      state: "stopped_task_open";
+      focusSessionId: FocusSessionId;
+      taskTitle: string;
+      recordedDurationSeconds: number;
+      canCompleteTask: boolean;
+      canAddManualNote: boolean;
+    }
+  | {
+      state: "task_completed";
+      focusSessionId: FocusSessionId;
+      taskTitle: string;
+      recordedDurationSeconds: number;
+    };
+
+export interface SuggestedStepView {
+  id: string;
+  title: string;
+  reason: string; // Required by first-release-plan.md §3.1
+  estimatedMinutes?: number;
+  energyLevel?: "low" | "medium" | "high";
+  goalId: GoalId;
+  goalTitle: string;
+  projectId?: ProjectId;
+  projectTitle?: string;
+  sourceProjectsUsed: ProjectId[]; // Transparency for cross-project active memory
+}
+
+export interface QuickCaptureItemView {
+  id: CaptureId;
+  text: string;
+  createdAtIso: string;
+  linkedProjectId?: ProjectId;
+  linkedGoalId?: GoalId;
+}
+
+// Covers progress, memory, reviewer, and practice updates with explicit conflict states
+export type ReviewProposalKind = "goal_progress" | "project_memory" | "obsidian_reviewer" | "learning_history";
+
+export interface ReviewProposalView {
+  id: ProposalId;
+  kind: ReviewProposalKind;
+  projectId?: ProjectId;
+  sessionId?: SessionId;
+  title: string;
+  proposedContentMarkdown: string;
+  uncertaintyNotes: string[]; // Required by first-release-plan.md §3.4 & §5
+  sourceContextSummary: string; // Shows what context was available or compacted
+  targetDestination?: string; // e.g., relative vault path for Obsidian reviewer
+  conflictState:
+    | { status: "clean" }
+    | { status: "external_edit_detected"; detail: string }
+    | { status: "file_collision"; detail: string }
+    | { status: "memory_budget_reached"; detail: string }
+    | { status: "partial_write_recovery_needed"; detail: string };
+}
+
+export interface DashboardViewState {
+  route: SurfaceRoute;
+  filter: { maxMinutes?: number; energy?: "low" | "medium" | "high" };
+  suggestions: {
+    status: "loading" | "ready" | "empty_no_active_goals" | "ai_unavailable";
+    items: SuggestedStepView[];
+    statusMessage?: string;
+  };
+  lastSession?: {
+    sessionId: SessionId;
+    title: string;
+    projectId: ProjectId;
+    projectTitle: string;
+  };
+  recentCaptures: QuickCaptureItemView[];
+  focus: FocusStatusView;
+  activeWorkspace?: {
+    projectId: ProjectId;
+    projectTitle: string;
+    folderPath?: string; // Optional: supports folderless study goals
+    sessionId: SessionId;
+    sessionTitle: string;
+    agyTerminalHealth: DependencyHealth;
+    pendingProposals: ReviewProposalView[];
+  };
+  activeModalProposal?: ReviewProposalView;
+}
+
+// Intent actions emitted by the UI track and fulfilled by the Logic track
+export interface DashboardActions {
+  navigate(route: SurfaceRoute): void;
+  setSuggestionFilter(filter: { maxMinutes?: number; energy?: "low" | "medium" | "high" }): void;
+  selectSuggestion(stepId: string, mode: "open_agy_workspace" | "focus_independently"): Promise<void>;
+  editSuggestion(stepId: string, updatedTitle: string): Promise<void>;
+  dismissSuggestion(stepId: string): Promise<void>;
+  requestAlternativeSuggestions(): Promise<void>;
+
+  submitQuickCapture(text: string, association?: { projectId?: ProjectId; goalId?: GoalId }): Promise<void>;
+
+  // Focus lifecycle: keeps Stop Session and Complete Task strictly separate
+  startFocus(params: { taskTitle: string; projectId?: ProjectId; goalId?: GoalId }): Promise<void>;
+  pauseFocus(focusSessionId: FocusSessionId): Promise<void>;
+  resumeFocus(focusSessionId: FocusSessionId): Promise<void>;
+  stopFocusLeaveTaskOpen(focusSessionId: FocusSessionId, manualNote?: string): Promise<void>;
+  completeFocusTask(focusSessionId: FocusSessionId, manualNote?: string): Promise<void>;
+
+  // Review lifecycle: never auto-applies AI changes without explicit user action
+  openProposalModal(proposalId: ProposalId): void;
+  requestMemoryDraft(sessionId: SessionId): Promise<void>;
+  requestReviewerDraft(sessionId: SessionId, additionalSources?: string[]): Promise<void>;
+  approveProposal(proposalId: ProposalId, userEditedMarkdown?: string): Promise<void>;
+  rejectProposal(proposalId: ProposalId): Promise<void>;
+  refreshConflictedProposal(proposalId: ProposalId): Promise<void>;
+}
+```
+
+---
+
+## 3. Consequential User-Facing Decisions & Concrete Acceptance Checks
+
+### Part A: Prototype & Visual Decisions (`Pending User Feedback` — Evaluate in Browser)
+These check whether the UX flow in [`tgm-ux-prototype/index.html`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/tgm-ux-prototype/index.html), [`home-tgm-concept.png`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/ui-exploration/home-tgm-concept.png), and [`workspace-tgm-concept.png`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/ui-exploration/workspace-tgm-concept.png) feels calm and natural to the user:
+
+| # | Consequential User Decision | Why It Matters | Prototype Acceptance Check (User Feedback) |
+|---|---|---|---|
+| **D1** | **Home vs. Workspace Control Placement:** Should `Start focus` and `Quick capture` be available on **both** Home and Workspace (as in [`home-tgm-concept.png`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/ui-exploration/home-tgm-concept.png) and [`workspace-tgm-concept.png`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/ui-exploration/workspace-tgm-concept.png)), and where should the explicit **Complete task** button appear after stopping focus? | Determines how independent focus (without AGY) and mid-session thought capture work, and makes stop-vs-complete unambiguous. | User opens [`tgm-ux-prototype/index.html`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/tgm-ux-prototype/index.html), tests starting/stopping focus and capturing thoughts, and confirms preferred placement of `Start focus`, `Complete task`, and `Quick capture`. |
+| **D2** | **Suggestion Card Actions & Energy Prompt:** How compact should `Edit`, `Dismiss`, `Alternatives`, and the optional `Energy` selector be on Home suggestion rows? | [`first-release-plan.md`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/first-release-plan.md#L42) requires these controls without cluttering the calm Home view. | User reviews the three suggestion rows in [`tgm-ux-prototype/index.html`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/tgm-ux-prototype/index.html#L50-L54) and chooses inline secondary actions vs. a subtle row menu. |
+| **D3** | **Loki-Themed Treatment, Typography & Brand Subtitle:** Approve/adjust the Georgia display serif vs. sans-serif hierarchy in [`styles.css`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/tgm-ux-prototype/styles.css#L1), horned emblem/gold borders, whether the subtitle stays `Personal Command Center`, and which exact `Unslop` / `GradientDeck` references apply. | Prevents the Design track from codifying unapproved generated placeholders into the design system ([`ux-shaping-draft.md`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/ux-shaping-draft.md#L52-L60)). | User confirms or revises the typography, gold/green ornament density, subtitle, and exact `Unslop` repo URL. |
+
+### Part B: Architecture & Data Ownership Decisions (`Pending Decision + Technical Verification`)
+These decisions affect data safety, local storage on `C:`, and cross-app behavior ([`first-release-plan.md`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/first-release-plan.md#L140-L150)):
+
+| # | Consequential Decision | Recommended Default (`Proposed`) | Technical Verification Gate (Automated / Harness) |
+|---|---|---|---|
+| **D4** | **Dashboard Repo Location & Relationship to FlowState (`P3`)** | Create a standalone Git repository on `C:` (outside the FlowState repo) so FlowState's uncommitted Tauri/Rust work is untouched and `git-wt` worktrees stay clean ([`development-orchestration.md`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/development-orchestration.md#L40)). | Verify `git-wt` creates isolated UI and Logic worktrees in the new `C:` repo with independent `node_modules`/ports and zero changes to the FlowState repo status. |
+| **D5** | **Data Ownership, Memory Budget & Obsidian Link Strategy (`P3`)** | FlowState owns authoritative focus session IDs and elapsed seconds; Dashboard SQLite owns goals, captures, pending approvals, and session links; curated project memory is stored as user-readable Markdown + SQLite metadata with an explicit character/token cap (e.g., `4,000` chars per project, never silently truncating original history); Obsidian reviewers support user-configurable relative path + link format (`[[wikilink]]` default matching sampled `BSIS JOURNEY` notes in [`dashboard-decisions.md`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/dashboard-decisions.md#L35), or standard Markdown links). | Automated fixture tests verify: (1) memory drafts exceeding the cap trigger `memory_budget_reached` review rather than silent deletion; (2) archived project memories are excluded from cross-project suggestion context; (3) staged temp-file + hash check blocks stale overwrites in an isolated test vault. |
+
+---
+
+## 4. Blockers and Dependency-Ordered Next Slice
+
+### Current Blockers & Risk Boundaries
+1. **User Prototype Evaluation Blocker (`Blocks P2 completion and First UI Slice lock`):** Production UI implementation must not start until the user evaluates [`tgm-ux-prototype/index.html`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/tgm-ux-prototype/index.html) and [`home-tgm-concept.png`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/ui-exploration/home-tgm-concept.png) ([`argon-next-step-brief.md`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/argon-next-step-brief.md#L5)).
+2. **Electron Version & Native Packaging Gate (`Blocks P5 release packaging, not P3/P4 contract work`):** Electron `45.2.3` crashed in the renderer (`0x80000003`), while Electron `44.10.2` passed unpackaged ([`stack-decision-proposal.md`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/stack-decision-proposal.md#L16-L18)). Pinning supported Electron `44.x` (while investigating `45.x`) and verifying `node-pty` + SQLite native addon rebuilds in a packaged Windows app is required before `P5` can be marked done.
+3. **Agent Desktop Minimized-Window Screenshot Issue (`Blocks automated visual regression only`):** In [`tgm-ux-prototype/README.md`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/tgm-ux-prototype/README.md#L11), Agent Desktop (`1.1.0` with isolated `AGENT_DESKTOP_HOME`) verified DOM/accessibility state transitions via `gemini-3.8-flash-high`, but screenshot capture failed because the target window was minimized. Any Agent Desktop visual check must ensure the target window is restored/foregrounded in an isolated test session before screenshot capture.
+4. **Data Protection Boundary (`Hard Constraint`):** Neither the user's real FlowState database nor `C:/Users/PC/Documents/Obsidian` may be connected until authenticated local IPC (`P6`) and atomic multi-file write + backup/recovery (`P7`) pass on disposable instances ([`project-hub.md`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/project-hub.md#L73-L74)).
+
+### Dependency-Ordered Next Slice (`P2` → `P3` → `P4`)
+
+```mermaid
+flowchart TD
+    S1["Step 1 (Now): User evaluates clickable prototype & resolves D1–D5"] --> S2["Step 2 (P3): Initialize C: repo, pin Electron 44.x + Vite/React/TS, commit shared contract & synthetic fixtures"]
+    S2 --> S3A["Step 3A (P4 Design Track via git-wt): Build React Home + Workspace UI states against synthetic fixtures"]
+    S2 --> S3B["Step 3B (P4 Logic Track via git-wt): Implement SQLite store for Goals, Projects, Captures, and Approval state machine"]
+    S3A --> S4["Step 4 (Lead Integration): Merge P4 tracks, run behavior tests + foregrounded Agent Desktop visual/a11y check"]
+    S4 --> S5["Step 5 (P5–P7 Spike Gates): Packaged Electron 44 PTY check, authenticated FlowState IPC, atomic Obsidian test-vault writes"]
+```
+
+1. **Step 1 — User Review & Decision Checkpoint (`Current Step, No File Changes Yet`):**
+   - Collect user answers on **D1–D5** after they try [`tgm-ux-prototype/index.html`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/tgm-ux-prototype/index.html).
+   - If the user wants quick adjustments to the disposable prototype first, update only the disposable preview; once satisfied, record decisions in [`project-hub.md`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/project-hub.md) and [`dashboard-decisions.md`](file:///C:/Users/PC/Documents/Codex/2026-11-05/so-x20/outputs/dashboard-decisions.md).
+[agy] print timeout after 3m0s with turn in progress; returning partial output
+error: print timeout after 3m0s with the turn still in progress; the response is partial
+AGY_ERROR: {"short_error":"print timeout after 3m0s with the turn still in progress; the response is partial","status":"DEADLINE_EXCEEDED","retryable":false,"reason":"print_timeout"}

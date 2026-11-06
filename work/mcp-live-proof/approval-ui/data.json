@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "alpha": {
+      "memory": "alpha-base:alpha-note",
+      "revision": 1
+    },
+    "beta": {
+      "memory": "beta-base:",
+      "revision": 0
+    }
+  },
+  "drafts": [],
+  "nextId": 3
+}
