@@ -46,3 +46,25 @@ button:active:not(:disabled) { filter: brightness(.9); }
   .brand small { display: none; }
   .side-label span { float: none; display: block; margin-top: 4px; }
 }
+
+/* Project disclosure and icon treatment. */
+.nav-icon,.project-icon,.chevron,.focus-icon { fill:none; stroke:currentColor; stroke-width:1.55; stroke-linecap:round; stroke-linejoin:round; flex:none; }
+.nav-icon { width:18px; height:18px; }
+.project-group { margin:2px 0 5px; }
+.project-group summary { display:flex; align-items:center; gap:9px; padding:9px 8px; color:#dfebdf; font-size:12px; font-weight:700; cursor:pointer; list-style:none; border-radius:6px; }
+.project-group summary::-webkit-details-marker { display:none; }
+.project-group summary:hover { background:#17382b; }
+.project-group summary:focus-visible { outline:2px solid #77e5c9; outline-offset:3px; }
+.project-icon { width:18px; height:18px; color:var(--gold); }
+.chevron { width:14px; height:14px; margin-left:auto; color:var(--muted); transform:rotate(-90deg); }
+.project-group[open] .chevron { transform:none; }
+.session-list { display:grid; margin-left:26px; border-left:1px solid var(--line); padding-left:7px; }
+.session { padding:8px 10px; }
+.project-group:not([open]) .session-list { display:none; }
+.focus-icon { display:inline-block; width:16px; height:16px; vertical-align:-3px; margin-right:7px; color:var(--gold); }
+@media (max-width:720px) {
+  .project-group { flex-basis:100%; }
+  .project-group summary { padding-left:0; }
+  .session-list { display:flex; flex-wrap:wrap; margin-left:22px; }
+  .sidebar .session { display:inline-flex; }
+}
