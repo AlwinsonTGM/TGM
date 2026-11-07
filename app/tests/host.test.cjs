@@ -45,6 +45,12 @@ test('Home bridge persists captures and rejects other windows', async (t) => {
     const otherPage = await otherPagePromise;
     await otherPage.waitForLoadState('domcontentloaded');
     await assert.rejects(otherPage.evaluate(() => window.tgm.listCaptures()), /Unauthorized IPC sender/);
+    await assert.rejects(otherPage.evaluate(() => window.tgm.updateCapture(1, 'Changed', null, null, 0)), /Unauthorized IPC sender/);
+    await assert.rejects(otherPage.evaluate(() => window.tgm.deleteCapture(1, 0)), /Unauthorized IPC sender/);
+    await assert.rejects(otherPage.evaluate(() => window.tgm.createProject('Unauthorized', null)), /Unauthorized IPC sender/);
+    await assert.rejects(otherPage.evaluate(() => window.tgm.listCompletedSteps()), /Unauthorized IPC sender/);
+    await assert.rejects(otherPage.evaluate(() => window.tgm.completeStep(1, 1, 'Step')), /Unauthorized IPC sender/);
+    await assert.rejects(otherPage.evaluate(() => window.tgm.restoreStep(1, 1)), /Unauthorized IPC sender/);
     await otherPage.close();
     await instance.close();
     instance = null;

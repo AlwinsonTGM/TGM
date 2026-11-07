@@ -8,6 +8,7 @@ const os = require('node:os');
 const path = require('node:path');
 const { DatabaseSync } = require('node:sqlite');
 const { makeGoals } = require('../electron/goals.cjs');
+const { openStore } = require('../electron/store.cjs');
 
 const CLI_PATH = path.resolve(__dirname, '../scripts/recover-database.cjs');
 
@@ -94,6 +95,29 @@ test('snapshot and restore return unique database paths and preserve all rows', 
   assert.equal(secondSnapshot.status, 0, secondSnapshot.stderr);
   assert.notEqual(secondSnapshot.stdout.trim(), snapshotPath);
   assert.deepEqual(readAllRows(secondSnapshot.stdout.trim()), expected);
+});
+
+test('snapshot and restore preserve migrated capture attachments and projects', t => {
+  const dir = withTempDir(t);
+  const sourcePath = path.join(dir, 'source.sqlite');
+  createPopulatedDatabase(sourcePath);
+  const store = openStore(sourcePath);
+  const project = store.createProject('Study', null)[0];
+  const capture = store.listCaptures()[0];
+  store.updateCapture(capture.id, capture.text, null, project.id, capture.revision);
+  const goal = store.listGoals()[0];
+  store.completeStep(goal.id, goal.steps[0].id, goal.steps[0].text);
+  store.close();
+  const snapshot = runCli(['snapshot', sourcePath, dir]);
+  assert.equal(snapshot.status, 0, snapshot.stderr);
+  const restored = runCli(['restore', snapshot.stdout.trim(), dir]);
+  assert.equal(restored.status, 0, restored.stderr);
+  const result = openStore(restored.stdout.trim());
+  try {
+    assert.equal(result.listProjects()[0].name, 'Study');
+    assert.equal(result.listCaptures()[0].projectName, 'Study');
+    assert.equal(result.listCompletedSteps()[0].text, 'Practice generic constraints');
+  } finally { result.close(); }
 });
 
 test('unrelated existing database and sidecars are preserved in the destination parent', (t) => {

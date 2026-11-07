@@ -45,9 +45,14 @@ function makeGoals(db) {
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       goal_id INTEGER NOT NULL,
       text TEXT NOT NULL CHECK (length(text) <= 500 AND instr(text, char(0)) = 0 AND length(trim(text)) > 0),
+      completed_at TEXT,
       FOREIGN KEY (goal_id) REFERENCES goals(id) ON DELETE CASCADE
     );
   `);
+
+  if (!db.prepare('PRAGMA table_info(steps)').all().some(column => column.name === 'completed_at')) {
+    db.exec('ALTER TABLE steps ADD COLUMN completed_at TEXT');
+  }
 
   function runInTransaction(work) {
     db.exec('BEGIN IMMEDIATE');
@@ -73,7 +78,7 @@ function makeGoals(db) {
         s.id AS step_id,
         s.text AS step_text
       FROM goals g
-      LEFT JOIN steps s ON s.goal_id = g.id
+      LEFT JOIN steps s ON s.goal_id = g.id AND s.completed_at IS NULL
       WHERE g.active = 1
       ORDER BY g.id ASC, s.id ASC
     `);
@@ -153,13 +158,13 @@ function makeGoals(db) {
       }
 
       if (validStepId !== null) {
-        const updateStepStmt = db.prepare('UPDATE steps SET text = ? WHERE id = ? AND goal_id = ? AND text = ?');
+        const updateStepStmt = db.prepare('UPDATE steps SET text = ? WHERE id = ? AND goal_id = ? AND text = ? AND completed_at IS NULL');
         const stepResult = updateStepStmt.run(validStepText, validStepId, validGoalId, expectedStep);
         if (Number(stepResult.changes) !== 1) {
           throw new Error('TGM_GOAL_CONFLICT: Step changed or is no longer available');
         }
       } else {
-        const countStepsStmt = db.prepare('SELECT COUNT(*) AS count FROM steps WHERE goal_id = ?');
+        const countStepsStmt = db.prepare('SELECT COUNT(*) AS count FROM steps WHERE goal_id = ? AND completed_at IS NULL');
         const existing = countStepsStmt.get(validGoalId);
         if (existing && Number(existing.count) > 0) {
           throw new Error('TGM_GOAL_CONFLICT: A step was added elsewhere');
@@ -177,10 +182,42 @@ function makeGoals(db) {
     });
   }
 
+  function completed() {
+    return db.prepare(`SELECT s.id, s.goal_id AS goalId, g.title AS goalTitle, s.text, s.completed_at AS completedAt
+      FROM steps s JOIN goals g ON g.id = s.goal_id WHERE s.completed_at IS NOT NULL AND g.active = 1
+      ORDER BY s.completed_at DESC, s.id DESC`).all();
+  }
+
+  function complete(goalId, stepId, expectedText) {
+    validateId(goalId, 'goalId'); validateId(stepId, 'stepId'); validateText(expectedText, 'expectedText');
+    return runInTransaction(() => {
+      const result = db.prepare(`UPDATE steps SET completed_at = ? WHERE id = ? AND goal_id = ? AND text = ?
+        AND completed_at IS NULL AND EXISTS (SELECT 1 FROM goals WHERE id = ? AND active = 1)`)
+        .run(new Date().toISOString(), stepId, goalId, expectedText, goalId);
+      if (Number(result.changes) !== 1) throw new Error('TGM_GOAL_CONFLICT: Step changed or is no longer available');
+      return { goals: list(), completed: completed() };
+    });
+  }
+
+  function restore(goalId, stepId) {
+    validateId(goalId, 'goalId'); validateId(stepId, 'stepId');
+    return runInTransaction(() => {
+      const result = db.prepare(`UPDATE steps SET completed_at = NULL WHERE id = ? AND goal_id = ? AND completed_at IS NOT NULL
+        AND EXISTS (SELECT 1 FROM goals WHERE id = ? AND active = 1)
+        AND NOT EXISTS (SELECT 1 FROM steps WHERE goal_id = ? AND completed_at IS NULL)`)
+        .run(stepId, goalId, goalId, goalId);
+      if (Number(result.changes) !== 1) throw new Error('TGM_GOAL_CONFLICT: Step cannot be restored while this goal has a next step');
+      return { goals: list(), completed: completed() };
+    });
+  }
+
   return {
     list,
     create,
     saveDetails,
+    completed,
+    complete,
+    restore,
   };
 }
 

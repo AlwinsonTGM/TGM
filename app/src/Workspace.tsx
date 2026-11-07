@@ -1,13 +1,13 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Terminal } from "@xterm/xterm";
 import { FitAddon } from "@xterm/addon-fit";
 import "@xterm/xterm/css/xterm.css";
 import "./workspace.css";
 
 type Harness = "agy" | "opencode";
-type Props = { active: boolean; onHome: () => void };
+type Props = { active: boolean; onHome: () => void; intent: WorkIntent | null; onRunningChange: (running: boolean) => void; onComplete: () => void; stepBusy: boolean; stepMessage: string; stepError: string };
 
-export function Workspace({ active, onHome }: Props) {
+export function Workspace({ active, onHome, intent, onRunningChange, onComplete, stepBusy, stepMessage, stepError }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const terminalRef = useRef<Terminal | null>(null);
   const fitRef = useRef<FitAddon | null>(null);
@@ -23,6 +23,19 @@ export function Workspace({ active, onHome }: Props) {
   const [availability, setAvailability] = useState("Checking harness…");
   const [availabilityState, setAvailabilityState] = useState<"checking" | "found" | "missing" | "error">("checking");
   const [error, setError] = useState("");
+  const [copyMessage, setCopyMessage] = useState("");
+  const [copyError, setCopyError] = useState("");
+
+  useLayoutEffect(() => { onRunningChange(running || busy); }, [running, busy, onRunningChange]);
+  useLayoutEffect(() => { if (intent && intent.mode !== "independent" && !running) setHarness(intent.mode); }, [intent]);
+  useEffect(() => { setCopyMessage(""); setCopyError(""); }, [intent?.stepId]);
+
+  async function copyStep() {
+    if (!intent || !window.terminalBridge) return;
+    setCopyMessage(""); setCopyError("");
+    try { await window.terminalBridge.copy(intent.stepText); setCopyMessage("Step copied. Paste it when you’re ready."); }
+    catch { setCopyError("Couldn’t copy the step. Select and copy its text instead."); }
+  }
 
   function fitTerminal() {
     const element = containerRef.current;
@@ -149,13 +162,17 @@ export function Workspace({ active, onHome }: Props) {
   }
 
   return <div className="workspace" hidden={!active}>
-    <div className="workspace-heading"><div><button type="button" className="quiet back-home" onClick={onHome}>Home</button><h1>Workspace</h1><p>Run an installed harness in a project folder.</p></div><span className="terminal-status" role="status">{status}</span></div>
+    <div className="workspace-heading"><div><button type="button" className="quiet back-home" onClick={onHome}>Home</button><h1>Workspace</h1><p>Run an installed harness in a working folder.</p></div><span className="terminal-status" role="status">{status}</span></div>
+    {intent && <div className="work-context"><span>Current step · {intent.goalTitle}</span><strong>{intent.stepText}</strong><p>This step is not sent to the terminal automatically.</p><div className="inline-actions"><button type="button" className="outline" onClick={() => void copyStep()}>Copy step</button><button type="button" className="quiet" disabled={stepBusy} onClick={onComplete}>{stepBusy ? "Saving…" : "Complete step"}</button></div>{copyMessage && <p className="feedback" role="status">{copyMessage}</p>}{copyError && <p className="feedback error" role="alert">{copyError}</p>}</div>}
+    {stepError && <p className="feedback error" role="alert">{stepError}</p>}
+    {stepMessage && <p id="workspace-step-result" className="feedback" role="status" tabIndex={-1}>{stepMessage}</p>}
     <div className="workspace-controls">
       <label className="harness-label" htmlFor="harness">Harness<select id="harness" value={harness} disabled={busy || running} onChange={event => { checkRequestRef.current++; setAvailabilityState("checking"); setHarness(event.target.value as Harness); }}><option value="opencode">OpenCode</option><option value="agy">Antigravity CLI</option></select></label>
-      <div className="folder-control"><span>Project folder</span><div><button type="button" className="outline" disabled={busy || running || !window.terminalBridge} onClick={() => void chooseFolder()}>Choose folder</button><span className="folder-name" title={folder || undefined}>{folder || "No folder selected"}</span></div></div>
+      <div className="folder-control"><span>Working folder</span><div><button type="button" className="outline" disabled={busy || running || !window.terminalBridge} onClick={() => void chooseFolder()}>Choose folder</button><span className="folder-name" title={folder || undefined}>{folder || "No folder selected"}</span></div></div>
       <button type="button" className="primary" disabled={!folder || busy || running || !window.terminalBridge || availabilityState !== "found"} onClick={() => void startTerminal()}>Start terminal</button>
       <button type="button" className="outline" disabled={!running || busy} onClick={() => void stopTerminal()}>Stop session</button>
     </div>
+    <p className="terminal-hint">{folder ? "The harness runs in the selected folder." : "Choose an existing working folder before starting. It does not need to be a project."}</p>
     <p className="harness-check" aria-live="polite">{availability} <button type="button" className="text-button" disabled={!window.terminalBridge} onClick={() => void checkHarness(harness)}>Check again</button></p>
     {error && <p className="feedback error" role="alert">{error}</p>}
     <div className="terminal-frame"><div className="terminal-heading"><strong>{harness === "agy" ? "Antigravity CLI" : "OpenCode"} terminal</strong><span>Local session</span></div><div className="terminal-screen" ref={containerRef} role="region" aria-label="Interactive terminal"/></div>

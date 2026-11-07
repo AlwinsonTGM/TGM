@@ -9,6 +9,11 @@ const tgmApi = Object.freeze({
   saveCapture(text) {
     return ipcRenderer.invoke('tgm:save-capture', text);
   },
+  updateCapture: (id, text, goalId, projectId, revision) => ipcRenderer.invoke('tgm:update-capture', id, text, goalId, projectId, revision),
+  deleteCapture: (id, revision) => ipcRenderer.invoke('tgm:delete-capture', id, revision),
+  listProjects: () => ipcRenderer.invoke('tgm:list-projects'),
+  createProject: (name, folder) => ipcRenderer.invoke('tgm:create-project', name, folder),
+  updateProject: (id, name, folder, active) => ipcRenderer.invoke('tgm:update-project', id, name, folder, active),
   listGoals() {
     return ipcRenderer.invoke('tgm:list-goals');
   },
@@ -18,6 +23,9 @@ const tgmApi = Object.freeze({
   saveGoalDetails(goalId, title, stepId, stepText, expectedTitle, expectedStep) {
     return ipcRenderer.invoke('tgm:save-goal-details', goalId, title, stepId, stepText, expectedTitle, expectedStep);
   },
+  listCompletedSteps: () => ipcRenderer.invoke('tgm:list-completed-steps'),
+  completeStep: (goalId, stepId, expectedText) => ipcRenderer.invoke('tgm:complete-step', goalId, stepId, expectedText),
+  restoreStep: (goalId, stepId) => ipcRenderer.invoke('tgm:restore-step', goalId, stepId),
 });
 
 contextBridge.exposeInMainWorld('tgm', tgmApi);

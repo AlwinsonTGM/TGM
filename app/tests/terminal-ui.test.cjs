@@ -110,6 +110,18 @@ test('Workspace terminal validates settings and runs, resizes, stops, and closes
     assert.deepEqual(first.args, []);
     assert.equal(path.resolve(first.cwd), path.resolve(dir));
 
+    await page.getByRole('button', { name: 'Home', exact: true }).click();
+    await page.getByRole('button', { name: 'Add goal', exact: true }).click();
+    await page.locator('#goal-title').fill('Second task');
+    await page.locator('#goal-step').fill('Next step');
+    await page.getByRole('button', { name: 'Save goal', exact: true }).click();
+    await page.getByRole('button', { name: 'Start Second task' }).click();
+    await page.getByText(/A terminal session is running/).waitFor();
+    assert.equal(processExists(first.pid), true);
+    assert.equal(await page.getByText('How would you like to work?').count(), 0);
+    await page.getByRole('button', { name: 'Open Workspace' }).click();
+    assert.equal(await page.getByText('Running', { exact: true }).isVisible(), true);
+
     await page.evaluate(() => {
       window.testTerminalOutput = '';
       window.terminalBridge.onData(data => { window.testTerminalOutput += data; });
@@ -134,7 +146,9 @@ test('Workspace terminal validates settings and runs, resizes, stops, and closes
     await waitForExit(first.pid);
     await page.getByText('Stopped', { exact: true }).waitFor();
 
-    await page.getByLabel('Harness').selectOption('opencode');
+    await page.getByRole('button', { name: 'Home', exact: true }).first().click();
+    await page.getByRole('button', { name: 'Start Second task' }).click();
+    await page.getByRole('button', { name: 'OpenCode', exact: true }).click();
     await page.getByRole('button', { name: 'Start terminal', exact: true }).click();
     await page.getByText('Running', { exact: true }).waitFor();
     const invocations = await app.evaluate(() => globalThis.terminalInvocations);
@@ -144,6 +158,9 @@ test('Workspace terminal validates settings and runs, resizes, stops, and closes
     assert.equal(path.basename(second.command).toLowerCase(), 'cmd.exe');
     assert.equal(second.args, `/d /v:off /s /c ""${path.join(binaryDir, 'opencode.cmd')}" --standalone"`);
     assert.equal(processExists(second.pid), true);
+    await page.getByRole('button', { name: 'Complete step' }).click();
+    await page.locator('.workspace').getByText('Step completed. Your terminal session is still running.').waitFor();
+    assert.equal(processExists(second.pid), true, 'Completing a step must not stop the terminal');
 
     await app.evaluate(() => { globalThis.stopChoice = 0; });
     await app.evaluate(({ BrowserWindow }) => BrowserWindow.getAllWindows()[0].close());

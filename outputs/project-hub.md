@@ -1,12 +1,14 @@
 # Personal Command Center — project hub
 
-> **Current handoff, 7 November 2026:** The first working [Home app](../app/README.md) is in this `main` checkout, using the selected Codex concept. It supports local quick capture, goals, optional first steps, and editable suggested steps. Its database recovery command creates a separate verified copy; it does not replace the live database. Workspace connects the installed AGY and OpenCode CLIs through the [terminal foundation](../app/README.md#workspace-terminal). FlowState, Obsidian and session resume are not connected.
+> **Current handoff, 7 November 2026:** The [Home app](../app/README.md) supports local goals and steps, editable captures, and basic projects with optional folders and archive/restore. Captures can be attached to a goal or project. A suggested step opens a choice of independent work or AGY/OpenCode; Workspace displays its context and requires an explicit working folder and start. Steps can be completed and restored, independently of stopping a terminal. Independent work is untimed, and the chosen context is not durable session history. Its database recovery command creates a separate verified copy; it does not replace the live database. Workspace connects installed CLIs through the [terminal foundation](../app/README.md#workspace-terminal). FlowState, Obsidian and session resume are not connected. See the [workflow implementation plan](home-workflow-implementation-plan.md) for scope and boundaries.
 >
 > The pushed `argon/tgm-home-slice-review` and `codex/tgm-home-review-fix` branches preserve the earlier Home implementation and safety work. The larger experimental design is separately preserved on `codex/design-prototype-backup`. Do not merge their visual designs or artifacts into `main` by default. Selectively reused storage and recovery code was reviewed and tested for this Home implementation. Older notes below are historical where they conflict with this handoff.
 
 **Last updated:** 7 November 2026
 
 **Current stage:** Local Home and one live harness terminal session are implemented; session resume and other integrations remain.
+
+**Workflow verification, 7 November 2026:** `npm run build` passed, and the 36-test suite passed with `node --test --test-concurrency=1 tests/*.test.cjs`. The default parallel `npm test` run reached 35/36: the existing OpenCode harness test's temporary-directory cleanup failed with Windows `EPERM`; that test passed separately and in the serial suite. The Impeccable source detector reported no findings. Home, the work chooser, capture/project editing, and Workspace were visually inspected in a test profile at desktop and narrow sizes; automated Home reflow was checked at 200% zoom. These checks do not establish production security, real FlowState integration, session resume, or packaged-release readiness.
 
 **Product implementation:** Home and its integrated terminal are in this `main` checkout; release packaging and remaining integrations remain.
 
@@ -43,7 +45,7 @@ Status meanings: **Done** = supported by the linked evidence; **In progress** = 
 | P1 | Draft first-release plan and visual project map | Done | P0 | [First-release plan](first-release-plan.md); this hub. Draft, not user-approved specification. |
 | P2 | Review scope and explore desktop UI/UX directions | In progress | P1 | User selected the Codex concept. Later design experiments are preserved separately and should not be merged by default. |
 | P3 | Choose dashboard project location, app shell, ownership, storage, and recovery approach | In progress | P1; UI informs shell | [Stack direction accepted](stack-decision-proposal.md); project location, ownership and safe FlowState/vault integration remain open. D: is an unreliable external HDD and must not be used for development. |
-| P4 | Build dashboard foundations: goals, projects, capture, and session history | In progress | P3 | Home supports local capture, goals, and next steps; projects and real session history remain. See [Home](../app/README.md). |
+| P4 | Build dashboard foundations: goals, projects, capture, and session history | In progress | P3 | Home supports local captures, goals, steps, and basic project records; real session history remains. See [Home](../app/README.md). |
 | P5 | Integrate AGY and OpenCode terminals, project sessions, MCP, and approvals | In progress | P3 | Workspace starts a single selected installed CLI in a chosen folder; session resume, MCP/approval integration and release packaging remain. |
 | P6 | Develop FlowState stop, integration, and reconciliation | Not started | P3, P5 | Direct and AGY-started sessions work; timing, duplicate prevention, and recovery checks pass. |
 | P7 | Integrate reviewed Obsidian reviewer saving | Not started | P3, P5 | Approved changes, conflict handling, backup/recovery, and opening in Obsidian verified. |

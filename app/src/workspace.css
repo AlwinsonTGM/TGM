@@ -23,4 +23,10 @@ button.nav-item:hover { background: #17382b; }
 .terminal-heading strong { color: #ebf0e7; }
 .terminal-screen { height: 350px; padding: 16px; }
 .terminal-hint { margin: 12px 0 0; color: var(--muted); font-size: 12px; line-height: 1.5; }
+.work-context { display: grid; gap: 6px; margin-top: 18px; padding: 14px 16px; border: 1px solid var(--line); border-radius: 9px; background: #10291f; overflow-wrap: anywhere; }
+.work-context span, .work-context p { color: var(--muted); font-size: 12px; }
+.work-context p { margin: 0; }
+.work-context button { width: fit-content; margin-top: 4px; }
+.folder-control > div { flex-wrap: wrap; }
+.folder-name { white-space: normal; overflow-wrap: anywhere; }
 @media (max-width: 720px) { .workspace-heading { align-items: start; } .workspace-controls { align-items: stretch; } .folder-control { flex-basis: 100%; } .terminal-screen { height: 300px; } }

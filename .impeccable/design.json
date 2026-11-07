@@ -1,0 +1,324 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-07T13:54:08Z",
+  "title": "Design System: TGM",
+  "extensions": {
+    "colorMeta": {
+      "forest-canvas": {
+        "role": "neutral",
+        "displayName": "Deep forest canvas",
+        "tonalRamp": [
+          "oklch(15% 0.027 174.2)",
+          "oklch(26% 0.027 174.2)",
+          "oklch(38% 0.027 174.2)",
+          "oklch(49% 0.027 174.2)",
+          "oklch(60% 0.027 174.2)",
+          "oklch(72% 0.027 174.2)",
+          "oklch(83% 0.027 174.2)",
+          "oklch(95% 0.012 174.2)"
+        ]
+      },
+      "forest-sidebar": {
+        "role": "neutral",
+        "displayName": "Deep forest sidebar",
+        "tonalRamp": [
+          "oklch(15% 0.023 170.3)",
+          "oklch(26% 0.023 170.3)",
+          "oklch(38% 0.023 170.3)",
+          "oklch(49% 0.023 170.3)",
+          "oklch(60% 0.023 170.3)",
+          "oklch(72% 0.023 170.3)",
+          "oklch(83% 0.023 170.3)",
+          "oklch(95% 0.012 170.3)"
+        ]
+      },
+      "forest-panel": {
+        "role": "neutral",
+        "displayName": "Forest panel",
+        "tonalRamp": [
+          "oklch(15% 0.036 165.4)",
+          "oklch(26% 0.037 165.4)",
+          "oklch(38% 0.037 165.4)",
+          "oklch(49% 0.037 165.4)",
+          "oklch(60% 0.037 165.4)",
+          "oklch(72% 0.037 165.4)",
+          "oklch(83% 0.037 165.4)",
+          "oklch(95% 0.012 165.4)"
+        ]
+      },
+      "forest-active": {
+        "role": "neutral",
+        "displayName": "Active forest",
+        "tonalRamp": [
+          "oklch(15% 0.036 163.7)",
+          "oklch(26% 0.053 163.7)",
+          "oklch(38% 0.053 163.7)",
+          "oklch(49% 0.053 163.7)",
+          "oklch(60% 0.053 163.7)",
+          "oklch(72% 0.053 163.7)",
+          "oklch(83% 0.041 163.7)",
+          "oklch(95% 0.012 163.7)"
+        ]
+      },
+      "forest-input": {
+        "role": "neutral",
+        "displayName": "Forest input",
+        "tonalRamp": [
+          "oklch(15% 0.034 169.0)",
+          "oklch(26% 0.034 169.0)",
+          "oklch(38% 0.034 169.0)",
+          "oklch(49% 0.034 169.0)",
+          "oklch(60% 0.034 169.0)",
+          "oklch(72% 0.034 169.0)",
+          "oklch(83% 0.034 169.0)",
+          "oklch(95% 0.012 169.0)"
+        ]
+      },
+      "terminal-canvas": {
+        "role": "neutral",
+        "displayName": "Terminal canvas",
+        "tonalRamp": [
+          "oklch(15% 0.023 174.8)",
+          "oklch(26% 0.023 174.8)",
+          "oklch(38% 0.023 174.8)",
+          "oklch(49% 0.023 174.8)",
+          "oklch(60% 0.023 174.8)",
+          "oklch(72% 0.023 174.8)",
+          "oklch(83% 0.023 174.8)",
+          "oklch(95% 0.012 174.8)"
+        ]
+      },
+      "rule-green": {
+        "role": "neutral",
+        "displayName": "Rule green",
+        "tonalRamp": [
+          "oklch(15% 0.036 161.5)",
+          "oklch(26% 0.045 161.5)",
+          "oklch(38% 0.045 161.5)",
+          "oklch(49% 0.045 161.5)",
+          "oklch(60% 0.045 161.5)",
+          "oklch(72% 0.045 161.5)",
+          "oklch(83% 0.041 161.5)",
+          "oklch(95% 0.012 161.5)"
+        ]
+      },
+      "control-border": {
+        "role": "neutral",
+        "displayName": "Control border",
+        "tonalRamp": [
+          "oklch(15% 0.036 160.2)",
+          "oklch(26% 0.050 160.2)",
+          "oklch(38% 0.050 160.2)",
+          "oklch(49% 0.050 160.2)",
+          "oklch(60% 0.050 160.2)",
+          "oklch(72% 0.050 160.2)",
+          "oklch(83% 0.041 160.2)",
+          "oklch(95% 0.012 160.2)"
+        ]
+      },
+      "text-primary": {
+        "role": "neutral",
+        "displayName": "Primary text",
+        "tonalRamp": [
+          "oklch(15% 0.013 130.8)",
+          "oklch(26% 0.013 130.8)",
+          "oklch(38% 0.013 130.8)",
+          "oklch(49% 0.013 130.8)",
+          "oklch(60% 0.013 130.8)",
+          "oklch(72% 0.013 130.8)",
+          "oklch(83% 0.013 130.8)",
+          "oklch(95% 0.012 130.8)"
+        ]
+      },
+      "text-muted": {
+        "role": "neutral",
+        "displayName": "Muted text",
+        "tonalRamp": [
+          "oklch(15% 0.031 151.4)",
+          "oklch(26% 0.031 151.4)",
+          "oklch(38% 0.031 151.4)",
+          "oklch(49% 0.031 151.4)",
+          "oklch(60% 0.031 151.4)",
+          "oklch(72% 0.031 151.4)",
+          "oklch(83% 0.031 151.4)",
+          "oklch(95% 0.012 151.4)"
+        ]
+      },
+      "muted-gold": {
+        "role": "secondary",
+        "displayName": "Muted gold",
+        "tonalRamp": [
+          "oklch(15% 0.036 88.0)",
+          "oklch(26% 0.062 88.0)",
+          "oklch(38% 0.086 88.0)",
+          "oklch(49% 0.086 88.0)",
+          "oklch(60% 0.086 88.0)",
+          "oklch(72% 0.067 88.0)",
+          "oklch(83% 0.041 88.0)",
+          "oklch(95% 0.012 88.0)"
+        ]
+      },
+      "soft-mint": {
+        "role": "primary",
+        "displayName": "Soft mint",
+        "tonalRamp": [
+          "oklch(15% 0.036 173.0)",
+          "oklch(26% 0.062 173.0)",
+          "oklch(38% 0.091 173.0)",
+          "oklch(49% 0.118 173.0)",
+          "oklch(60% 0.096 173.0)",
+          "oklch(72% 0.067 173.0)",
+          "oklch(83% 0.041 173.0)",
+          "oklch(95% 0.012 173.0)"
+        ]
+      },
+      "dark-ink": {
+        "role": "neutral",
+        "displayName": "Dark ink",
+        "tonalRamp": [
+          "oklch(15% 0.036 166.5)",
+          "oklch(26% 0.039 166.5)",
+          "oklch(38% 0.039 166.5)",
+          "oklch(49% 0.039 166.5)",
+          "oklch(60% 0.039 166.5)",
+          "oklch(72% 0.039 166.5)",
+          "oklch(83% 0.039 166.5)",
+          "oklch(95% 0.012 166.5)"
+        ]
+      },
+      "focus-mint": {
+        "role": "primary",
+        "displayName": "Focus mint",
+        "tonalRamp": [
+          "oklch(15% 0.036 174.9)",
+          "oklch(26% 0.062 174.9)",
+          "oklch(38% 0.091 174.9)",
+          "oklch(49% 0.110 174.9)",
+          "oklch(60% 0.096 174.9)",
+          "oklch(72% 0.067 174.9)",
+          "oklch(83% 0.041 174.9)",
+          "oklch(95% 0.012 174.9)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "headline": {
+        "displayName": "Page headline",
+        "purpose": "Major page headings."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Everyday interface text."
+      },
+      "section": {
+        "displayName": "Section title",
+        "purpose": "Section headings."
+      },
+      "supporting": {
+        "displayName": "Supporting text",
+        "purpose": "Context, labels, and status."
+      },
+      "terminal": {
+        "displayName": "Terminal",
+        "purpose": "Harness terminal output."
+      }
+    },
+    "shadows": [],
+    "motion": [
+      {
+        "name": "button-transition",
+        "value": "background-color 140ms ease, border-color 140ms ease",
+        "purpose": "Button background and border state changes; disabled under reduced motion."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "wide-compact",
+        "value": "1100px"
+      },
+      {
+        "name": "stack-home",
+        "value": "850px"
+      },
+      {
+        "name": "compact-navigation",
+        "value": "720px"
+      },
+      {
+        "name": "narrow-capture",
+        "value": "450px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The mint-filled action used to save or start.",
+      "html": "<button class=\"ds-primary\" type=\"button\">Save goal</button>",
+      "css": ".ds-primary{font:14px \"Segoe UI\",Arial,sans-serif;cursor:pointer;transition:background-color 140ms ease,border-color 140ms ease;padding:10px 15px;color:var(--ink,#09251b);background:var(--teal,#61d8b8);border:1px solid var(--teal,#61d8b8);border-radius:7px;font-weight:700}.ds-primary:hover:not(:disabled){background:#8ae8ce}.ds-primary:focus-visible{outline:2px solid #77e5c9;outline-offset:3px;}.ds-primary:disabled{cursor:not-allowed;opacity:.55}@media(prefers-reduced-motion:reduce){.ds-primary{transition:none}}"
+    },
+    {
+      "name": "Outline button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "A quieter action used to open an item or choose a folder.",
+      "html": "<button class=\"ds-outline\" type=\"button\">Open <svg class=\"ds-icon\" aria-hidden=\"true\" viewBox=\"0 0 24 24\"><path d=\"M4 12h15M14 7l5 5-5 5\"/></svg></button>",
+      "css": ".ds-outline{font:14px \"Segoe UI\",Arial,sans-serif;cursor:pointer;transition:background-color 140ms ease,border-color 140ms ease;display:inline-flex;align-items:center;justify-content:space-between;gap:12px;min-width:78px;padding:9px 13px;color:#edf4ea;background:transparent;border:1px solid #4e715e;border-radius:7px}.ds-outline:hover:not(:disabled){background:#204937}.ds-outline:focus-visible{outline:2px solid #77e5c9;outline-offset:3px;}.ds-outline:disabled{cursor:not-allowed;opacity:.55}.ds-icon{width:15px;height:15px;fill:none;stroke:var(--gold,#d9bf80);stroke-width:1.55;stroke-linecap:round;stroke-linejoin:round}@media(prefers-reduced-motion:reduce){.ds-outline{transition:none}}"
+    },
+    {
+      "name": "Text action",
+      "kind": "button",
+      "description": "A quiet inline action for secondary navigation and disclosure.",
+      "html": "<button class=\"ds-text\" type=\"button\">Add goal</button>",
+      "css": ".ds-text{font:14px \"Segoe UI\",Arial,sans-serif;cursor:pointer;transition:background-color 140ms ease,border-color 140ms ease;padding:4px 0;border:0;background:transparent;color:#d3e3d4}.ds-text:hover{color:#fff;text-decoration:underline;text-underline-offset:3px}.ds-text:focus-visible{outline:2px solid #77e5c9;outline-offset:3px;}.ds-text:disabled{cursor:not-allowed;opacity:.55}@media(prefers-reduced-motion:reduce){.ds-text{transition:none}}"
+    },
+    {
+      "name": "Text field",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "The bordered field used for goals and quick capture.",
+      "html": "<label class=\"ds-label\" for=\"ds-goal\">Goal</label><input class=\"ds-input\" id=\"ds-goal\" placeholder=\"What would you like to work toward?\">",
+      "css": ".ds-label{display:block;margin-bottom:8px;color:#d9e6d9;font:12px \"Segoe UI\",Arial,sans-serif}.ds-input{box-sizing:border-box;width:100%;min-width:0;padding:11px 12px;color:#e9eee5;background:#0b231b;border:1px solid #466753;border-radius:7px;font:14px \"Segoe UI\",Arial,sans-serif;caret-color:#83dfc7}.ds-input::placeholder{color:#afc2b2;opacity:1}.ds-input:focus-visible{outline:2px solid #77e5c9;outline-offset:3px;}"
+    },
+    {
+      "name": "Navigation item",
+      "kind": "nav",
+      "refersTo": "navigation-current",
+      "description": "A selected navigation item with a gold line icon.",
+      "html": "<nav aria-label=\"Sections\"><button class=\"ds-nav\" type=\"button\" aria-current=\"page\"><svg class=\"ds-nav-icon\" aria-hidden=\"true\" viewBox=\"0 0 24 24\"><path d=\"M3 11.5 12 4l9 7.5\"/><path d=\"M6 10v9h12v-9M10 19v-5h4v5\"/></svg>Home</button></nav>",
+      "css": ".ds-nav{font:14px \"Segoe UI\",Arial,sans-serif;cursor:pointer;transition:background-color 140ms ease,border-color 140ms ease;display:flex;align-items:center;gap:13px;width:100%;padding:12px;border:0;border-radius:8px;text-align:left;color:#f0f2e8;background:#153c2c}.ds-nav:hover{background:#17382b}.ds-nav:focus-visible{outline:2px solid #77e5c9;outline-offset:3px;}.ds-nav-icon{width:18px;height:18px;flex:none;fill:none;stroke:var(--gold,#d9bf80);stroke-width:1.55;stroke-linecap:round;stroke-linejoin:round}@media(prefers-reduced-motion:reduce){.ds-nav{transition:none}}"
+    },
+    {
+      "name": "Focus panel",
+      "kind": "card",
+      "description": "A bordered, tonal supporting panel used for independent focus.",
+      "html": "<section class=\"ds-panel\"><div class=\"ds-panel-label\">Independent focus</div><h3 class=\"ds-panel-title\">Work on your own.</h3><p class=\"ds-panel-copy\">Focus sessions will be available here when FlowState is connected.</p></section>",
+      "css": ".ds-panel{padding:18px;background:#10291f;border:1px solid #5b6442;border-radius:10px;font:14px \"Segoe UI\",Arial,sans-serif}.ds-panel-label{color:var(--gold,#d9bf80);font-size:12px;font-weight:700}.ds-panel-title{margin:10px 0 0;color:#e9eee5;font:600 22px Georgia,serif}.ds-panel-copy{margin:10px 0 0;color:#c0d0c1;font-size:12px;line-height:1.55}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Quiet Workspace",
+    "overview": "TGM is calm, focused, and familiar: a desktop workspace that helps a person find their next action without visual noise. Deep green surfaces, soft mint actions, and muted gold identity details give it a quiet warmth. Serif headings introduce a personal voice; straightforward sans-serif controls keep work easy to scan.\n\nThe interface is restrained and practical. It uses open space, fine rules, simple line icons, and a few gently layered panels. Preserve the user-approved Codex direction as new screens and states are added, and give honest, readable feedback when functionality is unavailable or an action fails.",
+    "keyCharacteristics": [
+      "Deep forest surfaces with muted gold identity details and soft mint actions.",
+      "Georgia headings alongside familiar Segoe UI controls and body text.",
+      "Flat, gently layered surfaces, fine borders, and ruled lists.",
+      "Compact navigation, clear labels, and an obvious keyboard focus treatment."
+    ],
+    "rules": [],
+    "dos": [
+      "**Do** extend the approved forest, mint, and gold palette and use existing components as the starting point.",
+      "**Do** pair serif page headings with clear sans-serif labels and readable body text.",
+      "**Do** preserve visible keyboard focus, meaningful labels, and explicit loading, error, and unavailable states.",
+      "**Do** use rules, spacing, and subtle surface changes to organize content."
+    ],
+    "donts": [
+      "**Don't** replace the approved visual identity with an unrelated generated design.",
+      "**Don't** add decorative gradients, neon accents, or collections of ornamental badges.",
+      "**Don't** imply an integration or action is available when it is not connected.",
+      "**Don't** make a panel or color carry information that needs a readable label."
+    ]
+  }
+}

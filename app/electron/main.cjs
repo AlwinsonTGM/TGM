@@ -146,6 +146,33 @@ function registerIpcHandlers() {
     assertTrustedSender(event);
     return getStore().saveCapture(text);
   });
+  ipcMain.handle('tgm:update-capture', (event, id, text, goalId, projectId, revision) => {
+    assertTrustedSender(event);
+    return getStore().updateCapture(id, text, goalId, projectId, revision);
+  });
+  ipcMain.handle('tgm:delete-capture', (event, id, revision) => {
+    assertTrustedSender(event);
+    return getStore().deleteCapture(id, revision);
+  });
+  ipcMain.handle('tgm:list-projects', (event) => {
+    assertTrustedSender(event);
+    return getStore().listProjects();
+  });
+  const validateProjectFolder = folder => {
+    if (folder !== null && (typeof folder !== 'string' || !path.isAbsolute(folder) || !fs.statSync(folder).isDirectory())) throw new Error('Choose an existing folder.');
+  };
+  ipcMain.handle('tgm:create-project', (event, name, folder) => {
+    assertTrustedSender(event);
+    validateProjectFolder(folder);
+    return getStore().createProject(name, folder);
+  });
+  ipcMain.handle('tgm:update-project', (event, id, name, folder, active) => {
+    assertTrustedSender(event);
+    const current = getStore().listProjects().find(project => project.id === id);
+    if (!current) throw new Error('Project is no longer available.');
+    if (folder !== current.folder) validateProjectFolder(folder);
+    return getStore().updateProject(id, name, folder, active);
+  });
   ipcMain.handle('tgm:list-goals', (event) => {
     assertTrustedSender(event);
     return getStore().listGoals();
@@ -157,6 +184,18 @@ function registerIpcHandlers() {
   ipcMain.handle('tgm:save-goal-details', (event, goalId, title, stepId, stepText, expectedTitle, expectedStep) => {
     assertTrustedSender(event);
     return getStore().saveGoalDetails(goalId, title, stepId, stepText, expectedTitle, expectedStep);
+  });
+  ipcMain.handle('tgm:list-completed-steps', (event) => {
+    assertTrustedSender(event);
+    return getStore().listCompletedSteps();
+  });
+  ipcMain.handle('tgm:complete-step', (event, goalId, stepId, expectedText) => {
+    assertTrustedSender(event);
+    return getStore().completeStep(goalId, stepId, expectedText);
+  });
+  ipcMain.handle('tgm:restore-step', (event, goalId, stepId) => {
+    assertTrustedSender(event);
+    return getStore().restoreStep(goalId, stepId);
   });
 }
 
