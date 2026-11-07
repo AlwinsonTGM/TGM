@@ -2,13 +2,14 @@ const { app, BrowserWindow, dialog, ipcMain, clipboard } = require('electron');
 const fs = require('node:fs');
 const path = require('node:path');
 const { TerminalSession } = require('./terminal.cjs');
+const { foundOnPath } = require('./harness-path.cjs');
 
 let window;
 let closing = false;
 const terminal = new TerminalSession();
 const harnesses = {
-  agy: { command: 'agy.exe', args: [] },
-  opencode: { command: process.env.ComSpec || 'cmd.exe', args: ['/d', '/c', 'opencode.cmd', '--standalone'] }
+  agy: { filename: 'agy.exe', command: 'agy.exe', args: [] },
+  opencode: { filename: 'opencode.cmd', command: process.env.ComSpec || 'cmd.exe', args: ['/d', '/c', 'opencode.cmd', '--standalone'] }
 };
 const validSize = (cols, rows) => Number.isInteger(cols) && cols >= 2 && cols <= 1000 && Number.isInteger(rows) && rows >= 2 && rows <= 1000;
 const authorized = event => window && event.sender === window.webContents && event.senderFrame === window.webContents.mainFrame;
@@ -47,6 +48,10 @@ app.whenReady().then(async () => {
     if (!authorized(event)) throw new Error('Unauthorized request.');
     const result = await dialog.showOpenDialog(window, { properties: ['openDirectory'] });
     return result.canceled ? null : result.filePaths[0];
+  });
+  ipcMain.handle('check-harness', (event, id) => {
+    if (!authorized(event) || !Object.hasOwn(harnesses, id)) throw new Error('Invalid harness.');
+    return foundOnPath(harnesses[id].filename);
   });
   ipcMain.handle('start-terminal', async (event, request) => {
     if (!authorized(event)) throw new Error('Unauthorized request.');

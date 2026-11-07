@@ -7,10 +7,12 @@
   "scripts": {
     "start": "electron .",
     "test": "electron tests/terminal.test.cjs",
+    "test:harness": "electron tests/harness-availability.test.cjs",
     "test:clipboard": "electron tests/clipboard.test.cjs",
     "test:clipboard-windows": "electron tests/clipboard-windows.test.cjs",
     "package:win": "node scripts/package-win.cjs",
-    "test:package": "node tests/packaged-native.test.cjs"
+    "test:package": "node tests/packaged-native.test.cjs",
+    "test:package-gui": "node tests/packaged-gui.test.cjs"
   },
   "dependencies": {
     "@xterm/addon-fit": "0.11.0",

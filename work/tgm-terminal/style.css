@@ -14,6 +14,8 @@ label, .folder { display: flex; flex-direction: column; gap: 6px; color: #bac8bf
 .folder { flex: 1; min-width: 220px; display: grid; grid-template-columns: auto 1fr; align-items: center; }
 .folder > span:first-child { grid-column: 1 / -1; }
 #folder-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.harness-check { color: #a8b4ad; font-size: 13px; }
+.harness-check button { min-height: 0; padding: 3px 8px; margin-left: 6px; }
 button, select { background: #202a25; color: #eef5f0; border: 1px solid #3a4a40; border-radius: 5px; padding: 9px 12px; font: inherit; min-height: 38px; }
 button { cursor: pointer; }
 button:hover:not(:disabled) { background: #304137; }

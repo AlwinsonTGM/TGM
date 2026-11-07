@@ -10,10 +10,30 @@ const start = document.getElementById('start');
 const stop = document.getElementById('stop');
 const status = document.getElementById('status');
 const error = document.getElementById('error');
+const availability = document.getElementById('harness-availability');
 let cwd = null;
 let running = false;
 let busy = false;
 let exitedWhileStarting = false;
+let availabilityRequest = 0;
+
+async function checkHarness() {
+  const request = ++availabilityRequest;
+  const selected = harness.value;
+  availability.textContent = 'Checking harness…';
+  try {
+    const found = await bridge.checkHarness(selected);
+    if (request !== availabilityRequest) return;
+    availability.textContent = found
+      ? 'Found on TGM’s PATH. Launch and sign-in are not checked.'
+      : 'Not found in TGM’s absolute PATH folders. You can still try starting it. Restart TGM after changing PATH.';
+  } catch {
+    if (request === availabilityRequest) availability.textContent = 'Could not check the harness. You can still try starting it.';
+  }
+}
+harness.addEventListener('change', checkHarness);
+document.getElementById('check-harness').addEventListener('click', checkHarness);
+checkHarness();
 
 function controls() {
   start.disabled = !cwd || running || busy;

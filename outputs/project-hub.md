@@ -1,16 +1,20 @@
 # Personal Command Center — project hub
 
-> **Current handoff, 6 November 2026:** The user chose the Codex design, now on `main`, and the competing UX branches were removed. The first release should support both installed AGY and OpenCode. A standalone, unpackaged [terminal foundation](../work/tgm-terminal/README.md) exists; it is not yet connected to the dashboard. See the [harness feasibility report](harness-feasibility-2026-11-06.md) for test results and the detached-process limitation. Older comparison and AGY-only notes below are historical where they conflict with this handoff.
+> **Current handoff, 7 November 2026:** The user selected the Codex design and asked to preserve the later changes separately and return `main` to the earlier commit. `main` was restored to `6dae949`; it contains the selected concept and standalone [terminal foundation](../work/tgm-terminal/README.md), but no Home app source. The pushed `argon/tgm-home-slice-review` branch preserves the subsequent Home implementation, review changes, and screenshots. The larger experimental design is preserved separately on `codex/design-prototype-backup`. Do not merge either branch's design or artifacts into `main` by default.
+>
+> A follow-up branch, `codex/tgm-home-review-fix`, contains safety fixes on top of the Home review branch. Review the desired functionality and interface before selectively bringing work to `main`. The terminal foundation supports installed AGY and OpenCode and reports whether their executables are present in its inherited PATH; that check does not verify launch or authentication. It is not connected to a dashboard. See the [harness feasibility report](harness-feasibility-2026-11-06.md) for its tested boundaries. Older notes below are historical where they conflict with this handoff.
 
-**Last updated:** 6 November 2026  
-**Current stage:** First-release plan drafted; product context and design/development orchestration in progress.  
-**Product implementation:** Not started. Earlier code was used for disposable feasibility tests.
+**Last updated:** 7 November 2026
+
+**Current stage:** Selected design and terminal foundation on `main`; Home implementation preserved separately for review.
+
+**Product implementation:** Standalone terminal foundation on `main`; Home implementation remains on the separate review branch.
 
 This is the short starting point for the user or a future agent. Read the [first-release plan](first-release-plan.md) for requirements, failure handling, acceptance checks, and unresolved decisions; [development orchestration](development-orchestration.md) captures the requested design/logic split and tool evidence. The [stack decision](stack-decision-proposal.md) records the accepted direction and remaining tests. [PRODUCT.md](../PRODUCT.md) holds durable product context. The [decisions and open checks](dashboard-decisions.md) preserve the discussion; the [prototype results](end-to-end-prototype-results.md) document the most recent experiments. Where an older verification note appears to conflict with a later test, use the dated result and retain the remaining limitations.
 
 ## What the app is for
 
-Help the user start a real work or study session when they feel overwhelmed, remember what they have done, and develop independent skills. The first usable Windows release combines a calm dashboard, the actual AGY CLI, the user's FlowState app, and their Obsidian reviewer library.
+Help the user start a real work or study session when they feel overwhelmed, remember what they have done, and develop independent skills. The first usable Windows release combines a calm dashboard, the installed AGY and OpenCode CLIs, the user's FlowState app, and their Obsidian reviewer library.
 
 ```mermaid
 flowchart LR
@@ -37,7 +41,7 @@ Status meanings: **Done** = supported by the linked evidence; **In progress** = 
 |---|---|---|---|---|
 | P0 | Record product decisions and run focused feasibility probes | Done | — | [Decisions](dashboard-decisions.md); [prototype results](end-to-end-prototype-results.md) |
 | P1 | Draft first-release plan and visual project map | Done | P0 | [First-release plan](first-release-plan.md); this hub. Draft, not user-approved specification. |
-| P2 | Review scope and explore desktop UI/UX directions | In progress | P1 | User chose the Loki-inspired TGM direction; 6 parallel Worktrunk (`git-wt`) UX & animation variations + [Comparison Arena](ux-arena/index.html) await user evaluation alongside the [original seed](tgm-ux-prototype/index.html). See [UX discovery](ux-shaping-draft.md). |
+| P2 | Review scope and explore desktop UI/UX directions | In progress | P1 | User selected the Codex concept. Later design experiments are preserved separately and should not be merged by default. |
 | P3 | Choose dashboard project location, app shell, ownership, storage, and recovery approach | In progress | P1; UI informs shell | [Stack direction accepted](stack-decision-proposal.md); project location, ownership and safe FlowState/vault integration remain open. D: is an unreliable external HDD and must not be used for development. |
 | P4 | Build dashboard foundations: goals, projects, capture, and session history | Not started | P3 | Acceptance checks in the plan pass with restart and test data. |
 | P5 | Integrate the actual AGY terminal, project sessions, MCP, and approvals | Not started | P3 | Packaged Windows workflow tested; failures and scope boundaries visible. |
@@ -67,7 +71,9 @@ flowchart LR
 
 The dependency arrows show what must exist to finish a checkpoint. UI exploration and technical investigation may overlap; the graph is not permission to omit any first-release integration.
 
-## Current handoff
+## Earlier handoffs
+
+The entries below record earlier stages and do not supersede the current handoff above.
 
 - **6 November Codex concept:** A seventh, independently designed synthetic preview is in the `ux-codex` worktree and the [comparison arena](ux-arena/index.html). It explores compact suggestions, independent focus, shared capture and review before saving. The user has not yet evaluated it; real AGY, FlowState and Obsidian integrations remain out of scope for this prototype.
 - **6 November design audit:** The six Flash UX variations received separate visual-design and usability grades in the [comparison audit](ux-design-audit-2026-11-06.md). The review recommends Discovered Skills as a starting point, subject to the user's own evaluation; it identifies concrete focus/task, keyboard and contrast defects that need correction before treating any variant as a foundation. These are synthetic previews, not production integrations.

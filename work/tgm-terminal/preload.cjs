@@ -1,6 +1,7 @@
 const { contextBridge, ipcRenderer } = require('electron');
 contextBridge.exposeInMainWorld('terminalBridge', {
   chooseFolder: () => ipcRenderer.invoke('choose-folder'),
+  checkHarness: id => ipcRenderer.invoke('check-harness', id),
   start: options => ipcRenderer.invoke('start-terminal', options),
   stop: () => ipcRenderer.invoke('stop-terminal'),
   input: data => ipcRenderer.send('terminal-input', data),

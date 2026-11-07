@@ -6,7 +6,11 @@ if (process.platform !== 'win32' || process.arch !== 'x64') {
 }
 
 const root = path.resolve(__dirname, '..');
-const output = path.join(root, 'dist', 'TGM-Terminal-win32-x64');
+const args = process.argv.slice(2);
+if (args.length && (args.length !== 2 || args[0] !== '--output' || !path.isAbsolute(args[1]))) {
+  throw new Error('Usage: node scripts/package-win.cjs [--output <absolute directory>]');
+}
+const output = args.length ? path.resolve(args[1]) : path.join(root, 'dist', 'TGM-Terminal-win32-x64');
 const runtime = path.join(root, 'node_modules', 'electron', 'dist');
 if (fs.existsSync(output)) {
   throw new Error(`Build directory already exists: ${output}. Move or remove it before rebuilding.`);
@@ -21,7 +25,7 @@ fs.renameSync(path.join(output, 'electron.exe'), path.join(output, 'TGM Terminal
 
 const app = path.join(output, 'resources', 'app');
 fs.mkdirSync(app, { recursive: true });
-for (const file of ['index.html', 'style.css', 'main.cjs', 'preload.cjs', 'renderer.js', 'terminal.cjs']) {
+for (const file of ['index.html', 'style.css', 'main.cjs', 'preload.cjs', 'renderer.js', 'terminal.cjs', 'harness-path.cjs']) {
   fs.copyFileSync(path.join(root, file), path.join(app, file));
 }
 const manifest = require(path.join(root, 'package.json'));
