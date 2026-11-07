@@ -1,14 +1,14 @@
 # Personal Command Center — project hub
 
-> **Current handoff, 7 November 2026:** The user selected the Codex design and asked to preserve the later changes separately and return `main` to the earlier commit. `main` was restored to `6dae949`; it contains the selected concept and standalone [terminal foundation](../work/tgm-terminal/README.md), but no Home app source. The pushed `argon/tgm-home-slice-review` branch preserves the subsequent Home implementation, review changes, and screenshots. The larger experimental design is preserved separately on `codex/design-prototype-backup`. Do not merge either branch's design or artifacts into `main` by default.
+> **Current handoff, 7 November 2026:** The first working [Home app](../app/README.md) is in this `main` checkout, using the selected Codex concept. It supports local quick capture, goals, optional first steps, and editable suggested steps. Its database recovery command creates a separate verified copy; it does not replace the live database. Workspace connects the installed AGY and OpenCode CLIs through the [terminal foundation](../app/README.md#workspace-terminal). FlowState, Obsidian and session resume are not connected.
 >
-> A follow-up branch, `codex/tgm-home-review-fix`, contains safety fixes on top of the Home review branch. Review the desired functionality and interface before selectively bringing work to `main`. The terminal foundation supports installed AGY and OpenCode and reports whether their executables are present in its inherited PATH; that check does not verify launch or authentication. It is not connected to a dashboard. See the [harness feasibility report](harness-feasibility-2026-11-06.md) for its tested boundaries. Older notes below are historical where they conflict with this handoff.
+> The pushed `argon/tgm-home-slice-review` and `codex/tgm-home-review-fix` branches preserve the earlier Home implementation and safety work. The larger experimental design is separately preserved on `codex/design-prototype-backup`. Do not merge their visual designs or artifacts into `main` by default. Selectively reused storage and recovery code was reviewed and tested for this Home implementation. Older notes below are historical where they conflict with this handoff.
 
 **Last updated:** 7 November 2026
 
-**Current stage:** Selected design and terminal foundation on `main`; Home implementation preserved separately for review.
+**Current stage:** Local Home and one live harness terminal session are implemented; session resume and other integrations remain.
 
-**Product implementation:** Standalone terminal foundation on `main`; Home implementation remains on the separate review branch.
+**Product implementation:** Home and its integrated terminal are in this `main` checkout; release packaging and remaining integrations remain.
 
 This is the short starting point for the user or a future agent. Read the [first-release plan](first-release-plan.md) for requirements, failure handling, acceptance checks, and unresolved decisions; [development orchestration](development-orchestration.md) captures the requested design/logic split and tool evidence. The [stack decision](stack-decision-proposal.md) records the accepted direction and remaining tests. [PRODUCT.md](../PRODUCT.md) holds durable product context. The [decisions and open checks](dashboard-decisions.md) preserve the discussion; the [prototype results](end-to-end-prototype-results.md) document the most recent experiments. Where an older verification note appears to conflict with a later test, use the dated result and retain the remaining limitations.
 
@@ -43,8 +43,8 @@ Status meanings: **Done** = supported by the linked evidence; **In progress** = 
 | P1 | Draft first-release plan and visual project map | Done | P0 | [First-release plan](first-release-plan.md); this hub. Draft, not user-approved specification. |
 | P2 | Review scope and explore desktop UI/UX directions | In progress | P1 | User selected the Codex concept. Later design experiments are preserved separately and should not be merged by default. |
 | P3 | Choose dashboard project location, app shell, ownership, storage, and recovery approach | In progress | P1; UI informs shell | [Stack direction accepted](stack-decision-proposal.md); project location, ownership and safe FlowState/vault integration remain open. D: is an unreliable external HDD and must not be used for development. |
-| P4 | Build dashboard foundations: goals, projects, capture, and session history | Not started | P3 | Acceptance checks in the plan pass with restart and test data. |
-| P5 | Integrate the actual AGY terminal, project sessions, MCP, and approvals | Not started | P3 | Packaged Windows workflow tested; failures and scope boundaries visible. |
+| P4 | Build dashboard foundations: goals, projects, capture, and session history | In progress | P3 | Home supports local capture, goals, and next steps; projects and real session history remain. See [Home](../app/README.md). |
+| P5 | Integrate AGY and OpenCode terminals, project sessions, MCP, and approvals | In progress | P3 | Workspace starts a single selected installed CLI in a chosen folder; session resume, MCP/approval integration and release packaging remain. |
 | P6 | Develop FlowState stop, integration, and reconciliation | Not started | P3, P5 | Direct and AGY-started sessions work; timing, duplicate prevention, and recovery checks pass. |
 | P7 | Integrate reviewed Obsidian reviewer saving | Not started | P3, P5 | Approved changes, conflict handling, backup/recovery, and opening in Obsidian verified. |
 | P8 | Add bounded project memory, learning history, and all three practice modes | Not started | P4, P5; reviewer path P7 | Approval, project scope, practice, and history checks pass. |

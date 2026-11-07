@@ -1,0 +1,26 @@
+[hidden] { display: none !important; }
+button.nav-item { width: 100%; border: 0; background: transparent; text-align: left; }
+button.nav-item.current { background: #153c2c; }
+button.nav-item:hover { background: #17382b; }
+.workspace-heading { display: flex; justify-content: space-between; align-items: end; gap: 20px; padding-bottom: 20px; border-bottom: 1px solid var(--line); }
+.workspace-heading h1 { margin-top: 14px; }
+.workspace-heading p { margin: 9px 0 0; color: var(--muted); }
+.back-home::before { content: "←"; margin-right: 9px; }
+.terminal-status { color: var(--muted); font-size: 12px; white-space: nowrap; }
+.workspace-controls { display: flex; flex-wrap: wrap; align-items: end; gap: 10px; padding-top: 22px; }
+.harness-label, .folder-control { display: flex; flex-direction: column; gap: 7px; color: #d9e6d9; font-size: 12px; }
+.harness-label select { min-width: 160px; min-height: 40px; padding: 9px 12px; color: #e9eee5; border: 1px solid #4e715e; border-radius: 7px; background: #102c22; font: inherit; font-size: 14px; }
+.harness-label select:focus-visible { outline: 2px solid #77e5c9; outline-offset: 3px; }
+.folder-control { flex: 1; min-width: 220px; }
+.folder-control > div { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.folder-control button { flex: none; }
+.folder-name { overflow: hidden; color: var(--muted); font-size: 12px; text-overflow: ellipsis; white-space: nowrap; }
+.workspace-controls > .primary, .workspace-controls > .outline { min-height: 40px; white-space: nowrap; }
+.harness-check { margin: 13px 0 0; color: var(--muted); font-size: 12px; line-height: 1.55; }
+.harness-check .text-button { margin-left: 5px; font-size: 12px; }
+.terminal-frame { margin-top: 20px; overflow: hidden; background: #061511; border: 1px solid #45614d; border-radius: 9px; }
+.terminal-heading { display: flex; justify-content: space-between; gap: 16px; padding: 13px 16px; color: var(--muted); background: #102b21; border-bottom: 1px solid var(--line); font-size: 12px; }
+.terminal-heading strong { color: #ebf0e7; }
+.terminal-screen { height: 350px; padding: 16px; }
+.terminal-hint { margin: 12px 0 0; color: var(--muted); font-size: 12px; line-height: 1.5; }
+@media (max-width: 720px) { .workspace-heading { align-items: start; } .workspace-controls { align-items: stretch; } .folder-control { flex-basis: 100%; } .terminal-screen { height: 300px; } }

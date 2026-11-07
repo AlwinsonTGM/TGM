@@ -41,7 +41,7 @@ Bring a small set of actionable goal suggestions together with selectable instal
 - Project memory is bounded and saved only on explicit user request after review. The user allows cross-project suggestions using active projects' memories; archived projects are excluded by default.
 - Review proposed changes before applying them to goal progress, learning history, project memory, or the existing vault. Preserve user data and distinguish verified facts from AI suggestions.
 - FlowState and independent focus must work without a harness; AI summaries are optional and depend on available context. First-release behavior for failure, synchronization, recovery, and backup must be designed and tested.
-- Product implementation has not started. The experiments used disposable data and prototypes and did not establish production security or a complete packaged dashboard.
+- The first local Home slice and a single-session terminal for installed AGY and OpenCode exist in one development app. Session resume and release packaging remain, and production security is not established; see the project hub for current verification.
 - The user wants design and logic work separated into focused tasks, coordinated through clear interfaces, with Worktrunk for isolated parallel development where applicable. The requested implementation model is AGY's Argon Medium, while Gemini 3.8 Flash High should drive Agent Desktop for UI testing where those tools work.
 
 ## Brand Commitments
