@@ -5,6 +5,7 @@ const path = require('node:path');
 const { pathToFileURL } = require('node:url');
 const { DatabaseSync } = require('node:sqlite');
 const { app, BrowserWindow, ipcMain } = require('electron');
+const { makeGoals } = require('./goals.cjs');
 
 const MAX_CAPTURE_LENGTH = 10000;
 const PRELOAD_PATH = path.join(__dirname, 'preload.cjs');
@@ -24,9 +25,10 @@ if (
 
 let mainWindow = null;
 let db = null;
+let goalsRepo = null;
 
 function getDatabase() {
-  if (db) {
+  if (db && goalsRepo) {
     return db;
   }
 
@@ -35,6 +37,7 @@ function getDatabase() {
   const dbPath = path.join(userDataDir, 'captures.sqlite');
 
   const instance = new DatabaseSync(dbPath);
+  let repo = null;
   try {
     instance.exec(`
       CREATE TABLE IF NOT EXISTS captures (
@@ -43,21 +46,25 @@ function getDatabase() {
         created_at TEXT NOT NULL
       )
     `);
+    repo = makeGoals(instance);
   } catch (error) {
     instance.close();
     throw error;
   }
 
   db = instance;
+  goalsRepo = repo;
   return db;
 }
 
 function closeDatabase() {
   if (!db) {
+    goalsRepo = null;
     return;
   }
   const currentDb = db;
   db = null;
+  goalsRepo = null;
   try {
     currentDb.close();
   } catch {
@@ -130,6 +137,24 @@ function registerIpcHandlers() {
     assertTrustedSender(event);
     const validText = validateCaptureText(rawText);
     return insertCaptureIntoDb(validText);
+  });
+
+  ipcMain.handle('tgm:list-goals', (event) => {
+    assertTrustedSender(event);
+    getDatabase();
+    return goalsRepo.list();
+  });
+
+  ipcMain.handle('tgm:create-goal', (event, title, firstStep) => {
+    assertTrustedSender(event);
+    getDatabase();
+    return goalsRepo.create(title, firstStep);
+  });
+
+  ipcMain.handle('tgm:save-goal-details', (event, goalId, title, stepId, stepText) => {
+    assertTrustedSender(event);
+    getDatabase();
+    return goalsRepo.saveDetails(goalId, title, stepId, stepText);
   });
 }
 
