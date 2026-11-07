@@ -17,7 +17,10 @@ async function launch(dir) {
   return { app, page: await app.firstWindow() };
 }
 async function close(app) {
-  if (app) await app.close();
+  if (!app) return;
+  // Test teardown discards disposable drafts after assertions have finished.
+  try { await app.evaluate(({ dialog }) => { dialog.showMessageBoxSync = () => 1; }); } catch {}
+  await app.close();
 }
 function cleanup(dir) {
   const root = fs.realpathSync(os.tmpdir());
@@ -124,6 +127,7 @@ test('opening a suggestion without saving does not mutate record, while saving e
 
     await detailForm.getByLabel('Goal title', { exact: true }).fill('Unsaved goal title');
     await detailForm.getByLabel('Next step', { exact: true }).fill('Unsaved step');
+    page.once('dialog', (dialog) => dialog.accept());
     await detailForm.getByRole('button', { name: 'Close details', exact: true }).click();
     assert.equal(await page.getByRole('form', { name: 'Goal and step details', exact: true }).count(), 0);
     assert.equal(await page.getByText('Build side project', { exact: true }).first().isVisible(), true);
@@ -161,6 +165,81 @@ test('opening a suggestion without saving does not mutate record, while saving e
     assert.equal(await detailForm.getByLabel('Goal title', { exact: true }).inputValue(), 'Ship side project');
     assert.equal(await detailForm.getByLabel('Next step', { exact: true }).inputValue(), 'Write release notes');
   } finally {
+    await close(app);
+    cleanup(dir);
+  }
+});
+
+test('closing or switching a dirty goal asks before discarding its draft', async () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'tgm-goals-unsaved-'));
+  let app;
+  try {
+    let page;
+    ({ app, page } = await launch(dir));
+    const addForm = page.getByRole('form', { name: 'Add a goal', exact: true });
+    for (const [title, step] of [['First goal', 'First step'], ['Second goal', 'Second step']]) {
+      await addForm.getByLabel('Goal title', { exact: true }).fill(title);
+      await addForm.getByLabel('First next step (optional)', { exact: true }).fill(step);
+      await addForm.getByRole('button', { name: 'Save goal', exact: true }).click();
+      await page.getByRole('button', { name: `Open ${step}`, exact: true }).waitFor();
+    }
+    await page.getByRole('button', { name: 'Open First step', exact: true }).click();
+    let detailForm = page.getByRole('form', { name: 'Goal and step details', exact: true });
+    await detailForm.getByLabel('Next step', { exact: true }).fill('My unfinished edit');
+
+    page.once('dialog', (dialog) => dialog.dismiss());
+    await detailForm.getByRole('button', { name: 'Close details', exact: true }).click();
+    assert.equal(await detailForm.getByLabel('Next step', { exact: true }).inputValue(), 'My unfinished edit');
+
+    page.once('dialog', (dialog) => dialog.dismiss());
+    await page.getByRole('button', { name: 'Open Second step', exact: true }).click();
+    assert.equal(await detailForm.getByLabel('Next step', { exact: true }).inputValue(), 'My unfinished edit');
+    assert.equal(await detailForm.getByLabel('Goal title', { exact: true }).inputValue(), 'First goal');
+
+    page.once('dialog', (dialog) => dialog.accept());
+    await page.getByRole('button', { name: 'Open Second step', exact: true }).click();
+    detailForm = page.getByRole('form', { name: 'Goal and step details', exact: true });
+    assert.equal(await detailForm.getByLabel('Goal title', { exact: true }).inputValue(), 'Second goal');
+    await page.getByRole('button', { name: 'Open First step', exact: true }).click();
+    assert.equal(await detailForm.getByLabel('Next step', { exact: true }).inputValue(), 'First step');
+  } finally {
+    await close(app);
+    cleanup(dir);
+  }
+});
+
+test('closing the window with a dirty goal offers to keep editing or discard', async () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'tgm-goals-window-close-'));
+  let app;
+  try {
+    let page;
+    ({ app, page } = await launch(dir));
+    const addForm = page.getByRole('form', { name: 'Add a goal', exact: true });
+    await addForm.getByLabel('Goal title', { exact: true }).fill('Window goal');
+    await addForm.getByLabel('First next step (optional)', { exact: true }).fill('Window step');
+    await addForm.getByRole('button', { name: 'Save goal', exact: true }).click();
+    await page.getByRole('button', { name: 'Open Window step', exact: true }).click();
+    const detailForm = page.getByRole('form', { name: 'Goal and step details', exact: true });
+    await detailForm.getByLabel('Next step', { exact: true }).fill('Unsaved window draft');
+
+    await app.evaluate(({ dialog }) => {
+      globalThis.testCloseChoice = 0;
+      globalThis.testClosePrompts = 0;
+      dialog.showMessageBoxSync = () => { globalThis.testClosePrompts++; return globalThis.testCloseChoice; };
+    });
+    await app.evaluate(({ BrowserWindow }) => BrowserWindow.getAllWindows()[0].close());
+    await page.waitForFunction(() => document.querySelector('#detail-step')?.value === 'Unsaved window draft');
+    assert.equal(await app.evaluate(() => globalThis.testClosePrompts), 1);
+    assert.equal(await detailForm.getByLabel('Next step', { exact: true }).inputValue(), 'Unsaved window draft');
+
+    await app.evaluate(() => { globalThis.testCloseChoice = 1; });
+    const closed = page.waitForEvent('close');
+    await app.evaluate(({ BrowserWindow }) => BrowserWindow.getAllWindows()[0].close());
+    await closed;
+  } finally {
+    if (app) {
+      try { await app.evaluate(() => { globalThis.testCloseChoice = 1; }); } catch {}
+    }
     await close(app);
     cleanup(dir);
   }

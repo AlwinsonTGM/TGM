@@ -107,6 +107,25 @@ test('collision with existing destination fails and preserves sentinel file byte
   assert.deepEqual(fs.readFileSync(existingDestPath), sentinelBytes);
 });
 
+test('preexisting SQLite sidecars block publication without altering their contents', (t) => {
+  const dir = withTempDir(t);
+  const sourcePath = path.join(dir, 'source.sqlite');
+  createPopulatedDatabase(sourcePath);
+  const sentinelBytes = Buffer.from('SIDECAR-DO-NOT-OVERWRITE-\x00\xff', 'binary');
+
+  for (const command of ['snapshot', 'restore']) {
+    for (const suffix of ['-wal', '-shm', '-journal']) {
+      const destination = path.join(dir, `${command}${suffix.slice(1)}.sqlite`);
+      const sidecar = destination + suffix;
+      fs.writeFileSync(sidecar, sentinelBytes);
+      const result = runCli([command, sourcePath, destination]);
+      assert.notEqual(result.status, 0, `${command} accepted existing ${suffix}`);
+      assert.equal(fs.existsSync(destination), false);
+      assert.deepEqual(fs.readFileSync(sidecar), sentinelBytes);
+    }
+  }
+});
+
 test('corrupt source fails and leaves no destination file', (t) => {
   const dir = withTempDir(t);
   const corruptSourcePath = path.join(dir, 'corrupt.sqlite');

@@ -20,6 +20,16 @@ export function Goals() {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
 
+  useEffect(() => {
+    if (!detail || (detail.title === detail.savedTitle && detail.step === detail.savedStep)) return;
+    const protectDraft = (event: BeforeUnloadEvent) => {
+      event.preventDefault();
+      event.returnValue = "";
+    };
+    window.addEventListener("beforeunload", protectDraft);
+    return () => window.removeEventListener("beforeunload", protectDraft);
+  }, [detail]);
+
   async function load() {
     setLoading(true);
     try {
@@ -78,6 +88,8 @@ export function Goals() {
         submitted.title,
         submitted.stepId,
         submitted.step,
+        submitted.savedTitle,
+        submitted.savedStep,
       );
       setGoals(saved);
       setLoadError(false);
@@ -100,14 +112,18 @@ export function Goals() {
         };
       });
       setMessage("Changes saved.");
-    } catch {
-      setError("Could not save your changes. Your text is still here; please try again.");
+    } catch (cause) {
+      setError(cause instanceof Error && cause.message.includes("TGM_GOAL_CONFLICT")
+        ? "This goal changed elsewhere. Your draft is still here; copy it, then restart the app to load the latest version."
+        : "Could not save your changes. Your text is still here; please try again.");
     } finally {
       setSaving(false);
     }
   }
 
   function open(goal: Goal, step: GoalStep | null) {
+    if (detail && (detail.title !== detail.savedTitle || detail.step !== detail.savedStep) &&
+        !window.confirm("Discard unsaved changes?")) return;
     setDetail({
       goalId: goal.id,
       stepId: step?.id ?? null,
@@ -230,6 +246,8 @@ export function Goals() {
               type="button"
               disabled={saving}
               onClick={() => {
+                if ((detail.title !== detail.savedTitle || detail.step !== detail.savedStep) &&
+                    !window.confirm("Discard unsaved changes?")) return;
                 setDetail(null);
                 setError("");
                 setMessage("");

@@ -4,7 +4,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { pathToFileURL } = require('node:url');
 const { DatabaseSync } = require('node:sqlite');
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, dialog, ipcMain } = require('electron');
 const { makeGoals } = require('./goals.cjs');
 
 const MAX_CAPTURE_LENGTH = 10000;
@@ -157,10 +157,10 @@ function registerIpcHandlers() {
     return goalsRepo.create(title, firstStep);
   });
 
-  ipcMain.handle('tgm:save-goal-details', (event, goalId, title, stepId, stepText) => {
+  ipcMain.handle('tgm:save-goal-details', (event, goalId, title, stepId, stepText, expectedTitle, expectedStep) => {
     assertTrustedSender(event);
     getDatabase();
-    return goalsRepo.saveDetails(goalId, title, stepId, stepText);
+    return goalsRepo.saveDetails(goalId, title, stepId, stepText, expectedTitle, expectedStep);
   });
 }
 
@@ -192,6 +192,19 @@ async function createMainWindow() {
   mainWindow = win;
 
   win.webContents.setWindowOpenHandler(() => ({ action: 'deny' }));
+
+  win.webContents.on('will-prevent-unload', (event) => {
+    const choice = dialog.showMessageBoxSync(win, {
+      type: 'warning',
+      message: 'Discard unsaved goal changes?',
+      detail: 'Your draft has not been saved.',
+      buttons: ['Keep editing', 'Discard and close'],
+      defaultId: 0,
+      cancelId: 0,
+      noLink: true,
+    });
+    if (choice === 1) event.preventDefault();
+  });
 
   win.webContents.on('will-navigate', (event, navigationUrl) => {
     if (!isAllowedNavigation(navigationUrl)) {

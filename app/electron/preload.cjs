@@ -15,8 +15,8 @@ const tgmApi = Object.freeze({
   createGoal(title, firstStep) {
     return ipcRenderer.invoke('tgm:create-goal', title, firstStep);
   },
-  saveGoalDetails(goalId, title, stepId, stepText) {
-    return ipcRenderer.invoke('tgm:save-goal-details', goalId, title, stepId, stepText);
+  saveGoalDetails(goalId, title, stepId, stepText, expectedTitle, expectedStep) {
+    return ipcRenderer.invoke('tgm:save-goal-details', goalId, title, stepId, stepText, expectedTitle, expectedStep);
   },
 });
 

@@ -28,7 +28,9 @@ declare global {
         goalId: number,
         title: string,
         stepId: number | null,
-        stepText: string
+        stepText: string,
+        expectedTitle: string,
+        expectedStep: string
       ): Promise<Goal[]>;
     };
   }

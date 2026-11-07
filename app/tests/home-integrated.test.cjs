@@ -29,6 +29,8 @@ async function launchApp(userDataDir) {
 async function closeApp(electronApp) {
   if (!electronApp) return;
   try {
+    // Test teardown discards disposable drafts after assertions have finished.
+    try { await electronApp.evaluate(({ dialog }) => { dialog.showMessageBoxSync = () => 1; }); } catch {}
     await electronApp.close();
   } catch {
     try {

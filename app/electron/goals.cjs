@@ -128,43 +128,48 @@ function makeGoals(db) {
     });
   }
 
-  function saveDetails(goalId, title, stepId = null, stepText = '') {
+  function saveDetails(goalId, title, stepId, stepText, expectedTitle, expectedStep) {
     const validGoalId = validateId(goalId, 'goalId');
     const validTitle = validateText(title, 'title', false);
+    const validExpectedTitle = validateText(expectedTitle, 'expectedTitle', false);
 
     let validStepId = null;
     let validStepText = '';
 
     if (stepId === null || stepId === undefined) {
       validStepText = validateText(stepText, 'stepText', true);
+      if (expectedStep !== '') throw new Error('expectedStep must be empty when no step exists');
     } else {
       validStepId = validateId(stepId, 'stepId');
       validStepText = validateText(stepText, 'stepText', false);
+      validateText(expectedStep, 'expectedStep', false);
     }
 
     return runInTransaction(() => {
-      const updateGoalStmt = db.prepare('UPDATE goals SET title = ? WHERE id = ? AND active = 1');
-      const goalResult = updateGoalStmt.run(validTitle, validGoalId);
+      const updateGoalStmt = db.prepare('UPDATE goals SET title = ? WHERE id = ? AND active = 1 AND title = ?');
+      const goalResult = updateGoalStmt.run(validTitle, validGoalId, validExpectedTitle);
       if (Number(goalResult.changes) !== 1) {
-        throw new Error('Goal not found or inactive');
+        throw new Error('TGM_GOAL_CONFLICT: Goal changed or is no longer available');
       }
 
       if (validStepId !== null) {
-        const updateStepStmt = db.prepare('UPDATE steps SET text = ? WHERE id = ? AND goal_id = ?');
-        const stepResult = updateStepStmt.run(validStepText, validStepId, validGoalId);
+        const updateStepStmt = db.prepare('UPDATE steps SET text = ? WHERE id = ? AND goal_id = ? AND text = ?');
+        const stepResult = updateStepStmt.run(validStepText, validStepId, validGoalId, expectedStep);
         if (Number(stepResult.changes) !== 1) {
-          throw new Error('Step not found or does not belong to goal');
+          throw new Error('TGM_GOAL_CONFLICT: Step changed or is no longer available');
         }
-      } else if (validStepText !== '') {
+      } else {
         const countStepsStmt = db.prepare('SELECT COUNT(*) AS count FROM steps WHERE goal_id = ?');
         const existing = countStepsStmt.get(validGoalId);
         if (existing && Number(existing.count) > 0) {
-          throw new Error('Goal already has steps; stepId is required to update an existing step');
+          throw new Error('TGM_GOAL_CONFLICT: A step was added elsewhere');
         }
-        const insertStepStmt = db.prepare('INSERT INTO steps (goal_id, text) VALUES (?, ?)');
-        const stepResult = insertStepStmt.run(validGoalId, validStepText);
-        if (Number(stepResult.changes) !== 1) {
-          throw new Error('Failed to insert step');
+        if (validStepText !== '') {
+          const insertStepStmt = db.prepare('INSERT INTO steps (goal_id, text) VALUES (?, ?)');
+          const stepResult = insertStepStmt.run(validGoalId, validStepText);
+          if (Number(stepResult.changes) !== 1) {
+            throw new Error('Failed to insert step');
+          }
         }
       }
 
