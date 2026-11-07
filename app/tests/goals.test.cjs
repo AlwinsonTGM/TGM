@@ -9,16 +9,29 @@ const { DatabaseSync } = require('node:sqlite');
 const entry = path.resolve(__dirname, '../electron/main.cjs');
 
 async function launch(dir) {
-  const app = await _electron.launch({ executablePath: require('electron'), args: [entry], env: { ...process.env, NODE_ENV: 'test', TGM_TEST_USER_DATA: dir } });
+  const app = await _electron.launch({
+    executablePath: require('electron'),
+    args: [entry],
+    env: { ...process.env, NODE_ENV: 'test', TGM_TEST_USER_DATA: dir },
+  });
   return { app, page: await app.firstWindow() };
 }
-async function close(app) { if (app) await app.close(); }
+async function close(app) {
+  if (app) await app.close();
+}
 function cleanup(dir) {
   const root = fs.realpathSync(os.tmpdir());
   const real = fs.realpathSync(dir);
   const rel = path.relative(root, real);
-  if (!rel || rel.startsWith('..') || path.isAbsolute(rel) || !path.basename(real).startsWith('tgm-goals-')) throw new Error('Unsafe temporary directory');
-  fs.rmSync(real, { recursive: true, force: true, maxRetries: 3, retryDelay: 100 });
+  if (
+    !rel ||
+    rel.startsWith('..') ||
+    path.isAbsolute(rel) ||
+    !path.basename(real).startsWith('tgm-goals-')
+  ) {
+    throw new Error('Unsafe temporary directory');
+  }
+  fs.rmSync(real, { recursive: true, force: true, maxRetries: 5, retryDelay: 150 });
 }
 
 test('goal and optional next step create a suggestion that survives restart', async () => {
@@ -27,19 +40,24 @@ test('goal and optional next step create a suggestion that survives restart', as
   try {
     let page;
     ({ app, page } = await launch(dir));
+    await page.getByText('Your next step starts here.').waitFor();
     await page.getByLabel('Goal title', { exact: true }).fill('Learn TypeScript');
     await page.getByLabel('First next step (optional)').fill('Practice functions');
     await page.getByRole('button', { name: 'Save goal', exact: true }).click();
     await page.getByRole('button', { name: 'Open Practice functions' }).waitFor();
     assert.equal(await page.getByText('Learn TypeScript', { exact: true }).first().isVisible(), true);
-    await close(app); app = null;
+    await close(app);
+    app = null;
     ({ app, page } = await launch(dir));
     await page.getByRole('button', { name: 'Open Practice functions' }).waitFor();
     assert.equal(await page.getByText('Learn TypeScript', { exact: true }).first().isVisible(), true);
-  } finally { await close(app); cleanup(dir); }
+  } finally {
+    await close(app);
+    cleanup(dir);
+  }
 });
 
-test('goal created without a step can have a next step added later and survives restart', async () => {
+test('goal created without a step survives restart on its own, can have a next step added later, and updates suggestions', async () => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'tgm-goals-add-step-'));
   let app;
   try {
@@ -49,8 +67,18 @@ test('goal created without a step can have a next step added later and survives 
     await addForm.getByLabel('Goal title', { exact: true }).fill('Read more books');
     await addForm.getByRole('button', { name: 'Save goal', exact: true }).click();
 
+    await page.getByRole('button', { name: 'Add a next step to Read more books', exact: true }).waitFor();
+    assert.equal(await page.getByText('Your next step starts here.').isVisible(), true);
+    assert.equal(await page.locator('.suggestions li').count(), 0);
+
+    await close(app);
+    app = null;
+    ({ app, page } = await launch(dir));
+
     const addStepBtn = page.getByRole('button', { name: 'Add a next step to Read more books', exact: true });
     await addStepBtn.waitFor();
+    assert.equal(await page.getByText('Your next step starts here.').isVisible(), true);
+    assert.equal(await page.locator('.suggestions li').count(), 0);
     await addStepBtn.click();
 
     const detailForm = page.getByRole('form', { name: 'Goal and step details', exact: true });
@@ -60,13 +88,18 @@ test('goal created without a step can have a next step added later and survives 
     await detailForm.getByRole('button', { name: 'Save changes', exact: true }).click();
 
     await page.getByRole('button', { name: 'Open Pick a short novel', exact: true }).waitFor();
+    assert.equal(await page.getByRole('button', { name: 'Add a next step to Read more books', exact: true }).count(), 0);
     assert.equal(await page.getByText('Read more books', { exact: true }).first().isVisible(), true);
 
-    await close(app); app = null;
+    await close(app);
+    app = null;
     ({ app, page } = await launch(dir));
     await page.getByRole('button', { name: 'Open Pick a short novel', exact: true }).waitFor();
     assert.equal(await page.getByText('Read more books', { exact: true }).first().isVisible(), true);
-  } finally { await close(app); cleanup(dir); }
+  } finally {
+    await close(app);
+    cleanup(dir);
+  }
 });
 
 test('opening a suggestion without saving does not mutate record, while saving edits persists across restart', async () => {
@@ -91,8 +124,12 @@ test('opening a suggestion without saving does not mutate record, while saving e
 
     await detailForm.getByLabel('Goal title', { exact: true }).fill('Unsaved goal title');
     await detailForm.getByLabel('Next step', { exact: true }).fill('Unsaved step');
+    await detailForm.getByRole('button', { name: 'Close details', exact: true }).click();
+    assert.equal(await page.getByRole('form', { name: 'Goal and step details', exact: true }).count(), 0);
+    assert.equal(await page.getByText('Build side project', { exact: true }).first().isVisible(), true);
 
-    await close(app); app = null;
+    await close(app);
+    app = null;
     ({ app, page } = await launch(dir));
     const openBtnAfterView = page.getByRole('button', { name: 'Open Draft requirements', exact: true });
     await openBtnAfterView.waitFor();
@@ -111,7 +148,8 @@ test('opening a suggestion without saving does not mutate record, while saving e
     await page.getByRole('button', { name: 'Open Write release notes', exact: true }).waitFor();
     assert.equal(await page.getByText('Ship side project', { exact: true }).first().isVisible(), true);
 
-    await close(app); app = null;
+    await close(app);
+    app = null;
     ({ app, page } = await launch(dir));
     const editedOpenBtn = page.getByRole('button', { name: 'Open Write release notes', exact: true });
     await editedOpenBtn.waitFor();
@@ -122,10 +160,13 @@ test('opening a suggestion without saving does not mutate record, while saving e
     await detailForm.waitFor();
     assert.equal(await detailForm.getByLabel('Goal title', { exact: true }).inputValue(), 'Ship side project');
     assert.equal(await detailForm.getByLabel('Next step', { exact: true }).inputValue(), 'Write release notes');
-  } finally { await close(app); cleanup(dir); }
+  } finally {
+    await close(app);
+    cleanup(dir);
+  }
 });
 
-test('rejected validation for blank goal title preserves user inputs in create and detail forms', async () => {
+test('rejected validation for blank goal title or step preserves user inputs in create and detail forms', async () => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'tgm-goals-validation-'));
   let app;
   try {
@@ -139,6 +180,7 @@ test('rejected validation for blank goal title preserves user inputs in create a
     const createValidationError = addForm.getByRole('alert').or(page.getByRole('alert')).first();
     await createValidationError.waitFor({ state: 'visible' });
     assert.equal(await createValidationError.isVisible(), true);
+    assert.equal(await addForm.getByLabel('Goal title', { exact: true }).inputValue(), '   ');
     assert.equal(await addForm.getByLabel('First next step (optional)', { exact: true }).inputValue(), 'Sketch wireframes');
     assert.equal(await page.getByRole('button', { name: 'Open Sketch wireframes', exact: true }).count(), 0);
 
@@ -158,16 +200,21 @@ test('rejected validation for blank goal title preserves user inputs in create a
     const detailValidationError = detailForm.getByRole('alert').or(page.getByRole('alert')).first();
     await detailValidationError.waitFor({ state: 'visible' });
     assert.equal(await detailValidationError.isVisible(), true);
+    assert.equal(await detailForm.getByLabel('Goal title', { exact: true }).inputValue(), '   ');
     assert.equal(await detailForm.getByLabel('Next step', { exact: true }).inputValue(), 'Audit tokens');
 
-    await close(app); app = null;
+    await close(app);
+    app = null;
     ({ app, page } = await launch(dir));
     await page.getByRole('button', { name: 'Open Sketch wireframes', exact: true }).waitFor();
     assert.equal(await page.getByText('Design system', { exact: true }).first().isVisible(), true);
-  } finally { await close(app); cleanup(dir); }
+  } finally {
+    await close(app);
+    cleanup(dir);
+  }
 });
 
-test('SQLite write failure with BEGIN EXCLUSIVE preserves inputs and succeeds on retry after unlock', async () => {
+test('SQLite write failure with BEGIN EXCLUSIVE preserves inputs in create and detail forms and succeeds on retry after unlock', async () => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'tgm-goals-sqlite-lock-'));
   let app;
   let lockDb;
@@ -197,17 +244,40 @@ test('SQLite write failure with BEGIN EXCLUSIVE preserves inputs and succeeds on
 
     lockDb.exec('ROLLBACK');
     locked = false;
+
+    await addForm.getByRole('button', { name: 'Save goal', exact: true }).click();
+    const openStepBtn = page.getByRole('button', { name: 'Open Read chapter 1', exact: true });
+    await openStepBtn.waitFor({ state: 'visible' });
+    assert.equal(await page.getByText('Learn Rust', { exact: true }).first().isVisible(), true);
+
+    await openStepBtn.click();
+    const detailForm = page.getByRole('form', { name: 'Goal and step details', exact: true });
+    await detailForm.waitFor({ state: 'visible' });
+    await detailForm.getByLabel('Goal title', { exact: true }).fill('Learn Rust deeply');
+    await detailForm.getByLabel('Next step', { exact: true }).fill('Ownership exercises');
+
+    lockDb.exec('BEGIN EXCLUSIVE');
+    locked = true;
+    await detailForm.getByRole('button', { name: 'Save changes', exact: true }).click();
+
+    const detailSaveAlert = page.getByRole('alert').filter({ hasText: /Could not save your changes/ });
+    await detailSaveAlert.waitFor({ state: 'visible' });
+    assert.equal(await detailForm.getByLabel('Goal title', { exact: true }).inputValue(), 'Learn Rust deeply');
+    assert.equal(await detailForm.getByLabel('Next step', { exact: true }).inputValue(), 'Ownership exercises');
+
+    lockDb.exec('ROLLBACK');
+    locked = false;
     lockDb.close();
     lockDb = null;
 
-    await addForm.getByRole('button', { name: 'Save goal', exact: true }).click();
-    await page.getByRole('button', { name: 'Open Read chapter 1', exact: true }).waitFor({ state: 'visible' });
-    assert.equal(await page.getByText('Learn Rust', { exact: true }).first().isVisible(), true);
+    await detailForm.getByRole('button', { name: 'Save changes', exact: true }).click();
+    await page.getByRole('button', { name: 'Open Ownership exercises', exact: true }).waitFor({ state: 'visible' });
 
-    await close(app); app = null;
+    await close(app);
+    app = null;
     ({ app, page } = await launch(dir));
-    await page.getByRole('button', { name: 'Open Read chapter 1', exact: true }).waitFor({ state: 'visible' });
-    assert.equal(await page.getByText('Learn Rust', { exact: true }).first().isVisible(), true);
+    await page.getByRole('button', { name: 'Open Ownership exercises', exact: true }).waitFor({ state: 'visible' });
+    assert.equal(await page.getByText('Learn Rust deeply', { exact: true }).first().isVisible(), true);
   } finally {
     if (lockDb) {
       try {
@@ -216,6 +286,31 @@ test('SQLite write failure with BEGIN EXCLUSIVE preserves inputs and succeeds on
       try {
         lockDb.close();
       } catch {}
+    }
+    await close(app);
+    cleanup(dir);
+  }
+});
+
+test('goal load failure displays error without claiming empty state and recovers on retry', async () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'tgm-goals-load-error-'));
+  const blockedDatabase = path.join(dir, 'captures.sqlite');
+  let app;
+  try {
+    fs.mkdirSync(blockedDatabase);
+    let page;
+    ({ app, page } = await launch(dir));
+    await page.getByText('Could not load your goals. Your saved data may still be there.').waitFor();
+    assert.equal(await page.getByText('Your next step starts here.').count(), 0);
+    assert.equal(await page.getByRole('button', { name: 'Save goal', exact: true }).isDisabled(), true);
+
+    fs.rmdirSync(blockedDatabase);
+    await page.getByRole('button', { name: 'Retry loading goals', exact: true }).click();
+    await page.getByText('Your next step starts here.').waitFor();
+    assert.equal(await page.getByRole('button', { name: 'Save goal', exact: true }).isEnabled(), true);
+  } finally {
+    if (fs.existsSync(blockedDatabase) && fs.lstatSync(blockedDatabase).isDirectory()) {
+      fs.rmdirSync(blockedDatabase);
     }
     await close(app);
     cleanup(dir);
@@ -237,7 +332,8 @@ test('goal and step with leading/trailing spaces and Unicode/emoji survive resta
 
     await page.getByRole('button', { name: /^Open\s+Lire résumé 🚀\s*$/ }).waitFor({ state: 'visible' });
 
-    await close(app); app = null;
+    await close(app);
+    app = null;
     ({ app, page } = await launch(dir));
 
     const openBtn = page.getByRole('button', { name: /^Open\s+Lire résumé 🚀\s*$/ });

@@ -1,49 +1,75 @@
 .session-status {
-  padding: 22px 0;
-  border-bottom: 1px solid #2b493a;
+  padding: 0 0 var(--space-medium, 12px);
+  margin-bottom: var(--space-large, 16px);
+  border-bottom: 1px solid var(--color-divider, #2b493a);
+}
+.session-status-compact .session-status-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 6px 16px;
 }
 .session-status h2 {
   margin: 0;
-  font-size: 16px;
+  font-size: 15px;
+  color: var(--color-text, #e9eee5);
 }
 .session-status-note {
-  margin: 9px 0 0;
-  color: #a8bdad;
-  line-height: 1.5;
+  margin: 0;
+  color: var(--color-muted, #a8bdad);
+  font-size: 13px;
+  line-height: 1.45;
+}
+.session-status-prominent .session-status-note {
+  margin-top: 6px;
 }
 .session-status-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 20px;
-  margin-top: 14px;
-  padding: 14px 16px;
-  border: 1px solid #42614d;
-  border-radius: 9px;
-  background: #102e23;
+  gap: 16px;
+  margin-top: 10px;
+  padding: 13px 16px;
+  border: 1px solid var(--color-border-session, #42614d);
+  border-radius: var(--radius-panel, 9px);
+  background: var(--color-surface-elevated, #102e23);
 }
 .session-status-details {
   display: flex;
   flex-wrap: wrap;
-  align-items: baseline;
-  gap: 5px 12px;
+  align-items: center;
+  gap: 4px 10px;
   min-width: 0;
   overflow-wrap: anywhere;
 }
 .session-status-details strong {
   flex-basis: 100%;
+  font-size: 15px;
+  color: var(--color-heading, #f3f1e6);
 }
-.session-status-details span,
+.session-status-meta,
 .session-status-feedback {
-  color: #a8bdad;
+  color: var(--color-muted, #a8bdad);
   font-size: 13px;
+}
+.session-status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: var(--radius-small, 6px);
+  border: 1px solid var(--color-border-warm, #5b6442);
+  background: var(--color-surface, #0e2920);
+  color: var(--color-gold, #d9bf80);
+  font-size: 12px;
+  font-weight: 600;
 }
 .session-status-feedback,
 .session-status-error {
-  margin: 9px 0 0;
+  margin: 8px 0 0;
 }
 .session-status-error {
-  color: #ffd0c5;
+  color: var(--color-error, #ffd0c5);
 }
 @media (max-width: 600px) {
   .session-status-row {

@@ -128,14 +128,14 @@ function makeGoals(db) {
     });
   }
 
-  function saveDetails(goalId, title, stepId, stepText) {
+  function saveDetails(goalId, title, stepId = null, stepText = '') {
     const validGoalId = validateId(goalId, 'goalId');
     const validTitle = validateText(title, 'title', false);
 
     let validStepId = null;
     let validStepText = '';
 
-    if (stepId === null) {
+    if (stepId === null || stepId === undefined) {
       validStepText = validateText(stepText, 'stepText', true);
     } else {
       validStepId = validateId(stepId, 'stepId');

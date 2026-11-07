@@ -91,6 +91,12 @@ function validateCaptureText(rawText) {
   if (typeof rawText !== 'string') {
     throw new Error('Capture text is required and must be a string.');
   }
+  if (!rawText.isWellFormed()) {
+    throw new Error('Capture text must be well-formed Unicode.');
+  }
+  if (rawText.includes('\0')) {
+    throw new Error('Capture text must not contain NUL characters.');
+  }
   if (rawText.trim().length === 0) {
     throw new Error('Capture text cannot be empty.');
   }
@@ -113,16 +119,16 @@ function listCapturesFromDb() {
   }));
 }
 
-function insertCaptureIntoDb(trimmedText) {
+function insertCaptureIntoDb(validText) {
   const database = getDatabase();
   const createdAt = new Date().toISOString();
   const stmt = database.prepare(
     'INSERT INTO captures (text, created_at) VALUES (?, ?)'
   );
-  const result = stmt.run(trimmedText, createdAt);
+  const result = stmt.run(validText, createdAt);
   return {
     id: Number(result.lastInsertRowid),
-    text: trimmedText,
+    text: validText,
     createdAt,
   };
 }
@@ -171,8 +177,8 @@ function isAllowedNavigation(targetUrl) {
 
 async function createMainWindow() {
   const win = new BrowserWindow({
-    width: 960,
-    height: 680,
+    width: 1120,
+    height: 760,
     show: true,
     webPreferences: {
       preload: PRELOAD_PATH,
