@@ -23,6 +23,7 @@ a {
 }
 button:focus-visible,
 a:focus-visible,
+input:focus-visible,
 textarea:focus-visible {
   outline: 2px solid #77e5c9;
   outline-offset: 3px;
@@ -177,6 +178,16 @@ h3 {
   margin-top: 16px;
   padding-top: 22px;
 }
+.suggestions, .goals-without-steps ul { list-style: none; padding: 0; margin: 16px 0 0; }
+.suggestions li, .goals-without-steps li { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 0; border-top: 1px solid #2b493a; overflow-wrap: anywhere; }
+.suggestions p { color: #a8bdad; font-size: 13px; margin: 6px 0 0; }
+.goals-without-steps { margin-top: 20px; }
+.goal-form, .goal-detail { display: grid; gap: 9px; margin-top: 24px; padding-top: 20px; border-top: 1px solid #2b493a; }
+.goal-form h3, .goal-detail h3 { margin-bottom: 4px; }
+.goal-form label, .goal-detail label { color: #c8d9ca; font-size: 13px; }
+.goal-form input, .goal-detail input { width: 100%; min-width: 0; font: inherit; border: 1px solid #486b55; border-radius: 7px; background: #0b231b; color: #e9eee5; padding: 11px 12px; caret-color: #77e5c9; }
+.goal-form button { justify-self: start; margin-top: 4px; }
+.goal-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
 .capture form {
   display: flex;
   gap: 9px;

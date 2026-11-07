@@ -1,5 +1,6 @@
 import { FormEvent, useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
+import { Goals } from "./Goals";
 import "./styles.css";
 
 function Mark() {
@@ -100,19 +101,7 @@ function App() {
           </div>
           <div className="home-grid">
             <div className="main-column">
-              <section className="next-steps" aria-labelledby="steps-heading">
-                <h2 id="steps-heading">Suggested next steps</h2>
-                <p className="supporting">
-                  Small enough to start. Choose what feels right.
-                </p>
-                <div className="empty-state">
-                  <strong>Your next step starts here.</strong>
-                  <p>
-                    Goals and suggestions are not available in this first build
-                    yet.
-                  </p>
-                </div>
-              </section>
+              <Goals />
               <section
                 id="quick-capture"
                 className="capture"
