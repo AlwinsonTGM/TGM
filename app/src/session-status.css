@@ -1,0 +1,53 @@
+.session-status {
+  padding: 22px 0;
+  border-bottom: 1px solid #2b493a;
+}
+.session-status h2 {
+  margin: 0;
+  font-size: 16px;
+}
+.session-status-note {
+  margin: 9px 0 0;
+  color: #a8bdad;
+  line-height: 1.5;
+}
+.session-status-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-top: 14px;
+  padding: 14px 16px;
+  border: 1px solid #42614d;
+  border-radius: 9px;
+  background: #102e23;
+}
+.session-status-details {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 5px 12px;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.session-status-details strong {
+  flex-basis: 100%;
+}
+.session-status-details span,
+.session-status-feedback {
+  color: #a8bdad;
+  font-size: 13px;
+}
+.session-status-feedback,
+.session-status-error {
+  margin: 9px 0 0;
+}
+.session-status-error {
+  color: #ffd0c5;
+}
+@media (max-width: 600px) {
+  .session-status-row {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
