@@ -104,22 +104,21 @@ test('integrated Home flow: goals, step editing, quick capture, honest integrati
     electronApp = null;
 
     const sourceDbPath = path.join(sourceDir, 'captures.sqlite');
-    const snapshotDbPath = path.join(backupDir, 'captures-backup.sqlite');
-    const restoredDbPath = path.join(restoredDir, 'captures.sqlite');
-
-    const snapResult = spawnSync(process.execPath, [RECOVER_CLI, 'snapshot', sourceDbPath, snapshotDbPath], {
+    const snapResult = spawnSync(process.execPath, [RECOVER_CLI, 'snapshot', sourceDbPath, backupDir], {
       encoding: 'utf8',
       windowsHide: true,
     });
     assert.equal(snapResult.status, 0, `Snapshot failed: ${snapResult.stderr}`);
 
-    const restoreResult = spawnSync(process.execPath, [RECOVER_CLI, 'restore', snapshotDbPath, restoredDbPath], {
+    const snapshotDbPath = snapResult.stdout.trim();
+    const restoreResult = spawnSync(process.execPath, [RECOVER_CLI, 'restore', snapshotDbPath, restoredDir], {
       encoding: 'utf8',
       windowsHide: true,
     });
     assert.equal(restoreResult.status, 0, `Restore failed: ${restoreResult.stderr}`);
 
-    ({ electronApp, page } = await launchApp(restoredDir));
+    const restoredDbPath = restoreResult.stdout.trim();
+    ({ electronApp, page } = await launchApp(path.dirname(restoredDbPath)));
     await page.getByRole('button', { name: 'Open Verify SQLite persistence', exact: true }).waitFor();
     await page.getByRole('button', { name: 'Open Read Raft paper section 5', exact: true }).waitFor();
     await page.getByText('Remember to check contrast ratios on dark-green surfaces', { exact: true }).waitFor();

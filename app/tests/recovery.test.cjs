@@ -69,105 +69,128 @@ function readAllRows(dbPath) {
   }
 }
 
-test('snapshot and restore round-trip preserves captures, goals, and steps with foreign keys', (t) => {
+test('snapshot and restore return unique database paths and preserve all rows', (t) => {
   const dir = withTempDir(t);
-  const sourcePath = path.join(dir, 'captures.sqlite');
-  const snapshotPath = path.join(dir, 'snapshot.sqlite');
-  const restoredPath = path.join(dir, 'restored.sqlite');
-
+  const sourcePath = path.join(dir, 'source.sqlite');
   createPopulatedDatabase(sourcePath);
   const expected = readAllRows(sourcePath);
 
-  const snapRes = runCli(['snapshot', sourcePath, snapshotPath]);
+  const snapRes = runCli(['snapshot', sourcePath, dir]);
   assert.equal(snapRes.status, 0, `snapshot failed: ${snapRes.stderr}`);
-  assert.equal(fs.existsSync(snapshotPath), true);
+  const snapshotPath = snapRes.stdout.trim();
+  assert.equal(path.isAbsolute(snapshotPath), true);
+  assert.equal(path.dirname(path.dirname(snapshotPath)), dir);
+  assert.equal(path.basename(snapshotPath), 'captures.sqlite');
   assert.deepEqual(readAllRows(snapshotPath), expected);
 
-  const restoreRes = runCli(['restore', snapshotPath, restoredPath]);
+  const restoreRes = runCli(['restore', snapshotPath, dir]);
   assert.equal(restoreRes.status, 0, `restore failed: ${restoreRes.stderr}`);
-  assert.equal(fs.existsSync(restoredPath), true);
+  const restoredPath = restoreRes.stdout.trim();
+  assert.notEqual(restoredPath, snapshotPath);
+  assert.equal(path.dirname(path.dirname(restoredPath)), dir);
   assert.deepEqual(readAllRows(restoredPath), expected);
+
+  const secondSnapshot = runCli(['snapshot', sourcePath, dir]);
+  assert.equal(secondSnapshot.status, 0, secondSnapshot.stderr);
+  assert.notEqual(secondSnapshot.stdout.trim(), snapshotPath);
+  assert.deepEqual(readAllRows(secondSnapshot.stdout.trim()), expected);
 });
 
-test('collision with existing destination fails and preserves sentinel file byte-for-byte', (t) => {
-  const dir = withTempDir(t);
-  const sourcePath = path.join(dir, 'source.sqlite');
-  const existingDestPath = path.join(dir, 'existing.sqlite');
-  const sentinelBytes = Buffer.from('SENTINEL-DO-NOT-OVERWRITE-\x00\xff\x42', 'binary');
-
-  createPopulatedDatabase(sourcePath);
-  fs.writeFileSync(existingDestPath, sentinelBytes);
-
-  const snapRes = runCli(['snapshot', sourcePath, existingDestPath]);
-  assert.notEqual(snapRes.status, 0);
-  assert.deepEqual(fs.readFileSync(existingDestPath), sentinelBytes);
-
-  const restoreRes = runCli(['restore', sourcePath, existingDestPath]);
-  assert.notEqual(restoreRes.status, 0);
-  assert.deepEqual(fs.readFileSync(existingDestPath), sentinelBytes);
-});
-
-test('preexisting SQLite sidecars block publication without altering their contents', (t) => {
+test('unrelated existing database and sidecars are preserved in the destination parent', (t) => {
   const dir = withTempDir(t);
   const sourcePath = path.join(dir, 'source.sqlite');
   createPopulatedDatabase(sourcePath);
-  const sentinelBytes = Buffer.from('SIDECAR-DO-NOT-OVERWRITE-\x00\xff', 'binary');
+  const sentinelBytes = Buffer.from('DO-NOT-OVERWRITE-\x00\xff', 'binary');
+  const unrelatedPath = path.join(dir, 'captures.sqlite');
+  for (const suffix of ['', '-wal', '-shm', '-journal']) {
+    fs.writeFileSync(unrelatedPath + suffix, sentinelBytes);
+  }
 
   for (const command of ['snapshot', 'restore']) {
-    for (const suffix of ['-wal', '-shm', '-journal']) {
-      const destination = path.join(dir, `${command}${suffix.slice(1)}.sqlite`);
-      const sidecar = destination + suffix;
-      fs.writeFileSync(sidecar, sentinelBytes);
-      const result = runCli([command, sourcePath, destination]);
-      assert.notEqual(result.status, 0, `${command} accepted existing ${suffix}`);
-      assert.equal(fs.existsSync(destination), false);
-      assert.deepEqual(fs.readFileSync(sidecar), sentinelBytes);
+    const result = runCli([command, sourcePath, dir]);
+    assert.equal(result.status, 0, result.stderr);
+    assert.notEqual(result.stdout.trim(), unrelatedPath);
+    assert.deepEqual(readAllRows(result.stdout.trim()), readAllRows(sourcePath));
+    for (const suffix of ['', '-wal', '-shm', '-journal']) {
+      assert.deepEqual(fs.readFileSync(unrelatedPath + suffix), sentinelBytes);
     }
   }
 });
 
-test('corrupt source fails and leaves no destination file', (t) => {
+test('corrupt or missing source fails without creating an output directory', (t) => {
   const dir = withTempDir(t);
   const corruptSourcePath = path.join(dir, 'corrupt.sqlite');
-  const snapDestPath = path.join(dir, 'snap-out.sqlite');
-  const restoreDestPath = path.join(dir, 'restore-out.sqlite');
-
+  const missingSourcePath = path.join(dir, 'missing.sqlite');
   fs.writeFileSync(corruptSourcePath, Buffer.from('not a valid sqlite database header at all'));
+  const before = fs.readdirSync(dir).sort();
 
-  const snapRes = runCli(['snapshot', corruptSourcePath, snapDestPath]);
-  assert.notEqual(snapRes.status, 0);
-  assert.equal(fs.existsSync(snapDestPath), false);
-
-  const restoreRes = runCli(['restore', corruptSourcePath, restoreDestPath]);
-  assert.notEqual(restoreRes.status, 0);
-  assert.equal(fs.existsSync(restoreDestPath), false);
+  for (const command of ['snapshot', 'restore']) {
+    for (const source of [corruptSourcePath, missingSourcePath]) {
+      const result = runCli([command, source, dir]);
+      assert.notEqual(result.status, 0);
+      assert.equal(result.stdout.trim(), '');
+      assert.deepEqual(fs.readdirSync(dir).sort(), before);
+    }
+  }
 });
 
-test('missing source fails without creating source or destination', (t) => {
+test('backup failure removes partial output without deleting unexpected files', (t) => {
   const dir = withTempDir(t);
-  const missingSourcePath = path.join(dir, 'does-not-exist.sqlite');
-  const snapDestPath = path.join(dir, 'snap-out.sqlite');
-  const restoreDestPath = path.join(dir, 'restore-out.sqlite');
+  const sourcePath = path.join(dir, 'source.sqlite');
+  const wrapperPath = path.join(dir, 'fail-backup.cjs');
+  createPopulatedDatabase(sourcePath);
+  fs.writeFileSync(wrapperPath, `
+    const fs = require('node:fs');
+    const sqlite = require('node:sqlite');
+    sqlite.backup = async (_db, destination) => {
+      fs.writeFileSync(destination, 'partial');
+      if (process.env.ADD_UNEXPECTED) fs.writeFileSync(destination + '-wal', 'keep me');
+      throw new Error('synthetic backup failure');
+    };
+    require(${JSON.stringify(CLI_PATH)});
+  `);
 
-  const snapRes = runCli(['snapshot', missingSourcePath, snapDestPath]);
-  assert.notEqual(snapRes.status, 0);
-  assert.equal(fs.existsSync(missingSourcePath), false);
-  assert.equal(fs.existsSync(snapDestPath), false);
-
-  const restoreRes = runCli(['restore', missingSourcePath, restoreDestPath]);
-  assert.notEqual(restoreRes.status, 0);
-  assert.equal(fs.existsSync(missingSourcePath), false);
-  assert.equal(fs.existsSync(restoreDestPath), false);
+  for (const addUnexpected of [false, true]) {
+    const parent = path.join(dir, addUnexpected ? 'unexpected' : 'empty');
+    fs.mkdirSync(parent);
+    const result = spawnSync(process.execPath, [wrapperPath, 'snapshot', sourcePath, parent], {
+      encoding: 'utf8', windowsHide: true,
+      env: { ...process.env, ADD_UNEXPECTED: addUnexpected ? '1' : '' },
+    });
+    assert.notEqual(result.status, 0);
+    assert.equal(result.stdout.trim(), '');
+    assert.match(result.stderr, /synthetic backup failure/);
+    const contents = fs.readdirSync(parent);
+    if (!addUnexpected) {
+      assert.deepEqual(contents, []);
+    } else {
+      assert.equal(contents.length, 1);
+      assert.match(result.stderr, /Failed to remove incomplete directory/);
+      const outputDir = path.join(parent, contents[0]);
+      assert.equal(fs.existsSync(path.join(outputDir, 'captures.sqlite')), false);
+      assert.equal(fs.readFileSync(path.join(outputDir, 'captures.sqlite-wal'), 'utf8'), 'keep me');
+    }
+  }
 });
 
-test('missing or invalid arguments fail with nonzero exit code', (t) => {
+test('invalid arguments or destination parents fail without changing existing files', (t) => {
   const dir = withTempDir(t);
-  const somePath = path.join(dir, 'db.sqlite');
+  const sourcePath = path.join(dir, 'source.sqlite');
+  const missingDir = path.join(dir, 'missing');
+  const sentinel = path.join(dir, 'not-a-directory');
+  createPopulatedDatabase(sourcePath);
+  fs.writeFileSync(sentinel, 'leave me alone');
+  const before = fs.readdirSync(dir).sort();
 
-  assert.notEqual(runCli([]).status, 0);
-  assert.notEqual(runCli(['snapshot']).status, 0);
-  assert.notEqual(runCli(['snapshot', somePath]).status, 0);
-  assert.notEqual(runCli(['restore']).status, 0);
-  assert.notEqual(runCli(['restore', somePath]).status, 0);
-  assert.notEqual(runCli(['unknown', somePath, path.join(dir, 'out.sqlite')]).status, 0);
+  for (const args of [
+    [], ['snapshot'], ['snapshot', sourcePath], ['restore'], ['restore', sourcePath],
+    ['unknown', sourcePath, dir], ['snapshot', sourcePath, missingDir],
+    ['restore', sourcePath, sentinel], ['snapshot', sourcePath, 'relative'],
+  ]) {
+    const result = runCli(args);
+    assert.notEqual(result.status, 0, `unexpected success: ${args}`);
+    assert.equal(result.stdout.trim(), '');
+  }
+  assert.deepEqual(fs.readdirSync(dir).sort(), before);
+  assert.equal(fs.readFileSync(sentinel, 'utf8'), 'leave me alone');
 });

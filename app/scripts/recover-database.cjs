@@ -5,7 +5,6 @@ const path = require('node:path');
 const { DatabaseSync, backup } = require('node:sqlite');
 
 const VALID_COMMANDS = new Set(['snapshot', 'restore']);
-const SIDECAR_SUFFIXES = ['', '-wal', '-shm', '-journal'];
 
 function assertAbsolutePath(value, label) {
   if (typeof value !== 'string' || value.length === 0 || value.includes('\0')) {
@@ -46,21 +45,6 @@ function assertDestinationParentDirectory(destDir) {
   }
 }
 
-function assertNoDestinationOrSidecars(destPath) {
-  for (const suffix of SIDECAR_SUFFIXES) {
-    const candidate = `${destPath}${suffix}`;
-    try {
-      fs.lstatSync(candidate);
-      throw new Error(`Destination or sidecar already exists: ${candidate}`);
-    } catch (err) {
-      if (err && err.code === 'ENOENT') {
-        continue;
-      }
-      throw err;
-    }
-  }
-}
-
 function verifyQuickCheck(db, label) {
   const rows = db.prepare('PRAGMA quick_check').all();
   if (!Array.isArray(rows) || rows.length === 0) {
@@ -78,114 +62,77 @@ async function main() {
   const args = process.argv.slice(2);
   if (args.length !== 3) {
     throw new Error(
-      'Usage: node recover-database.cjs <snapshot|restore> <absolute-source> <absolute-new-dest>'
+      'Usage: node recover-database.cjs <snapshot|restore> <absolute-source> <absolute-destination-parent-directory>'
     );
   }
 
-  const [command, sourceArg, destArg] = args;
+  const [command, sourceArg, parentArg] = args;
   if (!VALID_COMMANDS.has(command)) {
     throw new Error(`Unsupported command "${command}". Expected "snapshot" or "restore".`);
   }
 
   assertAbsolutePath(sourceArg, 'Source');
-  assertAbsolutePath(destArg, 'Destination');
+  assertAbsolutePath(parentArg, 'Destination parent');
 
   const sourcePath = path.normalize(sourceArg);
-  const destPath = path.normalize(destArg);
-
-  if (sourcePath === destPath) {
-    throw new Error('Source and destination paths must be distinct.');
-  }
-
+  const parentDir = path.normalize(parentArg);
   assertSourceRegularFile(sourcePath);
+  assertDestinationParentDirectory(parentDir);
 
-  const destDir = path.dirname(destPath);
-  assertDestinationParentDirectory(destDir);
-  assertNoDestinationOrSidecars(destPath);
-
-  let stageDir = null;
-  let stagePath = null;
+  let outputDir = null;
+  let outputPath = null;
   let sourceDb = null;
-  let stageDb = null;
-  let published = false;
+  let outputDb = null;
+  let verified = false;
   let primaryError = null;
 
   try {
-    stageDir = fs.mkdtempSync(path.join(destDir, `.${path.basename(destPath)}.stage-`));
-    stagePath = path.join(stageDir, 'stage.sqlite');
-
     sourceDb = new DatabaseSync(sourcePath, { readOnly: true });
     verifyQuickCheck(sourceDb, 'source');
 
-    await backup(sourceDb, stagePath);
+    // A freshly created directory avoids publishing beside unrelated SQLite sidecars.
+    outputDir = fs.mkdtempSync(path.join(parentDir, `tgm-${command}-`));
+    outputPath = path.join(outputDir, 'captures.sqlite');
+    await backup(sourceDb, outputPath);
 
     sourceDb.close();
     sourceDb = null;
 
-    assertSourceRegularFile(stagePath);
-
-    stageDb = new DatabaseSync(stagePath, { readOnly: true });
-    verifyQuickCheck(stageDb, 'staged');
-
-    stageDb.close();
-    stageDb = null;
-
-    assertNoDestinationOrSidecars(destPath);
-
-    fs.linkSync(stagePath, destPath);
-    published = true;
+    assertSourceRegularFile(outputPath);
+    outputDb = new DatabaseSync(outputPath, { readOnly: true });
+    verifyQuickCheck(outputDb, 'output');
+    outputDb.close();
+    outputDb = null;
+    verified = true;
   } catch (err) {
     primaryError = err;
     throw err;
   } finally {
     const cleanupErrors = [];
-
-    if (stageDb !== null) {
-      try {
-        stageDb.close();
-      } catch (err) {
-        cleanupErrors.push(`Failed to close staged database: ${err.message}`);
-      }
+    if (outputDb !== null) {
+      try { outputDb.close(); } catch (err) { cleanupErrors.push(`Failed to close output database: ${err.message}`); }
     }
-
     if (sourceDb !== null) {
-      try {
-        sourceDb.close();
-      } catch (err) {
-        cleanupErrors.push(`Failed to close source database: ${err.message}`);
+      try { sourceDb.close(); } catch (err) { cleanupErrors.push(`Failed to close source database: ${err.message}`); }
+    }
+    if (!verified && outputPath !== null) {
+      try { fs.unlinkSync(outputPath); } catch (err) {
+        if (err.code !== 'ENOENT') cleanupErrors.push(`Failed to remove incomplete database "${outputPath}": ${err.message}`);
       }
     }
-
-    if (stagePath !== null) {
-      try {
-        fs.unlinkSync(stagePath);
-      } catch (err) {
-        if (!err || err.code !== 'ENOENT' || published) {
-          cleanupErrors.push(`Failed to unlink staged file "${stagePath}": ${err.message}`);
-        }
+    if (!verified && outputDir !== null) {
+      try { fs.rmdirSync(outputDir); } catch (err) {
+        cleanupErrors.push(`Failed to remove incomplete directory "${outputDir}": ${err.message}`);
       }
     }
-
-    if (stageDir !== null) {
-      try {
-        fs.rmdirSync(stageDir);
-      } catch (err) {
-        cleanupErrors.push(`Failed to remove staging directory "${stageDir}": ${err.message}`);
-      }
-    }
-
     if (cleanupErrors.length > 0) {
-      const cleanupMessage = published
-        ? `Database published to "${destPath}", but staging cleanup failed: ${cleanupErrors.join('; ')}`
-        : `Staging cleanup failed: ${cleanupErrors.join('; ')}`;
-
-      if (primaryError !== null) {
-        console.error(cleanupMessage);
-      } else {
-        throw new Error(cleanupMessage);
-      }
+      const message = cleanupErrors.join('; ');
+      if (primaryError !== null) console.error(message);
+      else throw new Error(message);
     }
   }
+
+  console.log(outputPath);
 }
 
 main().catch((err) => {
