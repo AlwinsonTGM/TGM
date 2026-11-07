@@ -1,4 +1,5 @@
 import { FormEvent, useEffect, useState } from "react";
+import { useUnsavedDraft } from "./useUnsavedDraft";
 
 type Detail = {
   goalId: number;
@@ -20,15 +21,8 @@ export function Goals() {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
 
-  useEffect(() => {
-    if (!detail || (detail.title === detail.savedTitle && detail.step === detail.savedStep)) return;
-    const protectDraft = (event: BeforeUnloadEvent) => {
-      event.preventDefault();
-      event.returnValue = "";
-    };
-    window.addEventListener("beforeunload", protectDraft);
-    return () => window.removeEventListener("beforeunload", protectDraft);
-  }, [detail]);
+  useUnsavedDraft(Boolean(title || firstStep ||
+    (detail && (detail.title !== detail.savedTitle || detail.step !== detail.savedStep))));
 
   async function load() {
     setLoading(true);

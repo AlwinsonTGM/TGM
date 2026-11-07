@@ -2,6 +2,7 @@ import { FormEvent, useEffect, useState } from "react";
 import { Goals } from "./Goals";
 import { SessionStatus, type SessionProvider } from "./SessionStatus";
 import { unavailableSessionProvider } from "./useSession";
+import { useUnsavedDraft } from "./useUnsavedDraft";
 import "./styles.css";
 
 function Mark() {
@@ -32,6 +33,8 @@ export function App({
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
   const [feedback, setFeedback] = useState("");
+
+  useUnsavedDraft(Boolean(text));
 
   async function loadCaptures() {
     setLoading(true);

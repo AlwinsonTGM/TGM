@@ -196,7 +196,7 @@ async function createMainWindow() {
   win.webContents.on('will-prevent-unload', (event) => {
     const choice = dialog.showMessageBoxSync(win, {
       type: 'warning',
-      message: 'Discard unsaved goal changes?',
+      message: 'Discard unsaved changes?',
       detail: 'Your draft has not been saved.',
       buttons: ['Keep editing', 'Discard and close'],
       defaultId: 0,
