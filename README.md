@@ -1,19 +1,14 @@
-# TGM Android — public artifacts
+# TGM downloads
 
-This repository contains **only** downloadable artifacts for the private
-[`tgm-android`](https://github.com/AlwinsonTGM/tgm-android) project. It is public so the app can
-fetch model weights and updates without a GitHub token.
+Download TGM for Android and Windows from the [latest release](https://github.com/AlwinsonTGM/TGM/releases/latest). This public repository hosts app downloads and optional model and theme files; the application source repositories are private.
 
-## Install the app
+## Android
 
-Download the APK from the latest release and install it over an existing `com.tgm.task`:
+Download the APK from the latest release and open it on your Android device. You may need to allow your browser or file manager to install apps. The APK is debug-signed; an existing installation can be updated in place only if it uses the same signing key.
 
-```bash
-adb install -r tgm-android-1.1.0-arm64-debug.apk
-```
+## Windows
 
-The APK is a debug-signed `arm64-v8a` build (Android 8.0+). Updating never clears tasks, habits,
-notes, focus history or budget data.
+Download the Windows `.exe` installer from the same release and run it. Windows updates currently require downloading and running a newer installer.
 
 ## System One models
 
